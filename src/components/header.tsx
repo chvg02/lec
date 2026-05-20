@@ -79,7 +79,7 @@ export const Header = () => {
                         </div>
                         <div className="flex flex-col items-start">
                         <h2 className="text-lg font-bold tracking-tight text-white">LEC-FACOM</h2>
-                        <h5 className="text-xs font-light text-white">Laboratório de Educação Computacional</h5>
+                        <h5 className="text-xs font-light text-white">Laboratório de Educação em Computação</h5>
                         </div>
                     </div>
                     <nav className="hidden md:flex flex-1 justify-end">
