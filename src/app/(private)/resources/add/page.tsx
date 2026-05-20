@@ -4,10 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { Download, FileUp, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { upload } from "@vercel/blob/client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MAX_RESOURCE_UPLOAD_SIZE_BYTES } from "@/lib/security";
 import { ResourceDTO } from "@/types/TypesObject";
 
 const materialTypeOptions = [
@@ -18,8 +20,34 @@ const materialTypeOptions = [
 
 type MaterialType = (typeof materialTypeOptions)[number]["value"];
 
+const MULTIPART_UPLOAD_THRESHOLD_BYTES = 4 * 1024 * 1024;
+
 function getFileName(fileUrl: string) {
   return decodeURIComponent(fileUrl.split("/").pop() || "recurso");
+}
+
+function formatFileSize(bytes: number) {
+  if (bytes === 0) {
+    return "0 B";
+  }
+
+  const units = ["B", "KB", "MB", "GB"];
+  const unitIndex = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1
+  );
+  const value = bytes / 1024 ** unitIndex;
+
+  return `${value.toFixed(value >= 10 || unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+}
+
+function sanitizeClientFileName(fileName: string) {
+  return fileName
+    .normalize("NFKD")
+    .replace(/[^\w.-]+/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 120);
 }
 
 export default function AddResourcePage() {
@@ -35,6 +63,7 @@ export default function AddResourcePage() {
   const [fileUrl, setFileUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -79,25 +108,37 @@ export default function AddResourcePage() {
     }
 
     setUploading(true);
+    setUploadProgress(0);
     setError("");
 
-    const formData = new FormData();
-    formData.append("file", file);
+    if (file.size > MAX_RESOURCE_UPLOAD_SIZE_BYTES) {
+      setUploading(false);
+      setError(
+        `O arquivo excede o limite de ${formatFileSize(MAX_RESOURCE_UPLOAD_SIZE_BYTES)}.`
+      );
+      return;
+    }
 
     try {
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
+      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      const safeOriginalName = sanitizeClientFileName(file.name) || "recurso";
+      const blob = await upload(`resources/${uniqueSuffix}-${safeOriginalName}`, file, {
+        access: "public",
+        handleUploadUrl: "/api/upload/client",
+        contentType: file.type,
+        multipart: file.size > MULTIPART_UPLOAD_THRESHOLD_BYTES,
+        onUploadProgress: ({ percentage }) => {
+          setUploadProgress(Math.max(1, Math.round(percentage)));
+        },
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || "Erro ao fazer upload do arquivo.");
+      if (!blob?.url) {
+        setError("O Blob nao retornou a URL do arquivo.");
         return;
       }
 
-      setFileUrl(data.fileUrl || data.imageUrl || "");
+      setUploadProgress(100);
+      setFileUrl(blob.url);
     } catch (uploadError) {
       console.error(uploadError);
       setError("Erro de rede ao enviar o arquivo.");
@@ -215,7 +256,7 @@ export default function AddResourcePage() {
                 <>
                   <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
                   <span className="text-sm font-medium text-slate-600">
-                    Enviando arquivo...
+                    Enviando arquivo... {uploadProgress}%
                   </span>
                 </>
               ) : (
@@ -225,7 +266,8 @@ export default function AddResourcePage() {
                     Clique para selecionar o arquivo do recurso
                   </span>
                   <span className="text-sm text-slate-500">
-                    PDFs, ZIPs, videos, executaveis e outros arquivos
+                    PDFs, ZIPs, videos e documentos ate{" "}
+                    {formatFileSize(MAX_RESOURCE_UPLOAD_SIZE_BYTES)}
                   </span>
                 </>
               )}

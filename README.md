@@ -86,7 +86,17 @@ Em producao na Vercel, os uploads precisam de armazenamento persistente. Crie um
 
 Sem essa variavel, a rota `/api/upload` retorna erro informando que o Blob nao esta configurado. No desenvolvimento local, quando `BLOB_READ_WRITE_TOKEN` nao existe, os arquivos continuam sendo salvos em `public/uploads`.
 
-As imagens inseridas no editor usam client upload do Vercel Blob para contornar o limite de 4.5 MB das Vercel Functions. Nesse fluxo, o arquivo sai direto do navegador para o Blob, e a API `/api/upload/client` gera apenas o token temporario de envio.
+As imagens inseridas no editor e os arquivos de recursos usam client upload do Vercel Blob para contornar o limite de 4.5 MB das Vercel Functions. Nesse fluxo, o arquivo sai direto do navegador para o Blob, e a API `/api/upload/client` gera apenas o token temporario de envio. Recursos aceitam arquivos de ate 100 MB.
+
+## Banco Neon na Vercel
+
+Use a URL com pooler do Neon em `DATABASE_URL`, normalmente com `-pooler` no host e `sslmode=require`. Exemplo:
+
+```env
+DATABASE_URL="postgresql://usuario:senha@ep-exemplo-pooler.regiao.aws.neon.tech/neondb?sslmode=require"
+```
+
+Para migrations e comandos Prisma CLI, mantenha tambem uma URL direta sem pooler em `DATABASE_URL_UNPOOLED` ou `POSTGRES_URL_NON_POOLING`.
 
 ## Observacoes
 
