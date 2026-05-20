@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+generator jsclient {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum user_role_type {
+  admin
+  user
+}
+
+enum project_status_type {
+  done
+  inProgress
+}
+
+enum material_type {
+  article
+  didactic_material
+  software
+}
+
+model User {
+  id                     Int            @id @default(autoincrement())
+  name                   String
+  email                  String         @unique
+  password               String
+  profileImageUrl        String?
+  role                   user_role_type @default(admin)
+  isTeam                 Boolean        @default(false)
+  isFormerTeam           Boolean        @default(false)
+  canManageProjects      Boolean        @default(false)
+  canManageNews          Boolean        @default(false)
+  canManageEvents        Boolean        @default(false)
+  canManageResources     Boolean        @default(false)
+  canManageUsers         Boolean        @default(false)
+  canEditContact         Boolean        @default(false)
+  canEditAbout           Boolean        @default(false)
+  resetPasswordTokenHash String?
+  resetPasswordExpiresAt DateTime?
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  projects               project[]
+  events                 events[]
+  news                   news[]
+  materials              materials[]
+
+  @@map("users")
+}
+
+model project {
+  id          Int                 @id @default(autoincrement())
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  title       String              @db.VarChar(255)
+  description String
+  content     String
+  status      project_status_type @default(inProgress)
+  user        User                @relation(fields: [user_id], references: [id])
+  user_id     Int
+  tags        project_tags[]
+  images      project_images[]
+}
+
+model project_images {
+  id         Int      @id @default(autoincrement())
+  project_id Int
+  image_url  String
+  caption    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  project    project  @relation(fields: [project_id], references: [id])
+}
+
+model tags {
+  id         Int      @id @default(autoincrement())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model project_tags {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  projects   project[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model events {
+  id          Int            @id @default(autoincrement())
+  user_id     Int
+  title       String
+  description String
+  content     String
+  event_date  DateTime
+  created_at  DateTime       @default(now())
+  updated_at  DateTime       @updatedAt
+  user        User           @relation(fields: [user_id], references: [id])
+  images      event_images[]
+}
+
+model event_images {
+  id         Int      @id @default(autoincrement())
+  event_id   Int
+  image_url  String
+  caption    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  event      events   @relation(fields: [event_id], references: [id])
+}
+
+model news {
+  id          Int           @id @default(autoincrement())
+  user_id     Int
+  title       String
+  description String
+  content     String
+  news_date   DateTime
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  user        User          @relation(fields: [user_id], references: [id])
+  images      news_images[]
+}
+
+model news_images {
+  id         Int      @id @default(autoincrement())
+  news_id    Int
+  image_url  String
+  caption    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  news       news     @relation(fields: [news_id], references: [id])
+}
+
+model materials {
+  id            Int           @id @default(autoincrement())
+  user_id       Int
+  title         String
+  description   String
+  file_url      String
+  material_type material_type
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+
+  user User @relation(fields: [user_id], references: [id])
+}
+
+model contact_settings {
+  id              Int      @id @default(1)
+  title           String   @default("Entre em Contato")
+  subtitle        String   @default("Estamos abertos para duvidas, sugestoes e propostas de parceria. Utilize os canais abaixo ou preencha o formulario.") @db.Text
+  address_title   String   @default("Endereco")
+  address         String   @default("Av. Costa e Silva - Pioneiros, Campo Grande - MS, 79070-900, Brasil") @db.Text
+  phone_title     String   @default("Telefone")
+  phone           String   @default("(67) 3345-7000")
+  email_title     String   @default("E-mail")
+  email           String   @default("contato.labeduc@ufms.br")
+  map_embed_url   String   @default("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.636601438964!2d-54.61869868507567!3d-20.5213609862768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9486e63a5042686b%3A0x72a5aee97f7422a5!2sUniversidade%20Federal%20de%20Mato%20Grosso%20do%20Sul!5e0!3m2!1spt-BR!2sbr!4v1689278184517!5m2!1spt-BR!2sbr") @db.Text
+  form_title      String   @default("Envie uma Mensagem")
+  form_subtitle   String   @default("Preencha os campos abaixo para nos contatar.")
+  recipient_email String   @default("vitor.aa01@gmail.com")
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}

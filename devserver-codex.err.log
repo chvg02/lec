@@ -1,0 +1,1232 @@
+⚠ Slow filesystem detected. The benchmark took 574ms. If C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next/dev is a network drive, consider moving it to a local folder.
+See more: https://nextjs.org/docs/app/guides/local-development
+Image with src "/imgpadrao2.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/imgpadrao2.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao2.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/teste.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/teste.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/teste.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao3.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/imgpadrao3.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao3.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+[browser] Image with src "/imgpadrao2.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/imgpadrao2.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13 (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/imgpadrao2.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13 (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/teste.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/teste.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13 (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/teste.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13 (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/imgpadrao3.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/imgpadrao3.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13 (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/imgpadrao3.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13 (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Image with src "/imgpadrao2.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+Error [PrismaClientInitializationError]: Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at ignore-listed frames {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ unhandledRejection: Error [PrismaClientInitializationError]: Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at ignore-listed frames {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ unhandledRejection:  Error [PrismaClientInitializationError]: Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at ignore-listed frames {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].materials.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0wr7n~a._.js:922:172
+
+  919     }
+  920     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(material);
+  921 }
+→ 922 const materials = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].materials.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\materials\route.ts:40:46)
+    at async GET (src\app\api\materials\route.ts:40:23)
+  38 |     }
+  39 |
+> 40 |     const materials = await prisma.materials.findMany({
+     |                                              ^
+  41 |       include: { user: { select: publicUserSelect } },
+  42 |       orderBy: { created_at: "desc" },
+  43 |     }); {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].project.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0gkyhpi._.js:959:165
+
+  956     });
+  957     return {imported module ./nodemodules/next/server.js}["NextResponse"].json(project);
+  958 }
+→ 959 const projects = await {imported module ./src/lib/prisma.ts}["prisma"].project.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\project\route.ts:98:41)
+    at async GET (src\app\api\project\route.ts:98:20)
+   96 |   }
+   97 |
+>  98 |   const projects = await prisma.project.findMany({
+      |                                         ^
+   99 |     include: {
+  100 |       images: true,
+  101 |       tags: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0oerd_o._.js:918:162
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(news);
+  917 }
+→ 918 const news = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\news\route.ts:39:36)
+    at async GET (src\app\api\news\route.ts:39:18)
+  37 |     }
+  38 |
+> 39 |     const news = await prisma.news.findMany({
+     |                                    ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0hm0j1.._.js:918:166
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(event);
+  917 }
+→ 918 const events = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\events\route.ts:39:40)
+    at async GET (src\app\api\events\route.ts:39:20)
+  37 |     }
+  38 |
+> 39 |     const events = await prisma.events.findMany({
+     |                                        ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+[next-auth][error][JWT_SESSION_ERROR] 
+https://next-auth.js.org/errors#jwt_session_error decryption operation failed {
+  message: 'decryption operation failed',
+  stack: 'JWEDecryptionFailed: decryption operation failed\n' +
+    '    at gcmDecrypt (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_jose_dist_node_cjs_0wmi9~u._.js:734:15)\n' +
+    '    at decrypt (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_jose_dist_node_cjs_0wmi9~u._.js:757:20)\n' +
+    '    at flattenedDecrypt (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_jose_dist_node_cjs_0wmi9~u._.js:2254:52)\n' +
+    '    at async compactDecrypt (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_jose_dist_node_cjs_0wmi9~u._.js:2308:23)\n' +
+    '    at async jwtDecrypt (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_jose_dist_node_cjs_0wmi9~u._.js:3770:23)\n' +
+    '    at async Object.decode (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next-auth_045ewy.._.js:725:25)\n' +
+    '    at async Object.session (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next-auth_045ewy.._.js:2038:34)\n' +
+    '    at async AuthHandler (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next-auth_045ewy.._.js:3184:37)\n' +
+    '    at async NextAuthRouteHandler (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next-auth_045ewy.._.js:3501:30)\n' +
+    '    at async NextAuth._args$ (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next-auth_045ewy.._.js:3536:24)\n' +
+    '    at async AppRouteRouteModule.do (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\compiled\\next-server\\app-route-turbo.runtime.dev.js:5:40115)\n' +
+    '    at async AppRouteRouteModule.handle (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\compiled\\next-server\\app-route-turbo.runtime.dev.js:5:47321)\n' +
+    '    at async responseGenerator (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next_134j~.d._.js:13641:38)\n' +
+    '    at async AppRouteRouteModule.handleResponse (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\compiled\\next-server\\app-route-turbo.runtime.dev.js:1:227216)\n' +
+    '    at async handleResponse (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next_134j~.d._.js:13704:32)\n' +
+    '    at async Module.handler (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\.next\\dev\\server\\chunks\\node_modules_next_134j~.d._.js:13758:13)\n' +
+    '    at async DevServer.renderToResponseWithComponentsImpl (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\base-server.js:1454:9)\n' +
+    '    at async DevServer.renderPageComponent (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\base-server.js:1506:24)\n' +
+    '    at async DevServer.renderToResponseImpl (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\base-server.js:1556:32)\n' +
+    '    at async DevServer.pipeImpl (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\base-server.js:1043:25)\n' +
+    '    at async NextNodeServer.handleCatchallRenderRequest (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\next-server.js:338:17)\n' +
+    '    at async DevServer.handleRequestImpl (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\base-server.js:934:17)\n' +
+    '    at async C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js:394:20\n' +
+    '    at async Span.traceAsyncFn (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\trace\\trace.js:164:20)\n' +
+    '    at async DevServer.handleRequest (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js:390:24)\n' +
+    '    at async invokeRender (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\lib\\router-server.js:266:21)\n' +
+    '    at async handleRequest (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\lib\\router-server.js:465:24)\n' +
+    '    at async requestHandlerImpl (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\lib\\router-server.js:514:13)\n' +
+    '    at async Server.requestListener (C:\\Users\\vitor.a.anjos\\Downloads\\lec-facom (4)\\lec-facom\\lec-facom\\node_modules\\next\\dist\\server\\lib\\start-server.js:225:13)',
+  name: 'JWEDecryptionFailed'
+}
+Unhandled Rejection: Error [PrismaClientInitializationError]: Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at ignore-listed frames {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].user.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0ztr3qf._.js:472:158
+
+  469 ;
+  470 ;
+  471 async function GET() {
+→ 472     const data = await {imported module ./src/lib/prisma.ts}["prisma"].user.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\team\route.ts:5:34)
+    at async GET (src\app\api\team\route.ts:5:16)
+  3 |
+  4 | export async function GET() {
+> 5 |   const data = await prisma.user.findMany({
+    |                                  ^
+  6 |     where: { isTeam: true },
+  7 |     orderBy: { name: "asc" },
+  8 |     select: { id: true, name: true, email: true, role: true }, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].user.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0ztr3qf._.js:472:158
+
+  469 ;
+  470 ;
+  471 async function GET() {
+→ 472     const data = await {imported module ./src/lib/prisma.ts}["prisma"].user.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\team\route.ts:5:34)
+    at async GET (src\app\api\team\route.ts:5:16)
+  3 |
+  4 | export async function GET() {
+> 5 |   const data = await prisma.user.findMany({
+    |                                  ^
+  6 |     where: { isTeam: true },
+  7 |     orderBy: { name: "asc" },
+  8 |     select: { id: true, name: true, email: true, role: true }, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+[browser] Erro ao carregar dados da pagina Sobre: Error: Nao foi possivel carregar a equipe.
+    at fetchTeam (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:34:19)
+    at async refreshData (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:55:9) (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Erro ao carregar dados da pagina Sobre: Error: Nao foi possivel carregar a equipe.
+    at fetchTeam (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:34:19)
+    at async refreshData (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:55:9) (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0oerd_o._.js:918:162
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(news);
+  917 }
+→ 918 const news = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\news\route.ts:39:36)
+    at async GET (src\app\api\news\route.ts:39:18)
+  37 |     }
+  38 |
+> 39 |     const news = await prisma.news.findMany({
+     |                                    ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0hm0j1.._.js:918:166
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(event);
+  917 }
+→ 918 const events = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\events\route.ts:39:40)
+    at async GET (src\app\api\events\route.ts:39:20)
+  37 |     }
+  38 |
+> 39 |     const events = await prisma.events.findMany({
+     |                                        ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].project.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0gkyhpi._.js:959:165
+
+  956     });
+  957     return {imported module ./nodemodules/next/server.js}["NextResponse"].json(project);
+  958 }
+→ 959 const projects = await {imported module ./src/lib/prisma.ts}["prisma"].project.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\project\route.ts:98:41)
+    at async GET (src\app\api\project\route.ts:98:20)
+   96 |   }
+   97 |
+>  98 |   const projects = await prisma.project.findMany({
+      |                                         ^
+   99 |     include: {
+  100 |       images: true,
+  101 |       tags: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].materials.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0wr7n~a._.js:922:172
+
+  919     }
+  920     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(material);
+  921 }
+→ 922 const materials = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].materials.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\materials\route.ts:40:46)
+    at async GET (src\app\api\materials\route.ts:40:23)
+  38 |     }
+  39 |
+> 40 |     const materials = await prisma.materials.findMany({
+     |                                              ^
+  41 |       include: { user: { select: publicUserSelect } },
+  42 |       orderBy: { created_at: "desc" },
+  43 |     }); {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0oerd_o._.js:918:162
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(news);
+  917 }
+→ 918 const news = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\news\route.ts:39:36)
+    at async GET (src\app\api\news\route.ts:39:18)
+  37 |     }
+  38 |
+> 39 |     const news = await prisma.news.findMany({
+     |                                    ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0hm0j1.._.js:918:166
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(event);
+  917 }
+→ 918 const events = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\events\route.ts:39:40)
+    at async GET (src\app\api\events\route.ts:39:20)
+  37 |     }
+  38 |
+> 39 |     const events = await prisma.events.findMany({
+     |                                        ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].project.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0gkyhpi._.js:959:165
+
+  956     });
+  957     return {imported module ./nodemodules/next/server.js}["NextResponse"].json(project);
+  958 }
+→ 959 const projects = await {imported module ./src/lib/prisma.ts}["prisma"].project.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\project\route.ts:98:41)
+    at async GET (src\app\api\project\route.ts:98:20)
+   96 |   }
+   97 |
+>  98 |   const projects = await prisma.project.findMany({
+      |                                         ^
+   99 |     include: {
+  100 |       images: true,
+  101 |       tags: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].materials.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0wr7n~a._.js:922:172
+
+  919     }
+  920     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(material);
+  921 }
+→ 922 const materials = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].materials.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\materials\route.ts:40:46)
+    at async GET (src\app\api\materials\route.ts:40:23)
+  38 |     }
+  39 |
+> 40 |     const materials = await prisma.materials.findMany({
+     |                                              ^
+  41 |       include: { user: { select: publicUserSelect } },
+  42 |       orderBy: { created_at: "desc" },
+  43 |     }); {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].project.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0gkyhpi._.js:959:165
+
+  956     });
+  957     return {imported module ./nodemodules/next/server.js}["NextResponse"].json(project);
+  958 }
+→ 959 const projects = await {imported module ./src/lib/prisma.ts}["prisma"].project.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\project\route.ts:98:41)
+    at async GET (src\app\api\project\route.ts:98:20)
+   96 |   }
+   97 |
+>  98 |   const projects = await prisma.project.findMany({
+      |                                         ^
+   99 |     include: {
+  100 |       images: true,
+  101 |       tags: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0oerd_o._.js:918:162
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(news);
+  917 }
+→ 918 const news = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\news\route.ts:39:36)
+    at async GET (src\app\api\news\route.ts:39:18)
+  37 |     }
+  38 |
+> 39 |     const news = await prisma.news.findMany({
+     |                                    ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0hm0j1.._.js:918:166
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(event);
+  917 }
+→ 918 const events = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\events\route.ts:39:40)
+    at async GET (src\app\api\events\route.ts:39:20)
+  37 |     }
+  38 |
+> 39 |     const events = await prisma.events.findMany({
+     |                                        ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Image with src "/imgpadrao2.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/imgpadrao2.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao2.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/teste.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/teste.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/teste.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao3.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/imgpadrao3.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao3.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].user.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0ztr3qf._.js:472:158
+
+  469 ;
+  470 ;
+  471 async function GET() {
+→ 472     const data = await {imported module ./src/lib/prisma.ts}["prisma"].user.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\team\route.ts:5:34)
+    at async GET (src\app\api\team\route.ts:5:16)
+  3 |
+  4 | export async function GET() {
+> 5 |   const data = await prisma.user.findMany({
+    |                                  ^
+  6 |     where: { isTeam: true },
+  7 |     orderBy: { name: "asc" },
+  8 |     select: { id: true, name: true, email: true, role: true }, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].user.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0ztr3qf._.js:472:158
+
+  469 ;
+  470 ;
+  471 async function GET() {
+→ 472     const data = await {imported module ./src/lib/prisma.ts}["prisma"].user.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\team\route.ts:5:34)
+    at async GET (src\app\api\team\route.ts:5:16)
+  3 |
+  4 | export async function GET() {
+> 5 |   const data = await prisma.user.findMany({
+    |                                  ^
+  6 |     where: { isTeam: true },
+  7 |     orderBy: { name: "asc" },
+  8 |     select: { id: true, name: true, email: true, role: true }, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+[browser] Erro ao carregar dados da pagina Sobre: Error: Nao foi possivel carregar a equipe.
+    at fetchTeam (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:34:19)
+    at async refreshData (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:55:9) (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Erro ao carregar dados da pagina Sobre: Error: Nao foi possivel carregar a equipe.
+    at fetchTeam (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:34:19)
+    at async refreshData (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:55:9) (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0oerd_o._.js:918:162
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(news);
+  917 }
+→ 918 const news = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\news\route.ts:39:36)
+    at async GET (src\app\api\news\route.ts:39:18)
+  37 |     }
+  38 |
+> 39 |     const news = await prisma.news.findMany({
+     |                                    ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].project.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0gkyhpi._.js:959:165
+
+  956     });
+  957     return {imported module ./nodemodules/next/server.js}["NextResponse"].json(project);
+  958 }
+→ 959 const projects = await {imported module ./src/lib/prisma.ts}["prisma"].project.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\project\route.ts:98:41)
+    at async GET (src\app\api\project\route.ts:98:20)
+   96 |   }
+   97 |
+>  98 |   const projects = await prisma.project.findMany({
+      |                                         ^
+   99 |     include: {
+  100 |       images: true,
+  101 |       tags: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0hm0j1.._.js:918:166
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(event);
+  917 }
+→ 918 const events = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\events\route.ts:39:40)
+    at async GET (src\app\api\events\route.ts:39:20)
+  37 |     }
+  38 |
+> 39 |     const events = await prisma.events.findMany({
+     |                                        ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0oerd_o._.js:918:162
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(news);
+  917 }
+→ 918 const news = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].news.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\news\route.ts:39:36)
+    at async GET (src\app\api\news\route.ts:39:18)
+  37 |     }
+  38 |
+> 39 |     const news = await prisma.news.findMany({
+     |                                    ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].project.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0gkyhpi._.js:959:165
+
+  956     });
+  957     return {imported module ./nodemodules/next/server.js}["NextResponse"].json(project);
+  958 }
+→ 959 const projects = await {imported module ./src/lib/prisma.ts}["prisma"].project.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\project\route.ts:98:41)
+    at async GET (src\app\api\project\route.ts:98:20)
+   96 |   }
+   97 |
+>  98 |   const projects = await prisma.project.findMany({
+      |                                         ^
+   99 |     include: {
+  100 |       images: true,
+  101 |       tags: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0hm0j1.._.js:918:166
+
+  915     }
+  916     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(event);
+  917 }
+→ 918 const events = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\events\route.ts:39:40)
+    at async GET (src\app\api\events\route.ts:39:20)
+  37 |     }
+  38 |
+> 39 |     const events = await prisma.events.findMany({
+     |                                        ^
+  40 |       include: {
+  41 |         user: { select: publicUserSelect },
+  42 |         images: true, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].user.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0ztr3qf._.js:472:158
+
+  469 ;
+  470 ;
+  471 async function GET() {
+→ 472     const data = await {imported module ./src/lib/prisma.ts}["prisma"].user.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\team\route.ts:5:34)
+    at async GET (src\app\api\team\route.ts:5:16)
+  3 |
+  4 | export async function GET() {
+> 5 |   const data = await prisma.user.findMany({
+    |                                  ^
+  6 |     where: { isTeam: true },
+  7 |     orderBy: { name: "asc" },
+  8 |     select: { id: true, name: true, email: true, role: true }, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].user.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0ztr3qf._.js:472:158
+
+  469 ;
+  470 ;
+  471 async function GET() {
+→ 472     const data = await {imported module ./src/lib/prisma.ts}["prisma"].user.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\team\route.ts:5:34)
+    at async GET (src\app\api\team\route.ts:5:16)
+  3 |
+  4 | export async function GET() {
+> 5 |   const data = await prisma.user.findMany({
+    |                                  ^
+  6 |     where: { isTeam: true },
+  7 |     orderBy: { name: "asc" },
+  8 |     select: { id: true, name: true, email: true, role: true }, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+[browser] Erro ao carregar dados da pagina Sobre: Error: Nao foi possivel carregar a equipe.
+    at fetchTeam (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:34:19)
+    at async refreshData (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:55:9) (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+[browser] Erro ao carregar dados da pagina Sobre: Error: Nao foi possivel carregar a equipe.
+    at fetchTeam (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:34:19)
+    at async refreshData (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:55:9) (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].user.findMany()` invocation in
+C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__0ztr3qf._.js:472:158
+
+  469 ;
+  470 ;
+  471 async function GET() {
+→ 472     const data = await {imported module ./src/lib/prisma.ts}["prisma"].user.findMany(
+Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at <unknown> (src\app\api\team\route.ts:5:34)
+    at async GET (src\app\api\team\route.ts:5:16)
+  3 |
+  4 | export async function GET() {
+> 5 |   const data = await prisma.user.findMany({
+    |                                  ^
+  6 |     where: { isTeam: true },
+  7 |     orderBy: { name: "asc" },
+  8 |     select: { id: true, name: true, email: true, role: true }, {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+[browser] Erro ao carregar dados da pagina Sobre: Error: Nao foi possivel carregar a equipe.
+    at fetchTeam (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:34:19)
+    at async refreshData (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)/lec-facom/lec-facom/.next/dev/static/chunks/_0z3aivs._.js:55:9) (file://C:/Users/vitor.a.anjos/Downloads/lec-facom (4)
+Unhandled Rejection: Error [PrismaClientInitializationError]: Prisma Client could not locate the Query Engine for runtime "windows".
+
+This is likely caused by tooling that has not copied "query_engine-windows.dll.node" to the deployment folder.
+Ensure that you ran `prisma generate` and that "query_engine-windows.dll.node" has been copied to "..\..\..\..\..\..\ROOT\generated\prisma".
+
+We would appreciate if you could take the time to share some information with us.
+Please help us by answering a few questions: https://pris.ly/engine-not-found-tooling-investigation
+
+The following locations have been searched:
+  /ROOT/generated/prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\lec-facom\generated
+  C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\generated\prisma
+  C:\Users\vitor.a.anjos\Downloads\lec-facom (4)\lec-facom\.prisma\client
+  /tmp/prisma-engines
+    at ignore-listed frames {
+  clientVersion: '6.19.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ ./src/components/heroCarrossel.tsx:7:30
+Module not found: Can't resolve 'swiper/css/págination'
+  [90m 5 |[0m [36mimport[0m { [33mNavigation[0m, [33mPágination[0m, [33mAutoplay[0m } [36mfrom[0m [32m"swiper/modules"[0m;
+  [90m 6 |[0m [36mimport[0m [32m"swiper/css"[0m;
+[31m[1m>[0m [90m 7 |[0m [36mimport[0m [32m"swiper/css/navigation"[0m;
+  [90m   |[0m                              [31m[1m^[0m
+[31m[1m>[0m [90m 8 |[0m [36mimport[0m [32m"swiper/css/págination"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 9 |[0m
+  [90m10 |[0m [36mimport[0m { [33mHeroSection[0m } [36mfrom[0m [32m"./heroSection"[0m;
+  [90m11 |[0m
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/heroCarrossel.tsx
+    ./src/app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/components/heroCarrossel.tsx:8:1
+Module not found: Can't resolve 'swiper/css/págination'
+  [90m 6 |[0m [36mimport[0m [32m"swiper/css"[0m;
+  [90m 7 |[0m [36mimport[0m [32m"swiper/css/navigation"[0m;
+[31m[1m>[0m [90m 8 |[0m [36mimport[0m [32m"swiper/css/págination"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m 9 |[0m
+  [90m10 |[0m [36mimport[0m { [33mHeroSection[0m } [36mfrom[0m [32m"./heroSection"[0m;
+  [90m11 |[0m
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/heroCarrossel.tsx
+    ./src/app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+

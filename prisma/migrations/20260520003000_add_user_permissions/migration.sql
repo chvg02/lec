@@ -1,0 +1,8 @@
+ALTER TABLE "users"
+  ADD COLUMN "canManageProjects" BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN "canManageNews" BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN "canManageEvents" BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN "canManageResources" BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN "canManageUsers" BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN "canEditContact" BOOLEAN NOT NULL DEFAULT false,
+  ADD COLUMN "canEditAbout" BOOLEAN NOT NULL DEFAULT false;

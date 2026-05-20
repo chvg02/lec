@@ -1,0 +1,12 @@
+node_modules
+.next
+npm-debug.log*
+devserver-*.log
+devserver-*.err.log
+.env
+.env.*
+coverage
+.git
+.gitignore
+generated/prisma
+tsconfig.tsbuildinfo

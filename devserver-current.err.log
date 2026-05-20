@@ -1,0 +1,225 @@
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Image with src "/imgpadrao2.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/imgpadrao2.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao2.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/teste.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/teste.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/teste.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao3.jpg" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/imgpadrao3.jpg" has legacy prop "layout". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Image with src "/imgpadrao3.jpg" has legacy prop "objectFit". Did you forget to run the codemod?
+Read more: https://nextjs.org/docs/messages/next-image-upgrade-to-13
+Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create()` invocation in
+C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__f7121332._.js:558:165
+
+  555 async function POST(req) {
+  556     try {
+  557         const data = await req.json();
+→ 558         const event = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create({
+                data: {
+                  title: "formatura",
+                  description: "dwsdsds",
+                  user_id: 5,
+                  event_date: "2026-04-30T04:00:00.000Z",
+                  images: [
+                    {
+                      image_url: "/uploads/1777146086439-158957084-WhatsApp_Image_2026-01-05_at_19.34.42.jpeg"
+                    }
+                  ]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+              })
+
+Argument `images`: Invalid value provided. Expected event_imagesUncheckedCreateNestedManyWithoutEventInput, provided (Object).
+    at <unknown> (src\app\api\events\route.ts:36:39)
+    at async POST (src\app\api\events\route.ts:36:19)
+  34 |   try {
+  35 |     const data = await req.json();
+> 36 |     const event = await prisma.events.create({ data });
+     |                                       ^
+  37 |     return NextResponse.json(event, { status: 201 });
+  38 |   } catch (error) {
+  39 |     console.error(error); {
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create()` invocation in
+C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__f7121332._.js:558:165
+
+  555 async function POST(req) {
+  556     try {
+  557         const data = await req.json();
+→ 558         const event = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create({
+                data: {
+                  title: "formatura",
+                  description: "dwsdsds",
+                  user_id: 5,
+                  event_date: "2026-04-29T04:00:00.000Z",
+                  images: [
+                    {
+                      image_url: "/uploads/1777146086439-158957084-WhatsApp_Image_2026-01-05_at_19.34.42.jpeg"
+                    }
+                  ]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+              })
+
+Argument `images`: Invalid value provided. Expected event_imagesUncheckedCreateNestedManyWithoutEventInput, provided (Object).
+    at <unknown> (src\app\api\events\route.ts:36:39)
+    at async POST (src\app\api\events\route.ts:36:19)
+  34 |   try {
+  35 |     const data = await req.json();
+> 36 |     const event = await prisma.events.create({ data });
+     |                                       ^
+  37 |     return NextResponse.json(event, { status: 201 });
+  38 |   } catch (error) {
+  39 |     console.error(error); {
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create()` invocation in
+C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__f7121332._.js:558:165
+
+  555 async function POST(req) {
+  556     try {
+  557         const data = await req.json();
+→ 558         const event = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create({
+                data: {
+                  title: "formatura",
+                  description: "dwsdsds",
+                  user_id: 5,
+                  event_date: "2026-04-29T04:00:00.000Z",
+                  images: [
+                    {
+                      image_url: "/uploads/1777146086439-158957084-WhatsApp_Image_2026-01-05_at_19.34.42.jpeg"
+                    }
+                  ]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+              })
+
+Argument `images`: Invalid value provided. Expected event_imagesUncheckedCreateNestedManyWithoutEventInput, provided (Object).
+    at <unknown> (src\app\api\events\route.ts:36:39)
+    at async POST (src\app\api\events\route.ts:36:19)
+  34 |   try {
+  35 |     const data = await req.json();
+> 36 |     const event = await prisma.events.create({ data });
+     |                                       ^
+  37 |     return NextResponse.json(event, { status: 201 });
+  38 |   } catch (error) {
+  39 |     console.error(error); {
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create()` invocation in
+C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__f7121332._.js:558:165
+
+  555 async function POST(req) {
+  556     try {
+  557         const data = await req.json();
+→ 558         const event = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create({
+                data: {
+                  title: "formatura",
+                  description: "dwsdsds",
+                  user_id: 5,
+                  event_date: "2026-04-29T04:00:00.000Z",
+                  images: [
+                    {
+                      image_url: "/uploads/1777146086439-158957084-WhatsApp_Image_2026-01-05_at_19.34.42.jpeg"
+                    }
+                  ]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+              })
+
+Argument `images`: Invalid value provided. Expected event_imagesUncheckedCreateNestedManyWithoutEventInput, provided (Object).
+    at <unknown> (src\app\api\events\route.ts:36:39)
+    at async POST (src\app\api\events\route.ts:36:19)
+  34 |   try {
+  35 |     const data = await req.json();
+> 36 |     const event = await prisma.events.create({ data });
+     |                                       ^
+  37 |     return NextResponse.json(event, { status: 201 });
+  38 |   } catch (error) {
+  39 |     console.error(error); {
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create()` invocation in
+C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__f7121332._.js:558:165
+
+  555 async function POST(req) {
+  556     try {
+  557         const data = await req.json();
+→ 558         const event = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create({
+                data: {
+                  title: "formatura",
+                  description: "dwsdsds",
+                  user_id: 5,
+                  event_date: "2026-04-29T04:00:00.000Z",
+                  images: [
+                    {
+                      image_url: "/uploads/1777146086439-158957084-WhatsApp_Image_2026-01-05_at_19.34.42.jpeg"
+                    }
+                  ]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+              })
+
+Argument `images`: Invalid value provided. Expected event_imagesUncheckedCreateNestedManyWithoutEventInput, provided (Object).
+    at <unknown> (src\app\api\events\route.ts:36:39)
+    at async POST (src\app\api\events\route.ts:36:19)
+  34 |   try {
+  35 |     const data = await req.json();
+> 36 |     const event = await prisma.events.create({ data });
+     |                                       ^
+  37 |     return NextResponse.json(event, { status: 201 });
+  38 |   } catch (error) {
+  39 |     console.error(error); {
+  clientVersion: '6.19.0'
+}
+Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create()` invocation in
+C:\Users\Vitor Anjos\Downloads\lec-facom (3) (1)\lec-facom (3)\lec-facom (2)\lec-facom\lec-facom\.next\dev\server\chunks\[root-of-the-server]__f7121332._.js:558:165
+
+  555 async function POST(req) {
+  556     try {
+  557         const data = await req.json();
+→ 558         const event = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].events.create({
+                data: {
+                  title: "formatura",
+                  description: "dwsdsds",
+                  user_id: 5,
+                  event_date: "2026-04-29T04:00:00.000Z",
+                  images: [
+                    {
+                      image_url: "/uploads/1777146086439-158957084-WhatsApp_Image_2026-01-05_at_19.34.42.jpeg"
+                    }
+                  ]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+              })
+
+Argument `images`: Invalid value provided. Expected event_imagesUncheckedCreateNestedManyWithoutEventInput, provided (Object).
+    at <unknown> (src\app\api\events\route.ts:36:39)
+    at async POST (src\app\api\events\route.ts:36:19)
+  34 |   try {
+  35 |     const data = await req.json();
+> 36 |     const event = await prisma.events.create({ data });
+     |                                       ^
+  37 |     return NextResponse.json(event, { status: 201 });
+  38 |   } catch (error) {
+  39 |     console.error(error); {
+  clientVersion: '6.19.0'
+}
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`

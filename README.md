@@ -1,0 +1,87 @@
+# LEC Facom
+
+Aplicacao Next.js com Prisma e PostgreSQL.
+
+## Rodando localmente
+
+```bash
+npm install
+npm run dev
+```
+
+## Rodando com Docker
+
+O projeto ja esta preparado para subir a aplicacao e o banco via Docker Compose.
+
+### Subir os containers
+
+```bash
+npm run docker:up
+```
+
+Ou diretamente:
+
+```bash
+docker compose up --build
+```
+
+A aplicacao fica em `http://localhost:3000` e o PostgreSQL em `localhost:5432`.
+
+### Derrubar os containers
+
+```bash
+npm run docker:down
+```
+
+### Ver logs
+
+```bash
+npm run docker:logs
+```
+
+## Backup local
+
+O Docker Compose inclui o servico `backup`, que salva automaticamente:
+
+- o banco PostgreSQL em `backups/<data-hora>/database.dump`
+- os arquivos enviados em `backups/<data-hora>/uploads.tar.gz`
+
+Por padrao, o backup roda uma vez por dia e remove backups com mais de 7 dias. Esses valores ficam em `docker-compose.yml`:
+
+- `BACKUP_INTERVAL_SECONDS: 86400`
+- `BACKUP_RETENTION_DAYS: 7`
+
+### Rodar um backup manual
+
+Com os containers ativos:
+
+```bash
+docker compose run --rm -e BACKUP_ONCE=true backup
+```
+
+### Restaurar banco e uploads
+
+Substitua `<data-hora>` pela pasta do backup desejado:
+
+```bash
+docker compose run --rm backup pg_restore -h db -U postgres -d lec_facom --clean --if-exists /backups/<data-hora>/database.dump
+docker compose run --rm -v ./backups/<data-hora>/uploads.tar.gz:/restore/uploads.tar.gz -v lec-facom_uploads-data:/uploads postgres:16-alpine sh -c "rm -rf /uploads/* && tar -xzf /restore/uploads.tar.gz -C /uploads"
+```
+
+## Variaveis de ambiente do Docker
+
+O Compose usa o arquivo `docker/app.env`.
+
+Ajuste principalmente:
+
+- `NEXTAUTH_SECRET`
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+
+O `DATABASE_URL` do container da aplicacao ja e injetado automaticamente pelo `docker-compose.yml`.
+
+## Observacoes
+
+- As migrations do Prisma sao aplicadas automaticamente quando o container da app sobe.
+- Os uploads enviados para `public/uploads` ficam persistidos no volume `uploads-data`.
+- Os dados do PostgreSQL ficam persistidos no volume `postgres-data`.

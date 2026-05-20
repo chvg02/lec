@@ -1,0 +1,65 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lec-facom-app
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./docker/app.env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/lec_facom?schema=public
+      NEXTAUTH_URL: http://localhost:3000
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - uploads-data:/app/public/uploads
+
+  db:
+    image: postgres:16-alpine
+    container_name: lec-facom-db
+    environment:
+      POSTGRES_DB: lec_facom
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lec_facom"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backup:
+    image: postgres:16-alpine
+    container_name: lec-facom-backup
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: lec_facom
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      BACKUP_DIR: /backups
+      UPLOADS_DIR: /uploads
+      BACKUP_INTERVAL_SECONDS: 86400
+      BACKUP_RETENTION_DAYS: 7
+    command: ["/bin/sh", "/backup.sh"]
+    restart: unless-stopped
+    volumes:
+      - ./docker/backup.sh:/backup.sh:ro
+      - ./backups:/backups
+      - uploads-data:/uploads:ro
+
+volumes:
+  postgres-data:
+  uploads-data:
