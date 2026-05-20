@@ -3,28 +3,55 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+const ADMIN_PERMISSIONS = {
+  canManageProjects: true,
+  canManageNews: true,
+  canManageEvents: true,
+  canManageResources: true,
+  canManageUsers: true,
+  canEditContact: true,
+  canEditAbout: true,
+};
+
 async function main() {
-  const email = process.env.DEFAULT_ADMIN_EMAIL || "vitor.a.anjos@gmail.com";
-  const password = process.env.DEFAULT_ADMIN_PASSWORD || "123456";
-  const name = process.env.DEFAULT_ADMIN_NAME || "Vitor Anjos";
+  const email = (process.env.DEFAULT_ADMIN_EMAIL || "vitor.aa01@gmail.com")
+    .trim()
+    .toLowerCase();
+  const password = process.env.DEFAULT_ADMIN_PASSWORD || "12345678";
+  const name =
+    process.env.DEFAULT_ADMIN_NAME || "Vitor Gabriel Almeida dos Anjos";
+
+  const existingAdmin = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (existingAdmin) {
+    await prisma.user.update({
+      where: { email },
+      data: {
+        name,
+        role: "admin",
+        ...ADMIN_PERMISSIONS,
+      },
+    });
+
+    console.log(`Default admin already exists: ${email}`);
+    return;
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await prisma.user.upsert({
-    where: { email },
-    update: {
-      name,
-      password: hashedPassword,
-      role: "admin",
-    },
-    create: {
+  await prisma.user.create({
+    data: {
       name,
       email,
       password: hashedPassword,
       role: "admin",
+      ...ADMIN_PERMISSIONS,
     },
   });
 
-  console.log(`Default admin ready: ${email}`);
+  console.log(`Default admin created: ${email}`);
 }
 
 main()

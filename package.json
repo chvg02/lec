@@ -14,10 +14,10 @@
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f",
-    "build": "prisma generate && next build"
-  
-},
-  
+    "build": "prisma generate && next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && prisma db seed && next build",
+    "db:seed": "node scripts/ensure-default-admin.cjs"
+  },
   "dependencies": {
     "@floating-ui/react": "^0.27.16",
     "@prisma/client": "^6.19.3",

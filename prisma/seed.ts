@@ -1,23 +1,64 @@
+import bcrypt from "bcryptjs";
+import { PrismaClient } from "@prisma/client";
 
-import * as bcrypt from 'bcryptjs'; // Importe uma biblioteca de hash de senha (ex: bcryptjs)
-import {prisma} from '@/lib/prisma';
+const prisma = new PrismaClient();
 
-async function seed() {
-  await prisma.user.create({
-        data: {
-            id:1,
-            email: 'vitor.aa01@gtmail.com',
-            name: 'vitor Anjos',
-            password: '123',
-            role:'admin'
-        }
+const ADMIN_PERMISSIONS = {
+  canManageProjects: true,
+  canManageNews: true,
+  canManageEvents: true,
+  canManageResources: true,
+  canManageUsers: true,
+  canEditContact: true,
+  canEditAbout: true,
+};
+
+async function main() {
+  const email = (process.env.DEFAULT_ADMIN_EMAIL || "vitor.aa01@gmail.com")
+    .trim()
+    .toLowerCase();
+  const password = process.env.DEFAULT_ADMIN_PASSWORD || "12345678";
+  const name =
+    process.env.DEFAULT_ADMIN_NAME || "Vitor Gabriel Almeida dos Anjos";
+
+  const existingAdmin = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (existingAdmin) {
+    await prisma.user.update({
+      where: { email },
+      data: {
+        name,
+        role: "admin",
+        ...ADMIN_PERMISSIONS,
+      },
     });
-    console.log('Database seeded');
-    await prisma.$disconnect();
+
+    console.log(`Default admin already exists: ${email}`);
+    return;
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role: "admin",
+      ...ADMIN_PERMISSIONS,
+    },
+  });
+
+  console.log(`Default admin created: ${email}`);
 }
 
-seed().catch(e => {
-    console.error(e);
-    prisma.$disconnect();
-    process.exit(1);
-});
+main()
+  .catch((error) => {
+    console.error("Failed to seed database:", error);
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

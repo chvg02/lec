@@ -5,7 +5,7 @@ echo "Applying Prisma migrations..."
 npx prisma migrate deploy
 
 echo "Ensuring default admin..."
-node scripts/ensure-default-admin.cjs
+npx prisma db seed
 
 echo "Starting Next.js..."
 exec npm run start
