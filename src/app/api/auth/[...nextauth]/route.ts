@@ -32,9 +32,23 @@ const nextAuthOptions: NextAuthOptions = {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email },
-        });
+        let user;
+
+        try {
+          user = await prisma.user.findUnique({
+            where: { email },
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              password: true,
+              role: true,
+            },
+          });
+        } catch (error) {
+          console.error("Erro ao buscar usuario para login:", error);
+          return null;
+        }
 
         if (!user) return null;
 
@@ -46,11 +60,11 @@ const nextAuthOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
-          image: user.profileImageUrl,
-          profileImageUrl: user.profileImageUrl,
+          image: null,
+          profileImageUrl: null,
           role: user.role,
           ...USER_PERMISSION_KEYS.reduce(
-            (permissions, key) => ({ ...permissions, [key]: user[key] }),
+            (permissions, key) => ({ ...permissions, [key]: false }),
             {}
           ),
         };
@@ -75,20 +89,35 @@ const nextAuthOptions: NextAuthOptions = {
         session.user.profileImageUrl = session.user.image;
         Object.assign(session.user, getPermissionPayload(token));
 
-        const user = await prisma.user.findUnique({
-          where: { id: Number(token.id) },
-          select: {
-            role: true,
-            profileImageUrl: true,
-            ...USER_PERMISSION_SELECT,
-          },
-        });
+        try {
+          const user = await prisma.user.findUnique({
+            where: { id: Number(token.id) },
+            select: {
+              role: true,
+              profileImageUrl: true,
+              ...USER_PERMISSION_SELECT,
+            },
+          });
 
-        if (user) {
-          session.user.role = user.role;
-          session.user.image = user.profileImageUrl;
-          session.user.profileImageUrl = user.profileImageUrl;
-          Object.assign(session.user, getPermissionPayload(user));
+          if (user) {
+            session.user.role = user.role;
+            session.user.image = user.profileImageUrl;
+            session.user.profileImageUrl = user.profileImageUrl;
+            Object.assign(session.user, getPermissionPayload(user));
+          }
+        } catch (error) {
+          console.error("Erro ao atualizar dados da sessao:", error);
+
+          const user = await prisma.user.findUnique({
+            where: { id: Number(token.id) },
+            select: {
+              role: true,
+            },
+          });
+
+          if (user) {
+            session.user.role = user.role;
+          }
         }
       }
       return session;

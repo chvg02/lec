@@ -13,13 +13,20 @@ const ADMIN_PERMISSIONS = {
   canEditAbout: true,
 };
 
-async function main() {
-  const email = (process.env.DEFAULT_ADMIN_EMAIL || "vitor.aa01@gmail.com")
+function envValue(name: string, fallback: string) {
+  return String(process.env[name] ?? fallback)
     .trim()
-    .toLowerCase();
-  const password = process.env.DEFAULT_ADMIN_PASSWORD || "12345678";
-  const name =
-    process.env.DEFAULT_ADMIN_NAME || "Vitor Gabriel Almeida dos Anjos";
+    .replace(/^['"]|['"]$/g, "");
+}
+
+async function main() {
+  const email = envValue("DEFAULT_ADMIN_EMAIL", "vitor.aa01@gmail.com").toLowerCase();
+  const password = envValue("DEFAULT_ADMIN_PASSWORD", "12345678");
+  const name = envValue(
+    "DEFAULT_ADMIN_NAME",
+    "Vitor Gabriel Almeida dos Anjos"
+  );
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingAdmin = await prisma.user.findUnique({
     where: { email },
@@ -30,6 +37,7 @@ async function main() {
       where: { email },
       data: {
         name,
+        password: hashedPassword,
         role: "admin",
         ...ADMIN_PERMISSIONS,
       },
@@ -38,8 +46,6 @@ async function main() {
     console.log(`Default admin already exists: ${email}`);
     return;
   }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
 
   await prisma.user.create({
     data: {
