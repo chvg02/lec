@@ -13,6 +13,7 @@ const JAVASCRIPT_PROTOCOL_ATTRIBUTES =
   /\s+(href|src)\s*=\s*("|\')?\s*(javascript:|data:text\/html|vbscript:)[^"'\s>]*\2?/gi;
 
 export const MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024;
+export const MAX_PROFILE_IMAGE_SIZE_BYTES = 2 * 1024 * 1024;
 
 export const PUBLIC_FILE_SELECT = {
   id: true,
@@ -124,6 +125,35 @@ export function isSafeInternalUploadUrl(value: unknown) {
 export function normalizeUploadUrl(value: unknown) {
   const url = String(value ?? "").trim();
   return isSafeInternalUploadUrl(url) ? url : null;
+}
+
+export function isSafeProfileImageDataUrl(value: unknown) {
+  const url = String(value ?? "").trim();
+  const match = url.match(/^data:image\/(png|jpeg|webp|gif);base64,([A-Za-z0-9+/]+={0,2})$/i);
+
+  if (!match) {
+    return false;
+  }
+
+  const base64 = match[2];
+  const padding = base64.endsWith("==") ? 2 : base64.endsWith("=") ? 1 : 0;
+  const decodedSize = base64.length * 0.75 - padding;
+
+  return decodedSize > 0 && decodedSize <= MAX_PROFILE_IMAGE_SIZE_BYTES;
+}
+
+export function normalizeProfileImageUrl(value: unknown) {
+  const url = String(value ?? "").trim();
+
+  if (!url) {
+    return null;
+  }
+
+  if (isSafeInternalUploadUrl(url) || isSafeProfileImageDataUrl(url)) {
+    return url;
+  }
+
+  return null;
 }
 
 export function normalizeUploadList(images: unknown) {

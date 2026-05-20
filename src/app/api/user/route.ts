@@ -11,8 +11,8 @@ import { getPermissionPayload } from "@/lib/permissions";
 import {
   isValidEmail,
   normalizeEmail,
+  normalizeProfileImageUrl,
   normalizeText,
-  normalizeUploadUrl,
   parseNumericId,
 } from "@/lib/security";
 
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     const password = String(body.password ?? "");
     const role = String(body.role ?? "");
     const permissions = getPermissionPayload(body);
-    const profileImageUrl = normalizeUploadUrl(body.profileImageUrl);
+    const profileImageUrl = normalizeProfileImageUrl(body.profileImageUrl);
 
     if (body.profileImageUrl && !profileImageUrl) {
       return NextResponse.json({ error: "Foto de perfil invalida." }, { status: 400 });
@@ -151,7 +151,7 @@ export async function PUT(req: NextRequest) {
     const permissions = getPermissionPayload(body);
     const profileImageUrl =
       typeof body.profileImageUrl === "string" && body.profileImageUrl
-        ? normalizeUploadUrl(body.profileImageUrl)
+        ? normalizeProfileImageUrl(body.profileImageUrl)
         : null;
 
     if (body.profileImageUrl && !profileImageUrl) {

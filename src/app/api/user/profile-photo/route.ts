@@ -1,5 +1,3 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 import { NextResponse } from "next/server";
 
 import { requireAuthenticatedApi } from "@/lib/auth";
@@ -7,9 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { hasPermission } from "@/lib/permissions";
 import {
   isAllowedImageUpload,
-  MAX_UPLOAD_SIZE_BYTES,
+  MAX_PROFILE_IMAGE_SIZE_BYTES,
   parseNumericId,
-  sanitizeFileName,
 } from "@/lib/security";
 
 export const runtime = "nodejs";
@@ -49,9 +46,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "A imagem enviada esta vazia." }, { status: 400 });
     }
 
-    if (file.size > MAX_UPLOAD_SIZE_BYTES) {
+    if (file.size > MAX_PROFILE_IMAGE_SIZE_BYTES) {
       return NextResponse.json(
-        { error: "A imagem excede o limite de 10 MB." },
+        { error: "A imagem excede o limite de 2 MB." },
         { status: 400 }
       );
     }
@@ -65,16 +62,7 @@ export async function POST(req: Request) {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    const safeOriginalName = sanitizeFileName(file.name) || "foto";
-    const filename = `${uniqueSuffix}-${safeOriginalName}`;
-    const uploadDir = path.join(process.cwd(), "public/uploads/profile");
-    const filepath = path.join(uploadDir, filename);
-
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(filepath, buffer);
-
-    const profileImageUrl = `/uploads/profile/${filename}`;
+    const profileImageUrl = `data:${file.type};base64,${buffer.toString("base64")}`;
 
     if (!uploadOnly) {
       await prisma.user.update({
