@@ -86,6 +86,8 @@ Em producao na Vercel, os uploads precisam de armazenamento persistente. Crie um
 
 Sem essa variavel, a rota `/api/upload` retorna erro informando que o Blob nao esta configurado. No desenvolvimento local, quando `BLOB_READ_WRITE_TOKEN` nao existe, os arquivos continuam sendo salvos em `public/uploads`.
 
+As imagens inseridas no editor usam client upload do Vercel Blob para contornar o limite de 4.5 MB das Vercel Functions. Nesse fluxo, o arquivo sai direto do navegador para o Blob, e a API `/api/upload/client` gera apenas o token temporario de envio.
+
 ## Observacoes
 
 - As migrations do Prisma sao aplicadas automaticamente quando o container da app sobe.

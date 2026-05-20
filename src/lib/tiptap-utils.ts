@@ -1,5 +1,6 @@
 ﻿import type { Node as TiptapNode } from "@tiptap/pm/model"
 import type { Transaction } from "@tiptap/pm/state"
+import { upload } from "@vercel/blob/client"
 import {
   AllSelection,
   NodeSelection,
@@ -9,6 +10,17 @@ import {
 import type { Editor, NodeWithPos } from "@tiptap/react"
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+
+const MULTIPART_UPLOAD_THRESHOLD_BYTES = 4 * 1024 * 1024
+
+function sanitizeClientFileName(fileName: string) {
+  return fileName
+    .normalize("NFKD")
+    .replace(/[^\w.-]+/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 120)
+}
 
 export const MAC_SYMBOLS: Record<string, string> = {
   mod: "⌘",
@@ -360,36 +372,29 @@ export const handleImageUpload = async (
 ): Promise<string> => {
   if (!file) throw new Error("No file provided");
 
-  // Você pode simular um progresso inicial para a UI não ficar travada
-  onProgress?.({ progress: 30 });
-
-  const formData = new FormData();
-  formData.append("file", file);
+  onProgress?.({ progress: 1 });
 
   try {
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-      signal: abortSignal,
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`
+    const safeOriginalName = sanitizeClientFileName(file.name) || "imagem"
+    const blob = await upload(`uploads/${uniqueSuffix}-${safeOriginalName}`, file, {
+      access: "public",
+      handleUploadUrl: "/api/upload/client",
+      contentType: file.type,
+      abortSignal,
+      multipart: file.size > MULTIPART_UPLOAD_THRESHOLD_BYTES,
+      onUploadProgress: ({ percentage }) => {
+        onProgress?.({ progress: Math.max(1, Math.round(percentage)) })
+      },
     });
 
-    const data = await res.json().catch(() => null);
-
-    if (!res.ok) {
-      throw new Error(
-        data?.error || "Falha ao enviar a imagem para o servidor."
-      );
+    if (!blob?.url) {
+      throw new Error("O Blob nao retornou a URL da imagem.");
     }
 
-    if (!data?.imageUrl) {
-      throw new Error("O servidor não retornou a URL da imagem.");
-    }
-    
-    // Avisa que o upload terminou
     onProgress?.({ progress: 100 });
 
-    // Retorna a URL que a API gerou (ex: /uploads/nome-da-imagem.jpg)
-    return data.imageUrl;
+    return blob.url;
 
   } catch (error) {
     console.error("Upload error:", error);
