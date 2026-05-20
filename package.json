@@ -9,13 +9,15 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "docker:up": "docker compose up --build",
     "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f"
-  },
+    "docker:logs": "docker compose logs -f",
+    "build": "prisma generate && next build"
+  
+},
+  
   "dependencies": {
     "@floating-ui/react": "^0.27.16",
     "@prisma/client": "^6.19.3",
