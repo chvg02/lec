@@ -1,6 +1,5 @@
 ﻿import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { hashResetPasswordToken } from "@/lib/reset-password";
@@ -28,17 +27,15 @@ export async function POST(request: Request) {
 
     const tokenHash = hashResetPasswordToken(token);
 
-    const users = await prisma.$queryRaw<Array<{ id: number }>>(
-      Prisma.sql`
-        SELECT "id"
-        FROM "users"
-        WHERE "resetPasswordTokenHash" = ${tokenHash}
-          AND "resetPasswordExpiresAt" > NOW()
-        LIMIT 1
-      `
-    );
-
-    const user = users[0];
+    const user = await prisma.user.findFirst({
+      where: {
+        resetPasswordTokenHash: tokenHash,
+        resetPasswordExpiresAt: {
+          gt: new Date(),
+        },
+      },
+      select: { id: true },
+    });
 
     if (!user) {
       return NextResponse.json(
@@ -49,16 +46,14 @@ export async function POST(request: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await prisma.$executeRaw(
-      Prisma.sql`
-        UPDATE "users"
-        SET "password" = ${hashedPassword},
-            "resetPasswordTokenHash" = NULL,
-            "resetPasswordExpiresAt" = NULL,
-            "updatedAt" = NOW()
-        WHERE "id" = ${user.id}
-      `
-    );
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetPasswordTokenHash: null,
+        resetPasswordExpiresAt: null,
+      },
+    });
 
     return NextResponse.json({
       message: "Senha redefinida com sucesso.",

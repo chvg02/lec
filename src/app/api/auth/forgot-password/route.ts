@@ -1,5 +1,4 @@
 ﻿import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
 import { Resend } from "resend";
 
 import { prisma } from "@/lib/prisma";
@@ -80,15 +79,13 @@ export async function POST(request: Request) {
     const tokenHash = hashResetPasswordToken(token);
     const expiresAt = getResetPasswordExpirationDate();
 
-    await prisma.$executeRaw(
-      Prisma.sql`
-        UPDATE "users"
-        SET "resetPasswordTokenHash" = ${tokenHash},
-            "resetPasswordExpiresAt" = ${expiresAt},
-            "updatedAt" = NOW()
-        WHERE "id" = ${user.id}
-      `
-    );
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        resetPasswordTokenHash: tokenHash,
+        resetPasswordExpiresAt: expiresAt,
+      },
+    });
 
     const baseUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
     const resetUrl = `${baseUrl}/reset-password?token=${token}`;

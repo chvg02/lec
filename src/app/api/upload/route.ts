@@ -1,5 +1,8 @@
-﻿import { mkdir, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+
+import { put } from "@vercel/blob";
+import { NextResponse } from "next/server";
 
 import { requireAnyPermissionApi } from "@/lib/auth";
 import {
@@ -7,10 +10,37 @@ import {
   MAX_UPLOAD_SIZE_BYTES,
   sanitizeFileName,
 } from "@/lib/security";
-import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const MISSING_BLOB_CONFIGURATION_ERROR =
+  "Vercel Blob nao esta configurado. Crie um Blob Store publico e vincule BLOB_READ_WRITE_TOKEN ao projeto.";
+
+async function saveUpload(file: File, filename: string) {
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(`uploads/${filename}`, file, {
+      access: "public",
+      contentType: file.type,
+    });
+
+    return blob.url;
+  }
+
+  if (process.env.VERCEL) {
+    throw new Error(MISSING_BLOB_CONFIGURATION_ERROR);
+  }
+
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  const uploadDir = path.join(process.cwd(), "public/uploads");
+  const filepath = path.join(uploadDir, filename);
+
+  await mkdir(uploadDir, { recursive: true });
+  await writeFile(filepath, buffer);
+
+  return `/uploads/${filename}`;
+}
 
 export async function POST(req: Request) {
   const { response } = await requireAnyPermissionApi([
@@ -42,29 +72,29 @@ export async function POST(req: Request) {
 
     if (!isAllowedUpload(file)) {
       return NextResponse.json(
-        { error: "Tipo de arquivo não permitido." },
+        { error: "Tipo de arquivo nao permitido." },
         { status: 400 }
       );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     const safeOriginalName = sanitizeFileName(file.name) || "arquivo";
     const filename = `${uniqueSuffix}-${safeOriginalName}`;
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-    const filepath = path.join(uploadDir, filename);
-
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(filepath, buffer);
-
-    const fileUrl = `/uploads/${filename}`;
+    const fileUrl = await saveUpload(file, filename);
 
     return NextResponse.json({ imageUrl: fileUrl, fileUrl });
   } catch (error) {
     console.error("Erro no upload:", error);
+    const isMissingBlobConfiguration =
+      error instanceof Error &&
+      error.message === MISSING_BLOB_CONFIGURATION_ERROR;
+
     return NextResponse.json(
-      { error: "Erro interno ao salvar o arquivo." },
+      {
+        error: isMissingBlobConfiguration
+          ? MISSING_BLOB_CONFIGURATION_ERROR
+          : "Erro interno ao salvar o arquivo.",
+      },
       { status: 500 }
     );
   }

@@ -119,7 +119,23 @@ export function sanitizeFileName(fileName: string) {
 
 export function isSafeInternalUploadUrl(value: unknown) {
   const url = String(value ?? "").trim();
-  return /^\/uploads\/[A-Za-z0-9._/-]+$/.test(url);
+
+  if (/^\/uploads\/[A-Za-z0-9._/-]+$/.test(url)) {
+    return true;
+  }
+
+  try {
+    const parsedUrl = new URL(url);
+
+    return (
+      parsedUrl.protocol === "https:" &&
+      parsedUrl.hostname.endsWith(".public.blob.vercel-storage.com") &&
+      !parsedUrl.search &&
+      !parsedUrl.hash
+    );
+  } catch {
+    return false;
+  }
 }
 
 export function normalizeUploadUrl(value: unknown) {

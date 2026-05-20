@@ -80,6 +80,12 @@ Ajuste principalmente:
 
 O `DATABASE_URL` do container da aplicacao ja e injetado automaticamente pelo `docker-compose.yml`.
 
+## Uploads no Vercel
+
+Em producao na Vercel, os uploads precisam de armazenamento persistente. Crie um Vercel Blob Store publico no projeto e garanta que a variavel `BLOB_READ_WRITE_TOKEN` esteja vinculada aos ambientes usados pelo deploy.
+
+Sem essa variavel, a rota `/api/upload` retorna erro informando que o Blob nao esta configurado. No desenvolvimento local, quando `BLOB_READ_WRITE_TOKEN` nao existe, os arquivos continuam sendo salvos em `public/uploads`.
+
 ## Observacoes
 
 - As migrations do Prisma sao aplicadas automaticamente quando o container da app sobe.
