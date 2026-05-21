@@ -220,7 +220,7 @@ export default function UsersPage() {
                     <img
                       src={user.profileImageUrl || `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(user.name)}`}
                       alt={user.name}
-                      className="mx-auto h-10 w-10 rounded-full object-cover"
+                      className="mx-auto aspect-square h-10 w-10 rounded-full object-cover shrink-0"
                     />
                   </TableCell>
                   <TableCell className="text-center">{user.name}</TableCell>
