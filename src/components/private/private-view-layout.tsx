@@ -16,6 +16,7 @@ type PrivateViewLayoutProps = {
   iconClassName?: string;
   iconWrapperClassName?: string;
   addButtonClassName?: string;
+  containerClassName?: string;
   children: ReactNode;
 };
 
@@ -27,6 +28,7 @@ export function PrivateViewLayout({
   iconClassName,
   iconWrapperClassName,
   addButtonClassName,
+  containerClassName,
   children,
 }: PrivateViewLayoutProps) {
   const router = useRouter();

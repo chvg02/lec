@@ -193,6 +193,7 @@ export default function UsersPage() {
       iconWrapperClassName="bg-violet-100"
       iconClassName="text-violet-500"
       addButtonClassName="bg-violet-500 hover:bg-violet-600"
+      containerClassName="max-w-7xl"
     >
       {users.length === 0 ? (
         <p className="text-center text-slate-500">Nenhum usuário encontrado.</p>
@@ -220,8 +221,8 @@ export default function UsersPage() {
                     <img
                       src={user.profileImageUrl || `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(user.name)}`}
                       alt={user.name}
-                       className="mx-auto block size-10 rounded-full object-cover"
-                       style={{ aspectRatio: "1 / 1" }}
+                      className="mx-auto block size-10 rounded-full object-cover shrink-0 min-w-10" // <-- Alterado aqui
+                      style={{ aspectRatio: "1 / 1" }}
                     />
                   </TableCell>
                   <TableCell className="text-center">{user.name}</TableCell>
