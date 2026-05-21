@@ -197,7 +197,7 @@ export default function UsersPage() {
       {users.length === 0 ? (
         <p className="text-center text-slate-500">Nenhum usuário encontrado.</p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="w-full overflow-x-auto rounded-lg">
           <Table className="w-full table-auto">
             <TableHeader>
               <TableRow>
@@ -221,6 +221,7 @@ export default function UsersPage() {
                       src={user.profileImageUrl || `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(user.name)}`}
                       alt={user.name}
                        className="mx-auto block size-10 rounded-full object-cover"
+                       style={{ aspectRatio: "1 / 1" }}
                     />
                   </TableCell>
                   <TableCell className="text-center">{user.name}</TableCell>
