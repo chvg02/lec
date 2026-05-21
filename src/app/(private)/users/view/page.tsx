@@ -198,7 +198,7 @@ export default function UsersPage() {
         <p className="text-center text-slate-500">Nenhum usuário encontrado.</p>
       ) : (
         <div className="overflow-x-auto">
-          <Table className="min-w-full">
+          <Table className="w-full table-auto">
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">ID</TableHead>
@@ -220,7 +220,7 @@ export default function UsersPage() {
                     <img
                       src={user.profileImageUrl || `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(user.name)}`}
                       alt={user.name}
-                      className="mx-auto aspect-square h-10 w-10 rounded-full object-cover shrink-0"
+                       className="mx-auto block size-10 rounded-full object-cover"
                     />
                   </TableCell>
                   <TableCell className="text-center">{user.name}</TableCell>
