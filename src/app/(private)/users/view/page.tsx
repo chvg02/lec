@@ -198,7 +198,7 @@ export default function UsersPage() {
         <p className="text-center text-slate-500">Nenhum usuário encontrado.</p>
       ) : (
         <div className="overflow-x-auto">
-          <Table>
+          <Table className="min-w-full">
             <TableHeader>
               <TableRow>
                 <TableHead className="text-center">ID</TableHead>
@@ -239,8 +239,8 @@ export default function UsersPage() {
                   <TableCell className="text-center">
                     {new Date(user.createdAt).toLocaleDateString("pt-BR")}
                   </TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-center gap-2">
+                  <TableCell className="text-center min-w-[220px]">
+                    <div className="flex justify-center gap-2 whitespace-nowrap">
                       <Button
                         size="sm"
                         variant="outline"
