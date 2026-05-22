@@ -173,7 +173,7 @@ export default function DashboardPage() {
             </div>
           )}
           {canManageProjects && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-8">
+          <div className="flex rounded-2xl border border-slate-200 bg-white p-8">
             <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
               <div className="flex flex-row items-center gap-4">
                 <div className="rounded-lg bg-blue-100 p-2">
