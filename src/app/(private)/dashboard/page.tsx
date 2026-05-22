@@ -186,7 +186,7 @@ export default function DashboardPage() {
                 <h1 className="text-3xl font-black">{data.projects.activeCount}</h1>
               </div>
             </div>
-            <div className="flex flex-col gap-2 pt-4">
+            <div className="flex flex-1 h-full flex-col gap-2 pt-4">
               <div className="flex flex-row items-center justify-between">
                 <h5 className="text-lg font-medium">Recentes:</h5>
                 <Button variant="ghost" className="text-sm text-blue-500" onClick={() => handleGoTo("/projects/view")}>
