@@ -212,7 +212,7 @@ export default function DashboardPage() {
           )}
 
           {canManageUsers && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
               <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
                 <div className="flex flex-row items-center gap-4">
                   <div className="rounded-lg bg-violet-100 p-2">
@@ -241,14 +241,14 @@ export default function DashboardPage() {
                   {data.users.list.length === 0 && <span className="text-sm text-slate-400">Nenhum usuário.</span>}
                 </div>
               </div>
-              <Button className="mt-4 w-full bg-violet-500 hover:bg-violet-600" onClick={() => handleGoTo("/users/add")}>
+              <Button className="mt-auto w-full bg-violet-500 hover:bg-violet-600" onClick={() => handleGoTo("/users/add")}>
                 <Plus size={24} /> Adicionar Usuário
               </Button>
             </div>
           )}
 
           {canEditContact && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
               <div className="flex flex-row items-center gap-4 border-b border-slate-200 pb-4">
                 <div className="rounded-lg bg-sky-100 p-2">
                   <Mail size={24} className="text-sky-600" />
@@ -258,14 +258,14 @@ export default function DashboardPage() {
               <p className="pt-4 text-sm text-slate-500">
                 Atualize telefone, endereço, e-mail e mapa exibidos na página de contato.
               </p>
-              <Button className="mt-4 w-full bg-sky-500 hover:bg-sky-600" onClick={() => handleGoTo("/contact/edit")}>
+              <Button className="mt-auto w-full bg-sky-500 hover:bg-sky-600" onClick={() => handleGoTo("/contact/edit")}>
                 Editar contato
               </Button>
             </div>
           )}
 
           {canEditAbout && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
               <div className="flex flex-row items-center gap-4 border-b border-slate-200 pb-4">
                 <div className="rounded-lg bg-rose-100 p-2">
                   <Info size={24} className="text-rose-600" />
@@ -275,14 +275,14 @@ export default function DashboardPage() {
               <p className="pt-4 text-sm text-slate-500">
                 Gerencie os membros atuais e anteriores exibidos na página Sobre.
               </p>
-              <Button className="mt-4 w-full bg-rose-500 hover:bg-rose-600" onClick={() => handleGoTo("/sobre")}>
+              <Button className="mt-auto w-full bg-rose-500 hover:bg-rose-600" onClick={() => handleGoTo("/sobre")}>
                 Editar Sobre
               </Button>
             </div>
           )}
 
           {canManageNews && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
               <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
                 <div className="flex flex-row items-center gap-4">
                   <div className="rounded-lg bg-amber-100 p-2">
@@ -311,14 +311,14 @@ export default function DashboardPage() {
                   {data.news.list.length === 0 && <span className="text-sm text-slate-400">Nenhuma notícia.</span>}
                 </div>
               </div>
-              <Button className="mt-4 w-full bg-amber-500 hover:bg-amber-600" onClick={() => handleGoTo("/news/add")}>
+              <Button className="mt-auto w-full bg-amber-500 hover:bg-amber-600" onClick={() => handleGoTo("/news/add")}>
                 <Plus size={24} /> Adicionar Notícia
               </Button>
             </div>
           )}
 
           {canManageEvents && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
               <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
                 <div className="flex flex-row items-center gap-4">
                   <div className="rounded-lg bg-emerald-100 p-2">
@@ -347,14 +347,14 @@ export default function DashboardPage() {
                   {data.events.list.length === 0 && <span className="text-sm text-slate-400">Nenhum evento.</span>}
                 </div>
               </div>
-              <Button className="mt-4 w-full bg-emerald-500 hover:bg-emerald-600" onClick={() => handleGoTo("/events/add")}>
+              <Button className="mt-auto w-full bg-emerald-500 hover:bg-emerald-600" onClick={() => handleGoTo("/events/add")}>
                 <Plus size={24} /> Adicionar Evento
               </Button>
             </div>
           )}
 
           {canManageResources && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8">
+             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
               <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
                 <div className="flex flex-row items-center gap-4">
                   <div className="rounded-lg bg-cyan-100 p-2">
@@ -383,7 +383,7 @@ export default function DashboardPage() {
                   {data.resources.list.length === 0 && <span className="text-sm text-slate-400">Nenhum recurso.</span>}
                 </div>
               </div>
-              <Button className="mt-4 w-full bg-cyan-500 hover:bg-cyan-600" onClick={() => handleGoTo("/resources/add")}>
+              <Button className="mt-auto w-full bg-cyan-500 hover:bg-cyan-600" onClick={() => handleGoTo("/resources/add")}>
                 <Plus size={24} /> Adicionar Recurso
               </Button>
             </div>
