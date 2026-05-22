@@ -5,12 +5,13 @@ import {
     Camera,
     LayoutDashboard,
     Loader2,
+    LogOut,
     User,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import {
     DropdownMenu,
@@ -135,6 +136,13 @@ export const Header = () => {
                                                     <LayoutDashboard size={16} />
                                                     Dashboard
                                                 </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem
+                                                className="cursor-pointer gap-2 text-red-600 focus:bg-red-50 focus:text-red-700"
+                                                onClick={() => signOut({ callbackUrl: "/" })}
+                                            >
+                                                <LogOut size={16} />
+                                                Logout
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
