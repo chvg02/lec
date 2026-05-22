@@ -75,8 +75,12 @@ O Compose usa o arquivo `docker/app.env`.
 Ajuste principalmente:
 
 - `NEXTAUTH_SECRET`
-- `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL`
+- `SMTP_HOST`
+- `SMTP_USER`
+- `SMTP_PASS`
+- `SMTP_FROM_EMAIL`
+
+O envio de email usa SMTP via Nodemailer, entao pode ser configurado com Gmail/Google Workspace, Outlook, Zoho, Brevo, Mailgun, SendGrid ou outro provedor SMTP. `SMTP_PORT` usa `587` por padrao; use `465` com `SMTP_SECURE=true` quando o provedor exigir SSL direto. `SMTP_FROM_NAME` e opcional.
 
 O `DATABASE_URL` do container da aplicacao ja e injetado automaticamente pelo `docker-compose.yml`.
 
@@ -87,6 +91,24 @@ Em producao na Vercel, os uploads precisam de armazenamento persistente. Crie um
 Sem essa variavel, a rota `/api/upload` retorna erro informando que o Blob nao esta configurado. No desenvolvimento local, quando `BLOB_READ_WRITE_TOKEN` nao existe, os arquivos continuam sendo salvos em `public/uploads`.
 
 As imagens inseridas no editor e os arquivos de recursos usam client upload do Vercel Blob para contornar o limite de 4.5 MB das Vercel Functions. Nesse fluxo, o arquivo sai direto do navegador para o Blob, e a API `/api/upload/client` gera apenas o token temporario de envio. Recursos aceitam arquivos de ate 100 MB.
+
+## Deploy na Vercel
+
+Na Vercel, configure as variaveis em Project Settings > Environment Variables. Para o envio de emails, use as mesmas variaveis SMTP:
+
+```env
+NEXTAUTH_SECRET="gere-um-segredo-forte"
+NEXTAUTH_URL="https://seu-dominio.vercel.app"
+SMTP_HOST="smtp.seu-provedor.com"
+SMTP_PORT="587"
+SMTP_SECURE="false"
+SMTP_USER="usuario@seu-dominio.com"
+SMTP_PASS="senha-ou-app-password"
+SMTP_FROM_EMAIL="usuario@seu-dominio.com"
+SMTP_FROM_NAME="LEC Facom"
+```
+
+Use um SMTP de provedor externo, como Gmail/Google Workspace, Outlook, Zoho, Brevo, Mailgun, SendGrid ou servidor institucional. Para porta `465`, defina `SMTP_SECURE="true"`. Para porta `587`, mantenha `SMTP_SECURE="false"`.
 
 ## Banco Neon na Vercel
 

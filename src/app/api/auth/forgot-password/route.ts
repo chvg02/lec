@@ -1,6 +1,6 @@
 ﻿import { NextResponse } from "next/server";
-import { Resend } from "resend";
 
+import { getMailConfigErrorMessage, sendEmail } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
 import {
   generateResetPasswordToken,
@@ -14,15 +14,7 @@ import {
   normalizeEmail,
 } from "@/lib/security";
 
-function getRequiredEnv(name: string) {
-  const value = process.env[name];
-
-  if (!value) {
-    throw new Error(`Variavel de ambiente ausente: ${name}`);
-  }
-
-  return value;
-}
+export const runtime = "nodejs";
 
 function escapeHtml(value: string) {
   return value
@@ -90,15 +82,11 @@ export async function POST(request: Request) {
     const baseUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
     const resetUrl = `${baseUrl}/reset-password?token=${token}`;
 
-    const resend = new Resend(getRequiredEnv("RESEND_API_KEY"));
-    const fromName = process.env.CONTACT_FROM_NAME ?? "LEC Facom";
-    const fromEmail = getRequiredEnv("RESEND_FROM_EMAIL");
     const safeName = escapeHtml(user.name);
     const safeUrl = escapeHtml(resetUrl);
 
-    const { error } = await resend.emails.send({
-      from: `${fromName} <${fromEmail}>`,
-      to: [user.email],
+    await sendEmail({
+      to: user.email,
       subject: "Recuperação de senha",
       text: [
         `Ola, ${user.name}.`,
@@ -125,21 +113,13 @@ export async function POST(request: Request) {
       `,
     });
 
-    if (error) {
-      console.error("Erro do Resend ao enviar recuperação de senha:", error);
-
-      return NextResponse.json(
-        { error: "Não foi possível enviar o email de recuperação." },
-        { status: 500 }
-      );
-    }
-
     return successResponse;
   } catch (error) {
     console.error("Erro ao solicitar recuperação de senha:", error);
+    const mailConfigErrorMessage = getMailConfigErrorMessage(error);
 
     return NextResponse.json(
-      { error: "Não foi possível processar a solicitação." },
+      { error: mailConfigErrorMessage ?? "Não foi possível processar a solicitação." },
       { status: 500 }
     );
   }

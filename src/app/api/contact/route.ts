@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 
 import { requirePermissionApi } from "@/lib/auth";
+import { getMailConfigErrorMessage, sendEmail } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
 import {
   consumeRateLimit,
@@ -30,22 +30,14 @@ const DEFAULT_CONTACT_SETTINGS = {
   recipient_email: CONTACT_RECIPIENT,
 };
 
+export const runtime = "nodejs";
+
 async function getContactSettings() {
   return prisma.contact_settings.upsert({
     where: { id: 1 },
     update: {},
     create: DEFAULT_CONTACT_SETTINGS,
   });
-}
-
-function getRequiredEnv(name: string) {
-  const value = process.env[name];
-
-  if (!value) {
-    throw new Error(`Variavel de ambiente ausente: ${name}`);
-  }
-
-  return value;
 }
 
 function escapeHtml(value: string) {
@@ -58,18 +50,7 @@ function escapeHtml(value: string) {
 }
 
 function getContactSendErrorMessage(error: unknown) {
-  if (error && typeof error === "object" && "statusCode" in error) {
-    const resendError = error as { statusCode?: number; message?: string };
-
-    if (
-      resendError.statusCode === 403 &&
-      resendError.message?.includes("You can only send testing emails")
-    ) {
-      return "O envio esta em modo de teste no Resend. Nesse modo, as mensagens so podem ser enviadas para o e-mail da propria conta Resend. Para enviar para outro e-mail, verifique um dominio no Resend e use um remetente desse dominio.";
-    }
-  }
-
-  return "Nao foi possivel enviar a mensagem no momento.";
+  return getMailConfigErrorMessage(error) ?? "Nao foi possivel enviar a mensagem no momento.";
 }
 
 export async function GET() {
@@ -110,18 +91,14 @@ export async function POST(request: Request) {
     }
 
     const settings = await getContactSettings();
-    const resend = new Resend(getRequiredEnv("RESEND_API_KEY"));
-    const fromName = process.env.CONTACT_FROM_NAME ?? "LEC Facom";
-    const fromEmail = getRequiredEnv("RESEND_FROM_EMAIL");
 
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
     const safeSubject = escapeHtml(subject);
     const safeMessage = escapeHtml(message);
 
-    const { error } = await resend.emails.send({
-      from: `${fromName} <${fromEmail}>`,
-      to: [settings.recipient_email || CONTACT_RECIPIENT],
+    await sendEmail({
+      to: settings.recipient_email || CONTACT_RECIPIENT,
       replyTo: email,
       subject: `[Contato Site] ${subject}`,
       text: [
@@ -143,21 +120,12 @@ export async function POST(request: Request) {
       `,
     });
 
-    if (error) {
-      console.error("Erro do Resend ao enviar email de contato:", error);
-
-      return NextResponse.json(
-        { error: getContactSendErrorMessage(error) },
-        { status: 500 }
-      );
-    }
-
     return NextResponse.json({ message: "Mensagem enviada com sucesso." });
   } catch (error) {
     console.error("Erro ao enviar email de contato:", error);
 
     return NextResponse.json(
-      { error: "Nao foi possivel enviar a mensagem no momento." },
+      { error: getContactSendErrorMessage(error) },
       { status: 500 }
     );
   }
