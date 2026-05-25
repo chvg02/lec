@@ -121,9 +121,9 @@ export default function NewsDetailPage() {
   const heroImage = item.images?.[0]?.image_url || "/imgpadrao2.jpg";
 
   return (
-    <section className="min-h-screen bg-[#f7f9fc] px-4 py-10 md:px-8 xl:px-12">
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 rounded-[28px] border border-[#dfe8f1] bg-white px-5 py-8 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.28)] md:px-8 xl:px-10">
-        <div className="flex items-center justify-between gap-4">
+    <section className="min-h-screen bg-[#f7f9fc] px-4 py-8 md:px-8 md:py-10 xl:px-12">
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 rounded-[24px] border border-[#dfe8f1] bg-white px-4 py-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.28)] sm:px-5 sm:py-8 md:gap-8 md:px-8 xl:px-10">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <Button
             type="button"
             variant="ghost"
@@ -143,7 +143,7 @@ export default function NewsDetailPage() {
           </span>
         </div>
 
-        <div className="relative aspect-[2.2/1] overflow-hidden rounded-[24px] border border-[#d9e5f0] bg-[#edf3f8]">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-[#d9e5f0] bg-[#edf3f8] sm:aspect-[16/9] md:aspect-[2.2/1] md:rounded-[24px]">
           <Image
             src={heroImage}
             alt={item.title}
@@ -161,13 +161,13 @@ export default function NewsDetailPage() {
             </span>
           </div>
 
-          <h1 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
+          <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             {item.title}
           </h1>
-          <p className="mt-5 text-xl leading-9 text-[#3d6696]">{item.description}</p>
+          <p className="mt-5 text-lg leading-8 text-[#3d6696] sm:text-xl sm:leading-9">{item.description}</p>
         </div>
 
-        <div className="prose max-w-none text-slate-700">
+        <div className="prose max-w-none overflow-hidden text-slate-700">
           {item.content ? (
             parse(sanitizeRichTextHtml(item.content), parseOptions)
           ) : (

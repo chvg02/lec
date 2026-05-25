@@ -22,17 +22,17 @@ export function Cards({ id, image, title, description, type, href, actionLabel =
         href || "#";
 
     return (
-        <div className="flex flex-col bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300">
+        <div className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
             
             {/* 1. Área da Imagem de Capa (Colada nas bordas) */}
-            <div className="w-full h-48 relative shrink-0 bg-slate-200">
+            <div className="relative h-44 w-full shrink-0 bg-slate-200 sm:h-48">
                 {image ? (
                     <Image 
                         src={image}
                         alt={title}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
                     />
                 ) : (
                     // Placeholder cinza para manter o layout se não houver foto
@@ -43,14 +43,14 @@ export function Cards({ id, image, title, description, type, href, actionLabel =
             </div>
 
             {/* 2. Área do Texto e Botões */}
-            <div className="p-6 flex flex-col flex-1">
+            <div className="flex flex-1 flex-col p-5 sm:p-6">
                 {/* line-clamp-2 garante que o título tenha no máximo 2 linhas */}
-                <h1 className="text-xl font-bold text-slate-900 mb-2 line-clamp-2">
+                <h1 className="mb-2 line-clamp-2 text-lg font-bold text-slate-900 sm:text-xl">
                     {title}
                 </h1>
                 
                 {/* line-clamp-3 garante a descrição com tamanho uniforme */}
-                <h5 className="text-sm font-medium text-slate-500 mb-6 flex-1 line-clamp-3">
+                <h5 className="mb-6 line-clamp-3 flex-1 text-sm font-medium text-slate-500">
                     {description}
                 </h5>
 

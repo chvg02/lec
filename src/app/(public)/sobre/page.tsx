@@ -141,18 +141,18 @@ export default function About() {
     addLabel: string;
     emptyLabel: string;
   }) => (
-    <div className="mt-16 flex flex-col items-center justify-center">
-      <h1 className="text-5xl font-black">{title}</h1>
-      <p className="mt-4 text-lg text-slate-400">{description}</p>
+    <div className="mt-12 flex flex-col items-center justify-center sm:mt-16">
+      <h1 className="text-center text-3xl font-black sm:text-4xl lg:text-5xl">{title}</h1>
+      <p className="mt-4 max-w-3xl text-center text-base text-slate-400 sm:text-lg">{description}</p>
 
       {members.length === 0 ? (
         <p className="mt-8 text-center text-slate-500">{emptyLabel}</p>
       ) : (
-        <div className="grid w-full grid-cols-4 gap-8 p-8">
+        <div className="grid w-full grid-cols-1 gap-5 py-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {members.map((user) => (
             <div
               key={user.id}
-              className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+              className="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-slate-200 p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl sm:p-8"
             >
               <img
                 src={user.profileImageUrl || `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(user.name)}`}
@@ -163,7 +163,7 @@ export default function About() {
               <h5 className="font-medium text-blue-500">
                 {user.role === "admin" ? "Administrador" : "Membro"}
               </h5>
-              <p className="mt-4 text-center text-slate-400">{user.email}</p>
+              <p className="mt-4 max-w-full break-words text-center text-slate-400">{user.email}</p>
 
               {canEditAbout && (
                 <button
@@ -181,7 +181,7 @@ export default function About() {
 
       {canEditAbout && (
         <div className="mt-8 flex w-full flex-col items-center justify-center gap-3">
-          <div className="flex w-full max-w-2xl flex-row items-center justify-center gap-4">
+          <div className="flex w-full max-w-2xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
             <select
               className="w-full rounded border px-4 py-2"
               value={selectedUser}
@@ -196,7 +196,7 @@ export default function About() {
             </select>
 
             <button
-              className="flex items-center gap-2 rounded bg-blue-500 px-4 py-2 text-white disabled:opacity-50"
+              className="flex items-center justify-center gap-2 rounded bg-blue-500 px-4 py-2 text-white disabled:opacity-50"
               onClick={() =>
                 updateMembership(Number(selectedUser), membership, true)
               }
@@ -216,21 +216,21 @@ export default function About() {
   );
 
   return (
-    <div className="min-h-screen h-full px-16 py-8">
-      <div className="h-120 w-full overflow-hidden rounded-2xl bg-[url('https://www.ufms.br/wp-content/uploads/2021/02/UFMS.1.jpg')] bg-cover bg-center shadow-lg">
-        <div className="flex h-full w-full flex-col items-center justify-center bg-black/50 p-16">
-          <h1 className="text-center text-6xl font-black text-white">
+    <div className="min-h-screen h-full px-4 py-8 sm:px-6 lg:px-16">
+      <div className="min-h-[360px] w-full overflow-hidden rounded-2xl bg-[url('https://www.ufms.br/wp-content/uploads/2021/02/UFMS.1.jpg')] bg-cover bg-center shadow-lg sm:min-h-[440px] lg:min-h-[480px]">
+        <div className="flex min-h-[360px] w-full flex-col items-center justify-center gap-4 bg-black/50 p-6 sm:min-h-[440px] sm:p-10 lg:min-h-[480px] lg:p-16">
+          <h1 className="text-center text-3xl font-black text-white sm:text-5xl lg:text-6xl">
             Conheça o Laboratório de Educação em Computação
           </h1>
-          <h5 className="text-lg font-medium text-slate-200">
+          <h5 className="max-w-4xl text-center text-base font-medium text-slate-200 sm:text-lg">
             Pesquisando e desenvolvendo o futuro do ensino de computação, desde
             a educação básica até o ensino superior.
           </h5>
         </div>
       </div>
 
-      <div className="mt-16 w-full p-8">
-        <h1 className="mb-4 text-4xl font-black text-slate-800">
+      <div className="mt-10 w-full py-6 sm:mt-16 sm:p-8">
+        <h1 className="mb-4 text-3xl font-black text-slate-800 sm:text-4xl">
           Sobre o Laboratório
         </h1>
         <p className="text-slate-400">
@@ -240,7 +240,7 @@ export default function About() {
         </p>
       </div>
 
-      <div className="grid w-full grid-cols-3 gap-8 p-8">
+      <div className="grid w-full grid-cols-1 gap-5 py-6 md:grid-cols-3 sm:p-8">
         <div className="flex flex-col items-start rounded-lg border border-slate-200 p-6 shadow-lg dark:border-slate-800">
           <Lightbulb size={36} className="mb-8 text-blue-500" />
           <h2 className="text-lg font-bold">O que é o LEC?</h2>

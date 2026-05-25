@@ -214,12 +214,12 @@ export const SectionHeader = () => {
 
   return (
     <section
-      className="flex min-h-full flex-1 bg-slate-100 py-8 dark:bg-slate-900/50 sm:py-16"
+      className="flex min-h-full flex-1 bg-slate-100 py-10 dark:bg-slate-900/50 sm:py-16"
       id="pesquisas"
     >
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="mb-12 flex flex-col items-center gap-4 text-center">
-          <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-slate-50">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <div className="mb-10 flex flex-col items-center gap-4 text-center sm:mb-12">
+          <h2 className="text-2xl font-black tracking-tight text-slate-900 dark:text-slate-50 sm:text-3xl">
             Destaques Recentes
           </h2>
           <p className="max-w-2xl font-light">
@@ -228,7 +228,7 @@ export const SectionHeader = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {highlightCards.map((card) => (
             <Cards
               key={`${card.type}-${card.id}`}

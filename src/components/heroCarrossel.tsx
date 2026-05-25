@@ -20,7 +20,7 @@ export default function HeroCaroussel() {
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000, disableOnInteraction: true }}
         loop={true}
-        className="h-full w-full overflow-hidden rounded-2xl"
+        className="h-full w-full overflow-hidden rounded-2xl [&_.swiper-button-next]:hidden [&_.swiper-button-prev]:hidden sm:[&_.swiper-button-next]:flex sm:[&_.swiper-button-prev]:flex"
       >
         <SwiperSlide>
           <HeroSection

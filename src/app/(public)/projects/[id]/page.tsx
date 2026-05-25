@@ -76,33 +76,34 @@ export default function ProjectPage() {
     }
 
     return (
-        <div className="flex-1 flex flex-col items-center gap-8 w-4/5 mx-auto px-4 py-8">
+        <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center gap-8 px-4 py-8 sm:px-6">
             <div className="w-full flex flex-col items-start gap-4 ">
                 {/* Acessando a primeira imagem do array que vem do Prisma */}
-                <div className="w-full h-96 relative rounded-3xl overflow-hidden shadow-lg">
+                <div className="relative h-72 w-full overflow-hidden rounded-3xl shadow-lg sm:h-96">
                     <Image
-                        src={project.images?.[0]?.image_url || '/placeholder.png'}
+                        src={project.images?.[0]?.image_url || '/imgpadrao2.jpg'}
                         fill
                         alt={project.title || ""}
                         className='rounded-3xl object-cover'
                     />
 
-                    <h1 className="absolute inset-x-0 bottom-0 p-6 text-center text-4xl font-black tracking-[-0.033em]">{project.title}</h1>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
+                    <h1 className="absolute inset-x-0 bottom-0 p-5 text-center text-2xl font-black tracking-tight text-white sm:p-6 sm:text-4xl">{project.title}</h1>
                 </div>
-                <h5 className="text-slate-500 text-lg">{project.description}</h5>
+                <h5 className="text-base text-slate-500 sm:text-lg">{project.description}</h5>
 
-                <div className="prose max-w-none text-slate-700">
+                <div className="prose max-w-none overflow-hidden text-slate-700">
 
                             {project.content && (
-                        <div className="prose prose-lg max-w-none text-slate-700 w-full mt-8">
+                        <div className="prose prose-base sm:prose-lg mt-8 w-full max-w-none text-slate-700">
                             {parse(sanitizeRichTextHtml(project.content), parseOptions)}
                         </div>
                     )}
 
                 </div>
 
-                <div className='w-full flex justify-end mt-8'>
-                    <Button onClick={() => router.back()} className="bg-blue-600 hover:bg-blue-700 font-bold px-6">
+                <div className='mt-8 flex w-full justify-end'>
+                    <Button onClick={() => router.back()} className="w-full bg-blue-600 px-6 font-bold hover:bg-blue-700 sm:w-auto">
                         <MoveLeft size={20} className="mr-2" />
                         Voltar
                     </Button>

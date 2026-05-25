@@ -124,7 +124,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="mx-auto flex w-full flex-1 flex-col items-center gap-8 bg-slate-50 px-20 py-20">
+    <div className="mx-auto flex w-full flex-1 flex-col items-center gap-8 bg-slate-50 px-4 py-12 sm:px-6 md:px-10 md:py-16 xl:px-20">
       <div className="relative flex w-full flex-col items-center gap-4">
         {canEditContact && (
           <Button asChild variant="outline" className="order-3 gap-2 md:absolute md:right-0 md:top-0 md:order-none">
@@ -134,28 +134,28 @@ export default function Contact() {
             </Link>
           </Button>
         )}
-        <h1 className="text-5xl font-black tracking-[-0.033em] text-slate-900">
+        <h1 className="text-center text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
           {settings.title}
         </h1>
         <h5 className="max-w-2xl text-center text-base font-normal leading-normal text-slate-500">
           {settings.subtitle}
         </h5>
       </div>
-      <div className="mt-6 grid w-full grid-cols-2 gap-8">
+      <div className="mt-6 grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
         <div className="flex flex-col gap-4">
-          <div className="flex w-full flex-row items-center justify-between gap-4 rounded-xl border bg-white p-4 shadow-sm">
-            <div className="rounded-xl bg-blue-100 p-4 text-blue-500">
+          <div className="flex w-full flex-row items-start justify-between gap-4 rounded-xl border bg-white p-4 shadow-sm">
+            <div className="shrink-0 rounded-xl bg-blue-100 p-4 text-blue-500">
               <MapPin size={20} />
             </div>
             <div className="flex flex-1 flex-col items-start">
               <h3 className="text-base font-bold">{settings.address_title}</h3>
-              <h5 className="text-sm font-light">
+              <h5 className="break-words text-sm font-light">
                 {settings.address}
               </h5>
             </div>
           </div>
-          <div className="flex w-full flex-row items-center justify-between gap-4 rounded-xl border bg-white p-4 shadow-sm">
-            <div className="rounded-xl bg-blue-100 p-4 text-blue-500">
+          <div className="flex w-full flex-row items-start justify-between gap-4 rounded-xl border bg-white p-4 shadow-sm">
+            <div className="shrink-0 rounded-xl bg-blue-100 p-4 text-blue-500">
               <Phone size={20} />
             </div>
             <div className="flex flex-1 flex-col items-start">
@@ -163,16 +163,16 @@ export default function Contact() {
               <h5 className="text-sm font-light">{settings.phone}</h5>
             </div>
           </div>
-          <div className="flex w-full flex-row items-center justify-between gap-4 rounded-xl border bg-white p-4 shadow-sm">
-            <div className="rounded-xl bg-blue-100 p-4 text-blue-500">
+          <div className="flex w-full flex-row items-start justify-between gap-4 rounded-xl border bg-white p-4 shadow-sm">
+            <div className="shrink-0 rounded-xl bg-blue-100 p-4 text-blue-500">
               <Mail size={20} />
             </div>
             <div className="flex flex-1 flex-col items-start">
               <h3 className="text-base font-bold">{settings.email_title}</h3>
-              <h5 className="text-sm font-light">{settings.email}</h5>
+              <h5 className="break-all text-sm font-light">{settings.email}</h5>
             </div>
           </div>
-          <div className="h-96 w-full overflow-hidden rounded-xl border shadow-sm">
+          <div className="h-72 w-full overflow-hidden rounded-xl border shadow-sm sm:h-96">
             <iframe
               allowFullScreen
               height="100%"
@@ -183,7 +183,7 @@ export default function Contact() {
             ></iframe>
           </div>
         </div>
-        <div className="flex w-full flex-1 flex-col items-start gap-4 rounded-xl border bg-white p-8 shadow-sm">
+        <div className="flex w-full flex-1 flex-col items-start gap-4 rounded-xl border bg-white p-5 shadow-sm sm:p-8">
           <div className="flex w-full flex-col items-start gap-1">
             <h1 className="text-2xl font-black">{settings.form_title}</h1>
             <h3 className="font-light">

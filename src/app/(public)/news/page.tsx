@@ -267,7 +267,7 @@ function PaginationButton({
       onClick={onClick}
       disabled={disabled}
       className={[
-        "flex h-11 min-w-11 items-center justify-center rounded-xl border text-sm font-semibold transition-all duration-200 ease-out active:scale-[0.98]",
+        "flex h-10 min-w-10 items-center justify-center rounded-xl border text-sm font-semibold transition-all duration-200 ease-out active:scale-[0.98] sm:h-11 sm:min-w-11",
         active
           ? "border-[#0b73e0] bg-[#0b73e0] text-white shadow-sm"
           : "border-[#dbe7f3] bg-[#eef4fb] text-slate-700 hover:border-[#bfd5ee] hover:bg-[#e4eef9] hover:shadow-sm",
@@ -355,17 +355,17 @@ export default function NewsPage() {
   const highlightedDates = Object.keys(dateLookup).map((key) => new Date(`${key}T12:00:00`));
 
   return (
-    <section className="min-h-screen bg-[#f7f9fc] px-4 py-10 md:px-8 xl:px-12">
-      <div className="mx-auto flex w-full max-w-[1520px] flex-col gap-10">
-        <div className="flex flex-col gap-8 rounded-[28px] border border-[#e2ebf4] bg-white px-5 py-8 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.28)] md:px-8 xl:px-10">
+    <section className="min-h-screen bg-[#f7f9fc] px-4 py-8 md:px-8 md:py-10 xl:px-12">
+      <div className="mx-auto flex w-full max-w-[1520px] flex-col gap-8 md:gap-10">
+        <div className="flex flex-col gap-6 rounded-[24px] border border-[#e2ebf4] bg-white px-4 py-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.28)] sm:px-5 sm:py-8 md:gap-8 md:px-8 xl:px-10">
           <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
             <div className="max-w-3xl">
-              <h1 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
+              <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
                 Notícias e Eventos
               </h1>
             </div>
 
-            <label className="group flex h-14 w-full max-w-[390px] items-center gap-3 rounded-2xl border border-[#d8e5f1] bg-[#eff5fb] px-4 text-slate-500 shadow-inner transition-all duration-200 ease-out hover:border-[#bfd5ee] hover:bg-[#f3f8fd] focus-within:border-[#93c5fd] focus-within:bg-white focus-within:shadow-md focus-within:ring-4 focus-within:ring-blue-100">
+            <label className="group flex h-14 w-full max-w-full items-center gap-3 rounded-2xl border border-[#d8e5f1] bg-[#eff5fb] px-4 text-slate-500 shadow-inner transition-all duration-200 ease-out hover:border-[#bfd5ee] hover:bg-[#f3f8fd] focus-within:border-[#93c5fd] focus-within:bg-white focus-within:shadow-md focus-within:ring-4 focus-within:ring-blue-100 xl:max-w-[390px]">
               <Search className="size-5 text-[#326aa5]" />
               <input
                 value={search}
@@ -397,7 +397,7 @@ export default function NewsPage() {
                       variant: active ? "default" : "secondary",
                     }),
                     [
-                    "rounded-full px-5 py-3 text-base",
+                    "h-auto rounded-full px-4 py-2 text-sm sm:px-5 sm:py-3 sm:text-base",
                     active
                       ? "bg-[#d9eafc] text-[#0b73e0] hover:bg-[#cfe4fb]"
                       : "bg-[#eef3f8] text-slate-700 hover:bg-[#e2ebf8]",
@@ -425,11 +425,11 @@ export default function NewsPage() {
               paginatedFeed.map((item) => (
                 <article
                   key={item.id}
-                  className="grid gap-6 rounded-[24px] border border-[#dfe8f1] bg-white p-5 shadow-[0_18px_55px_-45px_rgba(15,23,42,0.35)] md:grid-cols-[minmax(0,1.2fr)_320px] md:p-7"
+                  className="grid gap-6 rounded-[24px] border border-[#dfe8f1] bg-white p-4 shadow-[0_18px_55px_-45px_rgba(15,23,42,0.35)] sm:p-5 md:grid-cols-[minmax(0,1.2fr)_320px] md:p-7"
                 >
                   <div className="flex flex-col justify-between">
                     <div>
-                      <div className="mb-4 flex items-start justify-between gap-4">
+                      <div className="mb-4 flex flex-wrap items-start justify-between gap-3 sm:gap-4">
                         <p className="text-[15px] text-[#326aa5]">
                           {formatLongDate(item.date)}
                         </p>
@@ -444,10 +444,10 @@ export default function NewsPage() {
                           {item.typeLabel}
                         </span>
                       </div>
-                      <h2 className="max-w-3xl text-3xl font-extrabold leading-tight text-slate-900">
+                      <h2 className="max-w-3xl text-2xl font-extrabold leading-tight text-slate-900 sm:text-3xl">
                         {item.title}
                       </h2>
-                      <p className="mt-5 max-w-3xl text-[18px] leading-9 text-[#3d6696]">
+                      <p className="mt-4 max-w-3xl text-base leading-7 text-[#3d6696] sm:mt-5 sm:text-[18px] sm:leading-9">
                         {item.description}
                       </p>
                     </div>
@@ -457,7 +457,7 @@ export default function NewsPage() {
                         asChild
                         type="button"
                         variant="secondary"
-                        className="h-12 rounded-2xl bg-[#eef3f8] px-6 text-lg font-medium text-slate-900 hover:bg-[#dfe9f5]"
+                        className="h-12 w-full rounded-2xl bg-[#eef3f8] px-6 text-base font-medium text-slate-900 hover:bg-[#dfe9f5] sm:w-auto sm:text-lg"
                       >
                         <Link href={item.href}>{item.actionLabel}</Link>
                       </Button>
@@ -521,8 +521,8 @@ export default function NewsPage() {
             )}
           </div>
 
-          <aside className="space-y-8">
-            <div className="rounded-[24px] border border-[#dfe8f1] bg-white p-7 shadow-[0_18px_55px_-45px_rgba(15,23,42,0.35)]">
+          <aside className="min-w-0 space-y-8">
+            <div className="rounded-[24px] border border-[#dfe8f1] bg-white p-4 shadow-[0_18px_55px_-45px_rgba(15,23,42,0.35)] sm:p-7">
               <div className="mb-5 flex items-center gap-3">
                 <div className="rounded-2xl bg-[#e8f1fb] p-3 text-[#0b73e0]">
                   <CalendarDays className="size-5" />
@@ -558,13 +558,13 @@ export default function NewsPage() {
                   months: "relative w-full",
                   month: "w-full space-y-4",
                   nav: "absolute inset-x-0 top-0 z-10 flex items-center justify-between px-1",
-                  month_caption: "flex h-10 items-center justify-center px-12",
-                  caption_label: "text-center text-lg font-bold capitalize text-slate-900",
+                  month_caption: "flex h-10 items-center justify-center px-10 sm:px-12",
+                  caption_label: "text-center text-base font-bold capitalize text-slate-900 sm:text-lg",
                   table: "w-full",
                   weekdays: "grid grid-cols-7 gap-y-2",
-                  weekday: "flex h-9 items-center justify-center text-sm font-medium uppercase tracking-[0.04em] text-[#6b85a6]",
+                  weekday: "flex h-8 items-center justify-center text-xs font-medium uppercase tracking-[0.04em] text-[#6b85a6] sm:h-9 sm:text-sm",
                   week: "grid grid-cols-7",
-                  day: "flex items-center justify-center p-1",
+                  day: "flex items-center justify-center p-0.5 sm:p-1",
                   button_previous:
                     "flex size-9 items-center justify-center rounded-full border border-[#e1ebf5] bg-white text-slate-700 hover:bg-[#eff5fb]",
                   button_next:
@@ -582,7 +582,7 @@ export default function NewsPage() {
                         {...props}
                         title={getTooltipForDate(info)}
                         className={cn(
-                          "h-11 w-11 rounded-full text-[15px] font-medium",
+                          "h-9 w-9 rounded-full text-sm font-medium sm:h-11 sm:w-11 sm:text-[15px]",
                           props.className,
                           hasNews &&
                             !hasEvent &&
@@ -609,7 +609,7 @@ export default function NewsPage() {
               </button>
             </div>
 
-            <div className="rounded-[24px] border border-[#dfe8f1] bg-white p-7 shadow-[0_18px_55px_-45px_rgba(15,23,42,0.35)]">
+            <div className="rounded-[24px] border border-[#dfe8f1] bg-white p-4 shadow-[0_18px_55px_-45px_rgba(15,23,42,0.35)] sm:p-7">
               <h3 className="text-2xl font-extrabold text-slate-900">Em Destaque</h3>
 
               {featuredEvent ? (
@@ -642,10 +642,10 @@ export default function NewsPage() {
                       {featuredEvent.typeLabel}
                     </span>
                   </div>
-                  <h4 className="mt-3 text-2xl font-extrabold leading-tight text-slate-900">
+                  <h4 className="mt-3 text-xl font-extrabold leading-tight text-slate-900 sm:text-2xl">
                     {featuredEvent.title}
                   </h4>
-                  <p className="mt-4 text-[18px] leading-8 text-[#3d6696]">
+                  <p className="mt-4 text-base leading-7 text-[#3d6696] sm:text-[18px] sm:leading-8">
                     {featuredEvent.description}
                   </p>
 

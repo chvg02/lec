@@ -56,7 +56,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen -mt-16 flex items-center justify-center bg-linear-to-br from-blue-50 to-slate-100 dark:from-background dark:to-background/90">
+    <div className="min-h-screen -mt-16 flex items-center justify-center bg-linear-to-br from-blue-50 to-slate-100 px-4 py-8 dark:from-background dark:to-background/90">
       <Card className="w-full max-w-sm shadow-lg border border-slate-200 dark:border-slate-800">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-semibold">Entrar</CardTitle>

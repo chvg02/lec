@@ -37,9 +37,18 @@ export default function Projects() {
   const [selectedTag, setSelectedTag] = useState("Todas");
 
   useEffect(() => {
-    fetch("api/project")
-      .then((response) => response.json())
-      .then((data: Project[]) => setProjects(data));
+    async function loadProjects() {
+      try {
+        const response = await fetch("/api/project");
+        const data = response.ok ? await response.json() : [];
+        setProjects(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Erro ao carregar projetos:", error);
+        setProjects([]);
+      }
+    }
+
+    loadProjects();
   }, []);
 
   const availableTags = useMemo(() => {
@@ -124,9 +133,9 @@ export default function Projects() {
   );
 
   return (
-    <div className="flex w-full flex-1 flex-col items-center gap-8 px-16 py-8">
-      <div className="mt-16 flex w-full flex-col items-start gap-4">
-        <h1 className="text-5xl font-black tracking-[-0.033em] text-slate-900">
+    <div className="flex w-full flex-1 flex-col items-center gap-8 px-4 py-8 sm:px-6 lg:px-16">
+      <div className="mt-10 flex w-full flex-col items-start gap-4 sm:mt-16">
+        <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
           Pesquisa & Projetos
         </h1>
         <h5 className="max-w-2xl text-base font-normal leading-normal text-slate-400">
@@ -165,16 +174,16 @@ export default function Projects() {
       </div>
 
       <Tabs defaultValue="pesquisas" className="w-full">
-        <TabsList className="w-full">
+        <TabsList className="grid h-auto w-full grid-cols-1 gap-1 sm:grid-cols-2">
           <TabsTrigger
             value="pesquisas"
-            className="w-full"
+            className="min-h-10 w-full whitespace-normal text-center"
           >
             Pesquisas em Andamento
           </TabsTrigger>
           <TabsTrigger
             value="concluidos"
-            className="w-full"
+            className="min-h-10 w-full whitespace-normal text-center"
           >
             Projetos Concluidos
           </TabsTrigger>
@@ -234,9 +243,9 @@ export default function Projects() {
             {recentProjects.map((project) => (
               <div
                 key={project.id}
-                className="flex cursor-pointer flex-row items-center justify-between border-b border-slate-200 p-4 transition-all duration-200 hover:rounded-md hover:bg-slate-100"
+                className="flex cursor-pointer flex-col items-start justify-between gap-4 border-b border-slate-200 p-4 transition-all duration-200 hover:rounded-md hover:bg-slate-100 sm:flex-row sm:items-center"
               >
-                <div className="flex flex-col items-start gap-2">
+                <div className="flex min-w-0 flex-col items-start gap-2">
                   <h3 className="text-md font-bold">{project.title}</h3>
                   <p className="text-sm font-medium text-slate-500">
                     {project.description}
@@ -244,7 +253,7 @@ export default function Projects() {
                 </div>
                 <Button
                   asChild
-                  className="bg-blue-500 text-xs font-bold uppercase hover:bg-blue-700"
+                  className="w-full bg-blue-500 text-xs font-bold uppercase hover:bg-blue-700 sm:w-auto"
                 >
                   <Link href={`/projects/${project.id}`}>
                     <FileText size={16} />
