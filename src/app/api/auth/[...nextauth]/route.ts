@@ -126,7 +126,7 @@ const nextAuthOptions: NextAuthOptions = {
   pages: {
     signIn: "/SignIn",
     signOut: "/",
-    error: "/",
+    error: "/SignIn",
   },
 };
 const handler = NextAuth(nextAuthOptions);

@@ -43,16 +43,18 @@ export default function SignIn() {
       email,
       password,
       redirect: false,
+      callbackUrl: "/dashboard",
     });
 
     setLoading(false);
 
-    if (res?.error) {
+    if (res?.error || !res?.ok) {
       setError("Email ou senha inválidos.");
       return;
     }
 
-    router.replace('/');
+    router.replace("/dashboard");
+    router.refresh();
   };
 
   return (
