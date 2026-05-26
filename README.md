@@ -102,6 +102,14 @@ Por padrao, o seed nao troca a senha de um admin existente. Para forcar a senha 
 DEFAULT_ADMIN_RESET_PASSWORD=true
 ```
 
+Para resetar a senha do admin padrao uma unica vez, sem deixar o restart sempre sobrescrevendo a senha:
+
+```bash
+docker compose exec app npm run db:reset-default-admin
+```
+
+Esse comando monta automaticamente a conexao do banco a partir das variaveis `POSTGRES_*` do container.
+
 Depois que o administrador existir, ele pode trocar a senha pelo fluxo `Esqueci minha senha` na tela de login. Para isso funcionar em producao, mantenha `NEXTAUTH_URL` apontando para o dominio correto e configure as variaveis SMTP.
 
 ## Uploads

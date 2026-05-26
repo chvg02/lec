@@ -16,7 +16,8 @@
     "docker:logs": "docker compose logs -f",
     "build": "prisma generate && next build",
     "vercel-build": "prisma generate && prisma migrate deploy && prisma db seed && next build",
-    "db:seed": "node scripts/ensure-default-admin.cjs"
+    "db:seed": "node scripts/ensure-default-admin.cjs",
+    "db:reset-default-admin": "node scripts/reset-default-admin-password.cjs"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.16",

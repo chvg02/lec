@@ -2,6 +2,21 @@
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("@prisma/client");
 
+function configureDatabaseUrl() {
+  if (process.env.DATABASE_URL) return;
+
+  const user = encodeURIComponent(envValue("POSTGRES_USER", "postgres"));
+  const password = encodeURIComponent(envValue("POSTGRES_PASSWORD", "postgres"));
+  const host = envValue("POSTGRES_HOST", "db");
+  const port = envValue("POSTGRES_PORT", "5432");
+  const database = encodeURIComponent(envValue("POSTGRES_DB", "lec_facom"));
+  const schema = encodeURIComponent(envValue("POSTGRES_SCHEMA", "public"));
+
+  process.env.DATABASE_URL = `postgresql://${user}:${password}@${host}:${port}/${database}?schema=${schema}`;
+}
+
+configureDatabaseUrl();
+
 const prisma = new PrismaClient();
 
 const ADMIN_PERMISSIONS = {
@@ -36,6 +51,8 @@ async function main() {
   });
 
   if (existingAdmin) {
+    const isPasswordAlreadyCurrent = await bcrypt.compare(password, existingAdmin.password);
+
     await prisma.user.update({
       where: { email },
       data: {
@@ -46,7 +63,15 @@ async function main() {
       },
     });
 
-    console.log(`Default admin already exists: ${email}`);
+    if (shouldResetPassword) {
+      console.log(`Default admin password reset: ${email}`);
+    } else if (isPasswordAlreadyCurrent) {
+      console.log(`Default admin already exists with current password: ${email}`);
+    } else {
+      console.log(
+        `Default admin already exists, password was not changed because DEFAULT_ADMIN_RESET_PASSWORD=false: ${email}`
+      );
+    }
     return;
   }
 
