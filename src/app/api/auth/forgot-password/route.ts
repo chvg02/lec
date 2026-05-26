@@ -25,10 +25,14 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#39;");
 }
 
-const successResponse = NextResponse.json({
-  message:
-    "Se existir uma conta com esse email, enviaremos um link para redefinir a senha.",
-});
+const successMessage =
+  "Se existir uma conta com esse email, enviaremos um link para redefinir a senha.";
+
+function createSuccessResponse() {
+  return NextResponse.json({
+    message: successMessage,
+  });
+}
 
 export async function POST(request: Request) {
   try {
@@ -64,7 +68,7 @@ export async function POST(request: Request) {
     });
 
     if (!user) {
-      return successResponse;
+      return createSuccessResponse();
     }
 
     const token = generateResetPasswordToken();
@@ -113,7 +117,7 @@ export async function POST(request: Request) {
       `,
     });
 
-    return successResponse;
+    return createSuccessResponse();
   } catch (error) {
     console.error("Erro ao solicitar recuperação de senha:", error);
     const mailConfigErrorMessage = getMailConfigErrorMessage(error);

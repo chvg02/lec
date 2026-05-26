@@ -9,6 +9,29 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+const defaultSuccessMessage =
+  "Se existir uma conta com esse email, enviaremos um link para redefinir a senha.";
+
+type ForgotPasswordResponse = {
+  message?: string;
+  error?: string;
+};
+
+async function readForgotPasswordResponse(response: Response): Promise<ForgotPasswordResponse> {
+  const text = await response.text();
+
+  if (!text.trim()) {
+    return {};
+  }
+
+  try {
+    const data = JSON.parse(text);
+    return data && typeof data === "object" ? data : {};
+  } catch {
+    return {};
+  }
+}
+
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,13 +51,13 @@ export default function ForgotPasswordPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      const data = await response.json();
+      const data = await readForgotPasswordResponse(response);
 
       if (!response.ok) {
         throw new Error(data.error || "Não foi possível enviar o email.");
       }
 
-      setFeedback({ type: "success", text: data.message });
+      setFeedback({ type: "success", text: data.message || defaultSuccessMessage });
     } catch (error) {
       setFeedback({
         type: "error",
