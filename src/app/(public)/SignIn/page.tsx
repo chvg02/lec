@@ -10,6 +10,23 @@ import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Eye, EyeClosed, Loader2 } from "lucide-react";
 
+function getInitialAuthErrorMessage() {
+  if (typeof window === "undefined") return "";
+
+  const params = new URLSearchParams(window.location.search);
+  const authError = params.get("error");
+
+  if (authError === "SessionRequired") {
+    return "Login realizado, mas a sessao nao foi reconhecida. Confira a URL e os cookies do servidor.";
+  }
+
+  if (authError === "CredentialsSignin") {
+    return "Email ou senha inválidos.";
+  }
+
+  return "";
+}
+
 export default function SignIn() {
 
   const dashboardUrl = "/dashboard";
@@ -18,7 +35,7 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(getInitialAuthErrorMessage);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

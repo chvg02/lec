@@ -35,6 +35,7 @@ Depois edite `docker/app.env` com as variaveis da aplicacao:
 
 ```env
 NEXTAUTH_URL=https://seu-dominio.com
+NEXTAUTH_USE_SECURE_COOKIES=true
 NEXTAUTH_SECRET=gere-um-segredo-forte
 
 SMTP_HOST=smtp.seu-provedor.com
@@ -55,6 +56,20 @@ Gere um `NEXTAUTH_SECRET` forte com:
 
 ```bash
 openssl rand -base64 32
+```
+
+Se a VM estiver servindo sem HTTPS, use `http://` e cookies nao seguros:
+
+```env
+NEXTAUTH_URL=http://lec.facom.ufms.br
+NEXTAUTH_USE_SECURE_COOKIES=false
+```
+
+Se estiver usando Nginx/Apache/Caddy com HTTPS e certificado valido, use:
+
+```env
+NEXTAUTH_URL=https://lec.facom.ufms.br
+NEXTAUTH_USE_SECURE_COOKIES=true
 ```
 
 ### 2. Subir os containers

@@ -10,8 +10,23 @@ import {
 } from "@/lib/permissions";
 import { normalizeEmail } from "@/lib/security";
 
+function envFlag(name: string) {
+  const value = process.env[name]?.trim().toLowerCase();
+
+  if (value === "true") return true;
+  if (value === "false") return false;
+
+  return undefined;
+}
+
+const useSecureCookies =
+  envFlag("NEXTAUTH_USE_SECURE_COOKIES") ??
+  process.env.NEXTAUTH_URL?.startsWith("https://") ??
+  false;
+
 const nextAuthOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
+  useSecureCookies,
   session: {
     strategy: "jwt",
     maxAge: 60 * 60 * 8,
