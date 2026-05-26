@@ -6,7 +6,9 @@ import { NextResponse } from "next/server";
 
 import { requireAnyPermissionApi } from "@/lib/auth";
 import {
+  isAllowedImageUpload,
   isAllowedUpload,
+  MAX_RESOURCE_UPLOAD_SIZE_BYTES,
   MAX_UPLOAD_SIZE_BYTES,
   sanitizeFileName,
 } from "@/lib/security";
@@ -17,9 +19,21 @@ export const dynamic = "force-dynamic";
 const MISSING_BLOB_CONFIGURATION_ERROR =
   "Vercel Blob nao esta configurado. Crie um Blob Store publico e vincule BLOB_READ_WRITE_TOKEN ao projeto.";
 
-async function saveUpload(file: File, filename: string) {
+type UploadType = "cover-image" | "editor-image" | "resource";
+
+function getUploadType(value: FormDataEntryValue | null): UploadType {
+  return value === "editor-image" || value === "resource"
+    ? value
+    : "cover-image";
+}
+
+async function saveUpload(file: File, filename: string, uploadType: UploadType) {
+  const isResourceUpload = uploadType === "resource";
+  const blobPrefix = isResourceUpload ? "resources" : "uploads";
+  const localFolder = isResourceUpload ? "resources" : "";
+
   if (process.env.BLOB_READ_WRITE_TOKEN) {
-    const blob = await put(`uploads/${filename}`, file, {
+    const blob = await put(`${blobPrefix}/${filename}`, file, {
       access: "public",
       contentType: file.type,
     });
@@ -33,27 +47,28 @@ async function saveUpload(file: File, filename: string) {
 
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  const uploadDir = path.join(process.cwd(), "public/uploads");
+  const uploadDir = path.join(process.cwd(), "public/uploads", localFolder);
   const filepath = path.join(uploadDir, filename);
 
   await mkdir(uploadDir, { recursive: true });
   await writeFile(filepath, buffer);
 
-  return `/uploads/${filename}`;
+  return localFolder ? `/uploads/${localFolder}/${filename}` : `/uploads/${filename}`;
 }
 
 export async function POST(req: Request) {
-  const { response } = await requireAnyPermissionApi([
-    "canManageProjects",
-    "canManageNews",
-    "canManageEvents",
-    "canManageResources",
-  ]);
-  if (response) return response;
-
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
+    const uploadType = getUploadType(formData.get("uploadType"));
+    const isResourceUpload = uploadType === "resource";
+
+    const { response } = await requireAnyPermissionApi(
+      isResourceUpload
+        ? ["canManageResources"]
+        : ["canManageProjects", "canManageNews", "canManageEvents", "canManageResources"]
+    );
+    if (response) return response;
 
     if (!file) {
       return NextResponse.json({ error: "Nenhum arquivo enviado." }, { status: 400 });
@@ -63,14 +78,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "O arquivo enviado esta vazio." }, { status: 400 });
     }
 
-    if (file.size > MAX_UPLOAD_SIZE_BYTES) {
+    const maxUploadSize = isResourceUpload
+      ? MAX_RESOURCE_UPLOAD_SIZE_BYTES
+      : MAX_UPLOAD_SIZE_BYTES;
+
+    if (file.size > maxUploadSize) {
       return NextResponse.json(
-        { error: "O arquivo excede o limite de 10 MB." },
+        {
+          error: isResourceUpload
+            ? "O arquivo excede o limite de 100 MB."
+            : "O arquivo excede o limite de 10 MB.",
+        },
         { status: 400 }
       );
     }
 
-    if (!isAllowedUpload(file)) {
+    const isAllowedFile =
+      uploadType === "editor-image" ? isAllowedImageUpload(file) : isAllowedUpload(file);
+
+    if (!isAllowedFile) {
       return NextResponse.json(
         { error: "Tipo de arquivo nao permitido." },
         { status: 400 }
@@ -80,7 +106,7 @@ export async function POST(req: Request) {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     const safeOriginalName = sanitizeFileName(file.name) || "arquivo";
     const filename = `${uniqueSuffix}-${safeOriginalName}`;
-    const fileUrl = await saveUpload(file, filename);
+    const fileUrl = await saveUpload(file, filename, uploadType);
 
     return NextResponse.json({ imageUrl: fileUrl, fileUrl });
   } catch (error) {

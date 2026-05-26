@@ -1,12 +1,16 @@
 node_modules
 .next
 npm-debug.log*
+*.log
 devserver-*.log
 devserver-*.err.log
 .env
 .env.*
+docker/app.env
 coverage
 .git
 .gitignore
 generated/prisma
 tsconfig.tsbuildinfo
+backups
+lec-facom

@@ -20,12 +20,14 @@ function envValue(name: string, fallback: string) {
 }
 
 async function main() {
-  const email = envValue("DEFAULT_ADMIN_EMAIL", "vitor.aa01@gmail.com").toLowerCase();
-  const password = envValue("DEFAULT_ADMIN_PASSWORD", "12345678");
+  const email = envValue("DEFAULT_ADMIN_EMAIL", "vitor.a.anjos@ufms.br").toLowerCase();
+  const password = envValue("DEFAULT_ADMIN_PASSWORD", "Echvgme0406#");
   const name = envValue(
     "DEFAULT_ADMIN_NAME",
-    "Vitor Gabriel Almeida dos Anjos"
+    "vitor anjos"
   );
+  const shouldResetPassword =
+    envValue("DEFAULT_ADMIN_RESET_PASSWORD", "false").toLowerCase() === "true";
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingAdmin = await prisma.user.findUnique({
@@ -37,7 +39,7 @@ async function main() {
       where: { email },
       data: {
         name,
-        password: hashedPassword,
+        ...(shouldResetPassword ? { password: hashedPassword } : {}),
         role: "admin",
         ...ADMIN_PERMISSIONS,
       },

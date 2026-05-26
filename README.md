@@ -1,6 +1,6 @@
 # LEC Facom
 
-Aplicacao Next.js com Prisma e PostgreSQL.
+Aplicacao Next.js com Prisma, PostgreSQL e uploads persistentes.
 
 ## Rodando localmente
 
@@ -9,119 +9,150 @@ npm install
 npm run dev
 ```
 
-## Rodando com Docker
+## Deploy em VM com Docker
 
-O projeto ja esta preparado para subir a aplicacao e o banco via Docker Compose.
+O projeto esta preparado para subir a aplicacao, PostgreSQL, volume de uploads e backup automatico com Docker Compose.
 
-### Subir os containers
+### 1. Configurar variaveis
 
-```bash
-npm run docker:up
-```
-
-Ou diretamente:
+Opcionalmente copie o exemplo de variaveis do Compose para a raiz:
 
 ```bash
-docker compose up --build
+cp docker/compose.env.example .env
 ```
 
-A aplicacao fica em `http://localhost:3000` e o PostgreSQL em `localhost:5432`.
+Edite `.env` para alterar porta publica, nome do banco e senha do Postgres:
 
-### Derrubar os containers
+```env
+APP_PORT=3000
+POSTGRES_DB=lec_facom
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=troque-esta-senha
+POSTGRES_PUBLIC_PORT=5432
+```
+
+Depois edite `docker/app.env` com as variaveis da aplicacao:
+
+```env
+NEXTAUTH_URL=https://seu-dominio.com
+NEXTAUTH_SECRET=gere-um-segredo-forte
+
+SMTP_HOST=smtp.seu-provedor.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=usuario@dominio.com
+SMTP_PASS=senha-ou-app-password
+SMTP_FROM_EMAIL=usuario@dominio.com
+SMTP_FROM_NAME=LEC Facom
+
+DEFAULT_ADMIN_EMAIL=vitor.a.anjos@ufms.br
+DEFAULT_ADMIN_PASSWORD="Echvgme0406#"
+DEFAULT_ADMIN_NAME=vitor anjos
+DEFAULT_ADMIN_RESET_PASSWORD=false
+```
+
+Gere um `NEXTAUTH_SECRET` forte com:
 
 ```bash
-npm run docker:down
+openssl rand -base64 32
 ```
 
-### Ver logs
+### 2. Subir os containers
 
 ```bash
-npm run docker:logs
+docker compose up -d --build
 ```
 
-## Backup local
+A aplicacao fica na porta definida em `APP_PORT` (`3000` por padrao).
 
-O Docker Compose inclui o servico `backup`, que salva automaticamente:
+### 3. Ver logs
 
-- o banco PostgreSQL em `backups/<data-hora>/database.dump`
-- os arquivos enviados em `backups/<data-hora>/uploads.tar.gz`
+```bash
+docker compose logs -f app
+```
 
-Por padrao, o backup roda uma vez por dia e remove backups com mais de 7 dias. Esses valores ficam em `docker-compose.yml`:
+### 4. Derrubar os containers
 
-- `BACKUP_INTERVAL_SECONDS: 86400`
-- `BACKUP_RETENTION_DAYS: 7`
+```bash
+docker compose down
+```
 
-### Rodar um backup manual
+Use `docker compose down -v` apenas se quiser apagar tambem banco e uploads.
 
-Com os containers ativos:
+## O que o Docker faz ao iniciar
+
+- Aguarda o Postgres aceitar conexoes.
+- Executa `prisma migrate deploy`.
+- Garante a existencia do usuario administrador inicial:
+  - email: `vitor.a.anjos@ufms.br`
+  - senha inicial: a definida em `DEFAULT_ADMIN_PASSWORD`
+  - nome: `vitor anjos`
+- Inicia o Next.js em `0.0.0.0:3000`.
+
+Para desativar migrations ou seed automaticos, ajuste em `docker/app.env`:
+
+```env
+RUN_MIGRATIONS=false
+ENSURE_DEFAULT_ADMIN=false
+```
+
+Por padrao, o seed nao troca a senha de um admin existente. Para forcar a senha do `DEFAULT_ADMIN_PASSWORD` em um restart:
+
+```env
+DEFAULT_ADMIN_RESET_PASSWORD=true
+```
+
+Depois que o administrador existir, ele pode trocar a senha pelo fluxo `Esqueci minha senha` na tela de login. Para isso funcionar em producao, mantenha `NEXTAUTH_URL` apontando para o dominio correto e configure as variaveis SMTP.
+
+## Uploads
+
+No Docker, os uploads sao salvos localmente em `/app/public/uploads` e persistidos no volume `uploads-data`.
+
+Nao e necessario configurar Vercel Blob na VM. Se `BLOB_READ_WRITE_TOKEN` for definido, a API ainda consegue salvar no Vercel Blob, mas o fluxo padrao do Docker usa o volume local.
+
+## Banco de dados
+
+O Postgres fica no servico `db`. A aplicacao recebe automaticamente:
+
+```env
+DATABASE_URL=postgresql://POSTGRES_USER:POSTGRES_PASSWORD@db:5432/POSTGRES_DB?schema=public
+```
+
+O `DATABASE_URL` e montado pelo `docker/entrypoint.sh` a partir de `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`, `POSTGRES_PORT` e `POSTGRES_DB`. A porta do banco e vinculada somente ao `127.0.0.1` da VM para evitar exposicao publica.
+
+## Backup
+
+O servico `backup` salva automaticamente:
+
+- banco PostgreSQL em `backups/<data-hora>/database.dump`
+- uploads em `backups/<data-hora>/uploads.tar.gz`
+
+Por padrao, o backup roda uma vez por dia e remove backups com mais de 7 dias. Ajuste em `.env`:
+
+```env
+BACKUP_INTERVAL_SECONDS=86400
+BACKUP_RETENTION_DAYS=7
+```
+
+Backup manual:
 
 ```bash
 docker compose run --rm -e BACKUP_ONCE=true backup
 ```
 
-### Restaurar banco e uploads
-
-Substitua `<data-hora>` pela pasta do backup desejado:
+Restaurar banco e uploads:
 
 ```bash
 docker compose run --rm backup pg_restore -h db -U postgres -d lec_facom --clean --if-exists /backups/<data-hora>/database.dump
 docker compose run --rm -v ./backups/<data-hora>/uploads.tar.gz:/restore/uploads.tar.gz -v lec-facom_uploads-data:/uploads postgres:16-alpine sh -c "rm -rf /uploads/* && tar -xzf /restore/uploads.tar.gz -C /uploads"
 ```
 
-## Variaveis de ambiente do Docker
+## Reverse proxy
 
-O Compose usa o arquivo `docker/app.env`.
-
-Ajuste principalmente:
-
-- `NEXTAUTH_SECRET`
-- `SMTP_HOST`
-- `SMTP_USER`
-- `SMTP_PASS`
-- `SMTP_FROM_EMAIL`
-
-O envio de email usa SMTP via Nodemailer, entao pode ser configurado com Gmail/Google Workspace, Outlook, Zoho, Brevo, Mailgun, SendGrid ou outro provedor SMTP. `SMTP_PORT` usa `587` por padrao; use `465` com `SMTP_SECURE=true` quando o provedor exigir SSL direto. `SMTP_FROM_NAME` e opcional.
-
-O `DATABASE_URL` do container da aplicacao ja e injetado automaticamente pelo `docker-compose.yml`.
-
-## Uploads no Vercel
-
-Em producao na Vercel, os uploads precisam de armazenamento persistente. Crie um Vercel Blob Store publico no projeto e garanta que a variavel `BLOB_READ_WRITE_TOKEN` esteja vinculada aos ambientes usados pelo deploy.
-
-Sem essa variavel, a rota `/api/upload` retorna erro informando que o Blob nao esta configurado. No desenvolvimento local, quando `BLOB_READ_WRITE_TOKEN` nao existe, os arquivos continuam sendo salvos em `public/uploads`.
-
-As imagens inseridas no editor e os arquivos de recursos usam client upload do Vercel Blob para contornar o limite de 4.5 MB das Vercel Functions. Nesse fluxo, o arquivo sai direto do navegador para o Blob, e a API `/api/upload/client` gera apenas o token temporario de envio. Recursos aceitam arquivos de ate 100 MB.
-
-## Deploy na Vercel
-
-Na Vercel, configure as variaveis em Project Settings > Environment Variables. Para o envio de emails, use as mesmas variaveis SMTP:
+Em producao, a forma comum e apontar Nginx, Caddy ou Traefik para `http://127.0.0.1:3000` e definir:
 
 ```env
-NEXTAUTH_SECRET="gere-um-segredo-forte"
-NEXTAUTH_URL="https://seu-dominio.vercel.app"
-SMTP_HOST="smtp.seu-provedor.com"
-SMTP_PORT="587"
-SMTP_SECURE="false"
-SMTP_USER="usuario@seu-dominio.com"
-SMTP_PASS="senha-ou-app-password"
-SMTP_FROM_EMAIL="usuario@seu-dominio.com"
-SMTP_FROM_NAME="LEC Facom"
+NEXTAUTH_URL=https://seu-dominio.com
 ```
 
-Use um SMTP de provedor externo, como Gmail/Google Workspace, Outlook, Zoho, Brevo, Mailgun, SendGrid ou servidor institucional. Para porta `465`, defina `SMTP_SECURE="true"`. Para porta `587`, mantenha `SMTP_SECURE="false"`.
-
-## Banco Neon na Vercel
-
-Use a URL com pooler do Neon em `DATABASE_URL`, normalmente com `-pooler` no host e `sslmode=require`. Exemplo:
-
-```env
-DATABASE_URL="postgresql://usuario:senha@ep-exemplo-pooler.regiao.aws.neon.tech/neondb?sslmode=require"
-```
-
-Para migrations e comandos Prisma CLI, mantenha tambem uma URL direta sem pooler em `DATABASE_URL_UNPOOLED` ou `POSTGRES_URL_NON_POOLING`.
-
-## Observacoes
-
-- As migrations do Prisma sao aplicadas automaticamente quando o container da app sobe.
-- Os uploads enviados para `public/uploads` ficam persistidos no volume `uploads-data`.
-- Os dados do PostgreSQL ficam persistidos no volume `postgres-data`.
+Garanta tambem que o firewall da VM exponha apenas as portas necessarias, normalmente `80`, `443` e, se desejado, a porta da aplicacao.

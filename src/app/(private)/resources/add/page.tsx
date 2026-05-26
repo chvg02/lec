@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Download, FileUp, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { upload } from "@vercel/blob/client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,8 +18,6 @@ const materialTypeOptions = [
 ] as const;
 
 type MaterialType = (typeof materialTypeOptions)[number]["value"];
-
-const MULTIPART_UPLOAD_THRESHOLD_BYTES = 4 * 1024 * 1024;
 
 function getFileName(fileUrl: string) {
   return decodeURIComponent(fileUrl.split("/").pop() || "recurso");
@@ -48,6 +45,58 @@ function sanitizeClientFileName(fileName: string) {
     .replace(/_+/g, "_")
     .replace(/^_+|_+$/g, "")
     .slice(0, 120);
+}
+
+function uploadResourceFile(
+  file: File,
+  onProgress: (percentage: number) => void
+) {
+  return new Promise<string>((resolve, reject) => {
+    const formData = new FormData();
+    formData.append("file", file, sanitizeClientFileName(file.name) || "recurso");
+    formData.append("uploadType", "resource");
+
+    const request = new XMLHttpRequest();
+
+    request.upload.onprogress = (event) => {
+      if (!event.lengthComputable) return;
+
+      onProgress(Math.max(1, Math.round((event.loaded / event.total) * 100)));
+    };
+
+    request.onload = () => {
+      try {
+        const data = JSON.parse(request.responseText || "{}") as {
+          fileUrl?: string;
+          imageUrl?: string;
+          error?: string;
+        };
+
+        if (request.status < 200 || request.status >= 300) {
+          reject(new Error(data.error || "Erro ao enviar o arquivo."));
+          return;
+        }
+
+        const uploadedUrl = data.fileUrl || data.imageUrl;
+
+        if (!uploadedUrl) {
+          reject(new Error("O servidor nao retornou a URL do arquivo."));
+          return;
+        }
+
+        resolve(uploadedUrl);
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    request.onerror = () => {
+      reject(new Error("Erro de rede ao enviar o arquivo."));
+    };
+
+    request.open("POST", "/api/upload");
+    request.send(formData);
+  });
 }
 
 export default function AddResourcePage() {
@@ -120,28 +169,16 @@ export default function AddResourcePage() {
     }
 
     try {
-      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-      const safeOriginalName = sanitizeClientFileName(file.name) || "recurso";
-      const blob = await upload(`resources/${uniqueSuffix}-${safeOriginalName}`, file, {
-        access: "public",
-        handleUploadUrl: "/api/upload/client",
-        contentType: file.type,
-        multipart: file.size > MULTIPART_UPLOAD_THRESHOLD_BYTES,
-        onUploadProgress: ({ percentage }) => {
-          setUploadProgress(Math.max(1, Math.round(percentage)));
-        },
-      });
-
-      if (!blob?.url) {
-        setError("O Blob nao retornou a URL do arquivo.");
-        return;
-      }
-
+      const uploadedUrl = await uploadResourceFile(file, setUploadProgress);
       setUploadProgress(100);
-      setFileUrl(blob.url);
+      setFileUrl(uploadedUrl);
     } catch (uploadError) {
       console.error(uploadError);
-      setError("Erro de rede ao enviar o arquivo.");
+      setError(
+        uploadError instanceof Error
+          ? uploadError.message
+          : "Erro de rede ao enviar o arquivo."
+      );
     } finally {
       setUploading(false);
     }

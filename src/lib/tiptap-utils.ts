@@ -1,6 +1,5 @@
 ﻿import type { Node as TiptapNode } from "@tiptap/pm/model"
 import type { Transaction } from "@tiptap/pm/state"
-import { upload } from "@vercel/blob/client"
 import {
   AllSelection,
   NodeSelection,
@@ -10,8 +9,6 @@ import {
 import type { Editor, NodeWithPos } from "@tiptap/react"
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
-
-const MULTIPART_UPLOAD_THRESHOLD_BYTES = 4 * 1024 * 1024
 
 function sanitizeClientFileName(fileName: string) {
   return fileName
@@ -374,32 +371,65 @@ export const handleImageUpload = async (
 
   onProgress?.({ progress: 1 });
 
-  try {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`
-    const safeOriginalName = sanitizeClientFileName(file.name) || "imagem"
-    const blob = await upload(`uploads/${uniqueSuffix}-${safeOriginalName}`, file, {
-      access: "public",
-      handleUploadUrl: "/api/upload/client",
-      contentType: file.type,
-      abortSignal,
-      multipart: file.size > MULTIPART_UPLOAD_THRESHOLD_BYTES,
-      onUploadProgress: ({ percentage }) => {
-        onProgress?.({ progress: Math.max(1, Math.round(percentage)) })
-      },
-    });
+  return new Promise((resolve, reject) => {
+    const formData = new FormData()
+    formData.append("file", file, sanitizeClientFileName(file.name) || "imagem")
+    formData.append("uploadType", "editor-image")
 
-    if (!blob?.url) {
-      throw new Error("O Blob nao retornou a URL da imagem.");
+    const request = new XMLHttpRequest()
+
+    const abortUpload = () => {
+      request.abort()
+      reject(new DOMException("Upload cancelado.", "AbortError"))
     }
 
-    onProgress?.({ progress: 100 });
+    abortSignal?.addEventListener("abort", abortUpload, { once: true })
 
-    return blob.url;
+    request.upload.onprogress = (event) => {
+      if (!event.lengthComputable) return
 
-  } catch (error) {
-    console.error("Upload error:", error);
-    throw error;
-  }
+      onProgress?.({
+        progress: Math.max(1, Math.round((event.loaded / event.total) * 100)),
+      })
+    }
+
+    request.onload = () => {
+      abortSignal?.removeEventListener("abort", abortUpload)
+
+      try {
+        const data = JSON.parse(request.responseText || "{}") as {
+          imageUrl?: string
+          fileUrl?: string
+          error?: string
+        }
+
+        if (request.status < 200 || request.status >= 300) {
+          reject(new Error(data.error || "Erro ao enviar imagem."))
+          return
+        }
+
+        const uploadedUrl = data.imageUrl || data.fileUrl
+
+        if (!uploadedUrl) {
+          reject(new Error("O servidor nao retornou a URL da imagem."))
+          return
+        }
+
+        onProgress?.({ progress: 100 })
+        resolve(uploadedUrl)
+      } catch (error) {
+        reject(error)
+      }
+    }
+
+    request.onerror = () => {
+      abortSignal?.removeEventListener("abort", abortUpload)
+      reject(new Error("Erro de rede ao enviar imagem."))
+    }
+
+    request.open("POST", "/api/upload")
+    request.send(formData)
+  })
 };
 
 type ProtocolOptions = {
