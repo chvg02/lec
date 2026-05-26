@@ -12,6 +12,7 @@ import { Eye, EyeClosed, Loader2 } from "lucide-react";
 
 export default function SignIn() {
 
+  const dashboardUrl = "/dashboard";
   const { data: session, status } = useSession();
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -22,9 +23,9 @@ export default function SignIn() {
 
   useEffect(() => {
     if (status === "authenticated" && session) {
-      router.replace("/dashboard");
+      router.replace(dashboardUrl);
     }
-  }, [router, session, status]);
+  }, [dashboardUrl, router, session, status]);
 
   if (status === "loading") {
     return <p>Carregando...</p>;
@@ -43,7 +44,7 @@ export default function SignIn() {
       email,
       password,
       redirect: false,
-      callbackUrl: "/dashboard",
+      callbackUrl: dashboardUrl,
     });
 
     setLoading(false);
@@ -53,8 +54,7 @@ export default function SignIn() {
       return;
     }
 
-    router.replace("/dashboard");
-    router.refresh();
+    window.location.assign(dashboardUrl);
   };
 
   return (

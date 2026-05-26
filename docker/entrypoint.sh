@@ -1,6 +1,29 @@
 #!/bin/sh
 set -eu
 
+validate_nextauth_url() {
+  node - <<'NODE'
+const value = process.env.NEXTAUTH_URL;
+
+if (!value) {
+  console.error("NEXTAUTH_URL is required. Example: https://seu-dominio.com");
+  process.exit(1);
+}
+
+try {
+  const url = new URL(value);
+  if (!["http:", "https:"].includes(url.protocol)) {
+    throw new Error("invalid protocol");
+  }
+} catch {
+  console.error(
+    `Invalid NEXTAUTH_URL: ${value}. Use the full URL with http:// or https://.`
+  );
+  process.exit(1);
+}
+NODE
+}
+
 configure_database_url() {
   if [ -n "${DATABASE_URL:-}" ]; then
     export DATABASE_URL
@@ -58,6 +81,7 @@ NODE
   done
 }
 
+validate_nextauth_url
 configure_database_url
 wait_for_database
 
