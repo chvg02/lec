@@ -15,6 +15,7 @@ export const publicUserSelect = {
   email: true,
   profileImageUrl: true,
   role: true,
+  isActive: true,
   isTeam: true,
   isFormerTeam: true,
   ...USER_PERMISSION_SELECT,
@@ -31,6 +32,13 @@ export async function requireAuthenticatedApi() {
     };
   }
 
+  if (session.user.isActive === false) {
+    return {
+      session,
+      response: NextResponse.json({ error: "Conta desativada" }, { status: 403 }),
+    };
+  }
+
   return { session, response: null };
 }
 
@@ -41,6 +49,13 @@ export async function requireAdminApi() {
     return {
       session: null,
       response: NextResponse.json({ error: "Não autenticado" }, { status: 401 }),
+    };
+  }
+
+  if (session.user.isActive === false) {
+    return {
+      session,
+      response: NextResponse.json({ error: "Conta desativada" }, { status: 403 }),
     };
   }
 
@@ -67,6 +82,13 @@ export async function requirePermissionApi(permission: UserPermissionKey) {
     };
   }
 
+  if (session.user.isActive === false) {
+    return {
+      session,
+      response: NextResponse.json({ error: "Conta desativada" }, { status: 403 }),
+    };
+  }
+
   if (!hasPermission(session.user, permission)) {
     return {
       session,
@@ -87,6 +109,13 @@ export async function requireAnyPermissionApi(permissions: UserPermissionKey[]) 
     return {
       session: null,
       response: NextResponse.json({ error: "Não autenticado" }, { status: 401 }),
+    };
+  }
+
+  if (session.user.isActive === false) {
+    return {
+      session,
+      response: NextResponse.json({ error: "Conta desativada" }, { status: 403 }),
     };
   }
 

@@ -31,6 +31,7 @@ type TeamUser = {
   email: string;
   profileImageUrl?: string | null;
   role: string;
+  isActive?: boolean;
   isTeam?: boolean;
   isFormerTeam?: boolean;
 };
@@ -344,7 +345,9 @@ export default function About() {
     }
   };
 
-  const availableCurrentUsers = allUsers.filter((user) => !user.isTeam);
+  const availableCurrentUsers = allUsers.filter(
+    (user) => user.isActive !== false && !user.isTeam
+  );
   const availableFormerUsers = allUsers.filter((user) => !user.isFormerTeam);
   const displaySettings = isEditingAbout ? draftSettings : settings;
 
@@ -559,6 +562,7 @@ export default function About() {
               {availableUsers.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.name} ({user.email})
+                  {user.isActive === false ? " - conta desativada" : ""}
                 </option>
               ))}
             </select>

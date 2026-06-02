@@ -37,6 +37,7 @@ model User {
   password               String
   profileImageUrl        String?
   role                   user_role_type @default(admin)
+  isActive               Boolean        @default(true)
   isTeam                 Boolean        @default(false)
   isFormerTeam           Boolean        @default(false)
   canManageProjects      Boolean        @default(false)

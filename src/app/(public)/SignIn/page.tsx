@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,10 @@ function getInitialAuthErrorMessage() {
     return "Email ou senha inválidos.";
   }
 
+  if (authError === "AccountInactive") {
+    return "Esta conta está desativada. Entre em contato com o administrador.";
+  }
+
   return "";
 }
 
@@ -39,6 +43,11 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (status === "authenticated" && session?.user.isActive === false) {
+      signOut({ callbackUrl: "/SignIn?error=AccountInactive" });
+      return;
+    }
+
     if (status === "authenticated" && session) {
       router.replace(dashboardUrl);
     }
@@ -67,7 +76,11 @@ export default function SignIn() {
     setLoading(false);
 
     if (res?.error || !res?.ok) {
-      setError("Email ou senha inválidos.");
+      setError(
+        res?.error === "AccountInactive"
+          ? "Esta conta está desativada. Entre em contato com o administrador."
+          : "Email ou senha inválidos."
+      );
       return;
     }
 

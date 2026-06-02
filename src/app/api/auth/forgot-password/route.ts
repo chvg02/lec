@@ -64,10 +64,11 @@ export async function POST(request: Request) {
         id: true,
         name: true,
         email: true,
+        isActive: true,
       },
     });
 
-    if (!user) {
+    if (!user || !user.isActive) {
       return createSuccessResponse();
     }
 

@@ -34,12 +34,14 @@ export const EMPTY_USER_PERMISSIONS = USER_PERMISSION_KEYS.reduce(
 
 export type PermissionUser = {
   role?: string | null;
+  isActive?: boolean | null;
 } & Partial<UserPermissionFlags>;
 
 export function hasPermission(
   user: PermissionUser | null | undefined,
   permission: UserPermissionKey
 ) {
+  if (user?.isActive === false) return false;
   return user?.role === "admin" || Boolean(user?.[permission]);
 }
 
@@ -47,6 +49,7 @@ export function hasAnyPermission(
   user: PermissionUser | null | undefined,
   permissions: UserPermissionKey[]
 ) {
+  if (user?.isActive === false) return false;
   return user?.role === "admin" || permissions.some((permission) => Boolean(user?.[permission]));
 }
 

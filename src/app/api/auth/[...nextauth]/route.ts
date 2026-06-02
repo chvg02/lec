@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import {
   getPermissionPayload,
-  USER_PERMISSION_KEYS,
   USER_PERMISSION_SELECT,
 } from "@/lib/permissions";
 import { normalizeEmail } from "@/lib/security";
@@ -58,7 +57,10 @@ const nextAuthOptions: NextAuthOptions = {
               name: true,
               email: true,
               password: true,
+              profileImageUrl: true,
               role: true,
+              isActive: true,
+              ...USER_PERMISSION_SELECT,
             },
           });
         } catch (error) {
@@ -68,6 +70,10 @@ const nextAuthOptions: NextAuthOptions = {
 
         if (!user) return null;
 
+        if (!user.isActive) {
+          throw new Error("AccountInactive");
+        }
+
         const isValid = await bcrypt.compare(password, user.password);
 
         if (!isValid) return null;
@@ -76,13 +82,11 @@ const nextAuthOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
-          image: null,
-          profileImageUrl: null,
+          image: user.profileImageUrl,
+          profileImageUrl: user.profileImageUrl,
           role: user.role,
-          ...USER_PERMISSION_KEYS.reduce(
-            (permissions, key) => ({ ...permissions, [key]: false }),
-            {}
-          ),
+          isActive: user.isActive,
+          ...getPermissionPayload(user),
         };
       },
     }),
@@ -92,6 +96,7 @@ const nextAuthOptions: NextAuthOptions = {
       if (user) {
         token.id = Number(user.id);
         token.role = user.role;
+        token.isActive = user.isActive;
         token.picture = user.profileImageUrl ?? user.image ?? null;
         Object.assign(token, getPermissionPayload(user));
       }
@@ -101,6 +106,7 @@ const nextAuthOptions: NextAuthOptions = {
       if (token) {
         session.user.id = token.id;
         session.user.role = token.role;
+        session.user.isActive = token.isActive !== false;
         session.user.image = typeof token.picture === "string" ? token.picture : null;
         session.user.profileImageUrl = session.user.image;
         Object.assign(session.user, getPermissionPayload(token));
@@ -110,6 +116,7 @@ const nextAuthOptions: NextAuthOptions = {
             where: { id: Number(token.id) },
             select: {
               role: true,
+              isActive: true,
               profileImageUrl: true,
               ...USER_PERMISSION_SELECT,
             },
@@ -117,9 +124,12 @@ const nextAuthOptions: NextAuthOptions = {
 
           if (user) {
             session.user.role = user.role;
+            session.user.isActive = user.isActive;
             session.user.image = user.profileImageUrl;
             session.user.profileImageUrl = user.profileImageUrl;
             Object.assign(session.user, getPermissionPayload(user));
+          } else {
+            session.user.isActive = false;
           }
         } catch (error) {
           console.error("Erro ao atualizar dados da sessao:", error);
@@ -128,11 +138,15 @@ const nextAuthOptions: NextAuthOptions = {
             where: { id: Number(token.id) },
             select: {
               role: true,
+              isActive: true,
             },
           });
 
           if (user) {
             session.user.role = user.role;
+            session.user.isActive = user.isActive;
+          } else {
+            session.user.isActive = false;
           }
         }
       }

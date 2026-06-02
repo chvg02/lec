@@ -13,6 +13,10 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
         redirect('/SignIn?error=SessionRequired')
     }
 
+    if (session.user.isActive === false) {
+        redirect('/SignIn?error=AccountInactive')
+    }
+
     return (
         <>
             {children}

@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, Pencil, Trash2, Upload, UsersRound, X } from "lucide-react";
+import { Loader2, Pencil, Power, Trash2, Upload, UsersRound, X } from "lucide-react";
 
 import { PrivateViewLayout } from "@/components/private/private-view-layout";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +30,7 @@ type User = UserPermissionFlags & {
   email: string;
   profileImageUrl?: string | null;
   role: string;
+  isActive: boolean;
   createdAt: string;
 };
 
@@ -40,6 +41,7 @@ export default function UsersPage() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState<number | null>(null);
+  const [isTogglingStatus, setIsTogglingStatus] = useState<number | null>(null);
   const [uploadingProfilePhoto, setUploadingProfilePhoto] = useState(false);
 
   const fetchUsers = async () => {
@@ -85,6 +87,34 @@ export default function UsersPage() {
   const handleEdit = (user: User) => {
     setSelectedUser(user);
     setIsEditing(true);
+  };
+
+  const handleToggleStatus = async (user: User) => {
+    const nextActive = user.isActive === false;
+    const action = nextActive ? "reativar" : "desativar";
+
+    if (!confirm(`Tem certeza que deseja ${action} esta conta?`)) return;
+
+    try {
+      setIsTogglingStatus(user.id);
+      const res = await fetch(`/api/user`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: user.id, isActive: nextActive }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || `Erro ao ${action} usuário`);
+      }
+
+      await fetchUsers();
+    } catch (err) {
+      console.error(err);
+      alert(err instanceof Error ? err.message : `Erro ao ${action} usuário`);
+    } finally {
+      setIsTogglingStatus(null);
+    }
   };
 
   const handleSave = async () => {
@@ -207,6 +237,7 @@ export default function UsersPage() {
                 <TableHead className="text-center">Nome</TableHead>
                 <TableHead className="text-center">Email</TableHead>
                 <TableHead className="text-center">Função</TableHead>
+                <TableHead className="text-center">Status</TableHead>
                 <TableHead className="text-center">Funcionalidades</TableHead>
                 <TableHead className="text-center">Criado em</TableHead>
                 <TableHead className="text-center">Ações</TableHead>
@@ -215,7 +246,10 @@ export default function UsersPage() {
 
             <TableBody>
               {users.map((user) => (
-                <TableRow key={user.id}>
+                <TableRow
+                  key={user.id}
+                  className={user.isActive === false ? "bg-slate-50 opacity-75" : undefined}
+                >
                   <TableCell className="text-center">{user.id}</TableCell>
                   <TableCell className="text-center">
                     <img
@@ -235,13 +269,20 @@ export default function UsersPage() {
                       {user.role.replace("_", " ")}
                     </Badge>
                   </TableCell>
+                  <TableCell className="text-center">
+                    <Badge
+                      variant={user.isActive === false ? "destructive" : "secondary"}
+                    >
+                      {user.isActive === false ? "Desativada" : "Ativa"}
+                    </Badge>
+                  </TableCell>
                   <TableCell className="max-w-xs text-center text-sm text-slate-600">
                     {getPermissionSummary(user)}
                   </TableCell>
                   <TableCell className="text-center">
                     {new Date(user.createdAt).toLocaleDateString("pt-BR")}
                   </TableCell>
-                  <TableCell className="text-center min-w-[220px]">
+                  <TableCell className="min-w-[320px] text-center">
                     <div className="flex justify-center gap-2 whitespace-nowrap">
                       <Button
                         size="sm"
@@ -250,6 +291,19 @@ export default function UsersPage() {
                       >
                         <Pencil className="mr-1 h-4 w-4" />
                         Editar
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant={user.isActive === false ? "outline" : "secondary"}
+                        disabled={isTogglingStatus === user.id}
+                        onClick={() => handleToggleStatus(user)}
+                      >
+                        <Power className="mr-1 h-4 w-4" />
+                        {isTogglingStatus === user.id
+                          ? "Aguarde..."
+                          : user.isActive === false
+                            ? "Ativar"
+                            : "Desativar"}
                       </Button>
                       <Button
                         size="sm"

@@ -5,6 +5,7 @@ declare module "next-auth" {
   interface User extends DefaultUser, Partial<UserPermissionFlags> {
     id: number;
     role: string;
+    isActive?: boolean;
     profileImageUrl?: string | null;
   }
 
@@ -12,6 +13,7 @@ declare module "next-auth" {
     user: {
       id: number;
       role: string;
+      isActive: boolean;
       profileImageUrl?: string | null;
     } & DefaultSession["user"] & UserPermissionFlags;
   }
@@ -21,5 +23,6 @@ declare module "next-auth/jwt" {
   interface JWT extends Partial<UserPermissionFlags> {
     id: number;
     role: string;
+    isActive?: boolean;
   }
 }

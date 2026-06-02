@@ -11,6 +11,7 @@ export async function GET() {
       email: true,
       profileImageUrl: true,
       role: true,
+      isActive: true,
       isTeam: true,
       isFormerTeam: true,
     },

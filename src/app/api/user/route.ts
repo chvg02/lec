@@ -1,5 +1,6 @@
 ﻿import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
+import type { Prisma } from "@prisma/client";
 
 import {
   publicUserSelect,
@@ -31,7 +32,7 @@ export async function GET(req: NextRequest) {
         take: 5,
         select: publicUserSelect,
       }),
-      prisma.user.count(),
+      prisma.user.count({ where: { isActive: true } }),
     ]);
 
     return NextResponse.json({ users, count });
@@ -98,6 +99,7 @@ export async function POST(req: Request) {
       email: user.email,
       profileImageUrl: user.profileImageUrl,
       role: user.role,
+      isActive: user.isActive,
       isTeam: user.isTeam,
       isFormerTeam: user.isFormerTeam,
       ...permissions,
@@ -184,22 +186,32 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const { response } = await requirePermissionApi("canEditAbout");
-  if (response) return response;
   try {
     const body = await req.json();
     const id = parseNumericId(body.id);
     const isTeam = body.isTeam;
     const isFormerTeam = body.isFormerTeam;
+    const isActive = body.isActive;
+    const updatesTeam = typeof isTeam === "boolean" || typeof isFormerTeam === "boolean";
+    const updatesAccountStatus = typeof isActive === "boolean";
 
-    if (
-      !id ||
-      (typeof isTeam !== "boolean" && typeof isFormerTeam !== "boolean")
-    ) {
+    if (!id || (!updatesTeam && !updatesAccountStatus)) {
       return NextResponse.json({ error: "Dados inválidos." }, { status: 400 });
     }
 
-    const data: { isTeam?: boolean; isFormerTeam?: boolean } = {};
+    const { session, response } = updatesAccountStatus
+      ? await requirePermissionApi("canManageUsers")
+      : await requirePermissionApi("canEditAbout");
+    if (response) return response;
+
+    if (updatesAccountStatus && isActive === false && session?.user.id === id) {
+      return NextResponse.json(
+        { error: "Você não pode desativar a própria conta." },
+        { status: 400 }
+      );
+    }
+
+    const data: Prisma.UserUpdateInput = {};
 
     if (typeof isTeam === "boolean") {
       data.isTeam = isTeam;
@@ -215,6 +227,16 @@ export async function PATCH(req: NextRequest) {
       }
     }
 
+    if (updatesAccountStatus) {
+      data.isActive = isActive;
+
+      if (!isActive) {
+        data.isTeam = false;
+        data.resetPasswordTokenHash = null;
+        data.resetPasswordExpiresAt = null;
+      }
+    }
+
     const user = await prisma.user.update({
       where: { id },
       data,
@@ -223,7 +245,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json(user);
   } catch {
     return NextResponse.json(
-      { error: "Erro ao atualizar equipe." },
+      { error: "Erro ao atualizar usuário." },
       { status: 500 }
     );
   }
