@@ -5,7 +5,6 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Image from "@tiptap/extension-image";
-import { useEffect, useState } from "react";
 import { ImageType } from "@/types/editor";
 
 type RichTextEditorProps = {
@@ -18,16 +17,8 @@ type RichTextEditorProps = {
 export default function RichTextEditor({
   content,
   setContent,
-  images,
   setImages,
 }: RichTextEditorProps) {
-
-  // Impede SSR mismatch — só cria o editor no cliente
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const editor = useEditor({
     extensions: [
@@ -61,7 +52,7 @@ export default function RichTextEditor({
     setImages((prev) => [...prev, ...newImages]);
   };
 
-  if (!isClient || !editor) {
+  if (!editor) {
     return <div className="p-4 text-gray-500">Carregando editor...</div>;
   }
 

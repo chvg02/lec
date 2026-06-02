@@ -173,3 +173,24 @@ model contact_settings {
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 }
+
+model about_settings {
+  id                       Int      @id @default(1)
+  hero_title               String   @default("Conheça o Laboratório de Educação em Computação")
+  hero_subtitle            String   @default("Pesquisando e desenvolvendo o futuro do ensino de computação, desde a educação básica até o ensino superior.") @db.Text
+  hero_image_url           String   @default("https://www.ufms.br/wp-content/uploads/2021/02/UFMS.1.jpg") @db.Text
+  about_title              String   @default("Sobre o Laboratório")
+  about_description        String   @default("O Laboratório de Educação em Computação (LEC) é um espaço dedicado à pesquisa e ao desenvolvimento de práticas pedagógicas inovadoras para o ensino e a aprendizagem da computação em diversos níveis de ensino.") @db.Text
+  what_is_title            String   @default("O que é o LEC?")
+  what_is_description      String   @default("Um centro de excelência focado na interseção entre educação e tecnologia, buscando criar soluções que transformem o ensino da computação.") @db.Text
+  objectives_title         String   @default("Nossos Objetivos")
+  objectives_description   String   @default("Fomentar a pesquisa, desenvolver metodologias de ensino eficazes e promover a inclusão digital através da educação em computação.") @db.Text
+  mission_title            String   @default("Nossa Missão")
+  mission_description      String   @default("Capacitar educadores e estudantes com as ferramentas e conhecimentos necessários para prosperar em um mundo cada vez mais digital.") @db.Text
+  current_team_title       String   @default("Membros atuais")
+  current_team_description String   @default("Profissionais e estudantes dedicados que impulsionam a inovação no ensino de computação.") @db.Text
+  former_team_title        String   @default("Membros anteriores")
+  former_team_description  String   @default("Pessoas que contribuíram para a trajetória do laboratório e para seus projetos.") @db.Text
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+}

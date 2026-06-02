@@ -273,7 +273,7 @@ export default function DashboardPage() {
                 <h1 className="text-xl font-bold">Sobre</h1>
               </div>
               <p className="pt-4 text-sm text-slate-500">
-                Gerencie os membros atuais e anteriores exibidos na página Sobre.
+                Gerencie os textos, a imagem de capa e os membros exibidos na página Sobre.
               </p>
               <Button className="mt-auto w-full bg-rose-500 hover:bg-rose-600" onClick={() => handleGoTo("/sobre")}>
                 Editar Sobre

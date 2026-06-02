@@ -6,15 +6,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { articles } from "@/mocks/article";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { FileText } from "lucide-react";
 
-export default function Projects() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+type Project = {
+  id: number;
+  linkURL: string | null;
+  title: string;
+  status: "inProgress" | "done";
+  content: string;
+};
 
-  const [projetos, setProjetos] = useState<any[]>([]);
+export default function Projects() {
+  const [projetos, setProjetos] = useState<Project[]>([]);
 
   // Carregar os projetos quando logado
   useEffect(() => {

@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { MoveLeft, Loader2 } from 'lucide-react';
 import parse, { DOMNode, Element } from 'html-react-parser';
 import { isSafeInternalUploadUrl, sanitizeRichTextHtml } from '@/lib/security';
+import { useImageTextContrast } from '@/hooks/use-image-text-contrast';
+import { cn } from '@/lib/utils';
 
 type ProjectDetail = {
     title?: string;
@@ -22,6 +24,10 @@ export default function ProjectPage() {
     const [project, setProject] = useState<ProjectDetail | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const coverImage = project?.images?.[0]?.image_url || '/imgpadrao2.jpg';
+    const titleTextColor = useImageTextContrast(coverImage, {
+        sampleArea: 'bottom',
+    });
 
     // Criamos as opções para substituir tags específicas
     const parseOptions = {
@@ -81,14 +87,30 @@ export default function ProjectPage() {
                 {/* Acessando a primeira imagem do array que vem do Prisma */}
                 <div className="relative h-72 w-full overflow-hidden rounded-3xl shadow-lg sm:h-96">
                     <Image
-                        src={project.images?.[0]?.image_url || '/imgpadrao2.jpg'}
+                        src={coverImage}
                         fill
                         alt={project.title || ""}
                         className='rounded-3xl object-cover'
                     />
 
-                    <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-                    <h1 className="absolute inset-x-0 bottom-0 p-5 text-center text-2xl font-black tracking-tight text-white sm:p-6 sm:text-4xl">{project.title}</h1>
+                    <div
+                        className={cn(
+                            "absolute inset-0 bg-linear-to-t",
+                            titleTextColor === "black"
+                                ? "from-white/80 via-white/25 to-transparent"
+                                : "from-black/70 via-black/20 to-transparent"
+                        )}
+                    />
+                    <h1
+                        className={cn(
+                            "absolute inset-x-0 bottom-0 p-5 text-center text-2xl font-black tracking-tight sm:p-6 sm:text-4xl",
+                            titleTextColor === "black"
+                                ? "text-slate-950 [text-shadow:0_1px_16px_rgba(255,255,255,0.95)]"
+                                : "text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.85)]"
+                        )}
+                    >
+                        {project.title}
+                    </h1>
                 </div>
                 <h5 className="text-base text-slate-500 sm:text-lg">{project.description}</h5>
 

@@ -7,7 +7,9 @@ import { ArrowLeft, CalendarDays, Loader2 } from "lucide-react";
 import parse, { DOMNode, Element } from "html-react-parser";
 
 import { Button } from "@/components/ui/button";
+import { useImageTextContrast } from "@/hooks/use-image-text-contrast";
 import { isSafeInternalUploadUrl, sanitizeRichTextHtml } from "@/lib/security";
+import { cn } from "@/lib/utils";
 
 type DetailItem = {
   id: number;
@@ -36,6 +38,10 @@ export default function NewsDetailPage() {
   const [item, setItem] = useState<DetailItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const heroImage = item?.images?.[0]?.image_url || "/imgpadrao2.jpg";
+  const titleTextColor = useImageTextContrast(heroImage, {
+    sampleArea: "bottom",
+  });
 
   useEffect(() => {
     async function loadItem() {
@@ -118,7 +124,6 @@ export default function NewsDetailPage() {
   const isNews = params.itemId?.startsWith("news-");
   const typeLabel = isNews ? "Notícia" : "Evento";
   const publishedAt = item.news_date || item.event_date || new Date().toISOString();
-  const heroImage = item.images?.[0]?.image_url || "/imgpadrao2.jpg";
 
   return (
     <section className="min-h-screen bg-[#f7f9fc] px-4 py-8 md:px-8 md:py-10 xl:px-12">
@@ -151,6 +156,24 @@ export default function NewsDetailPage() {
             className="object-cover"
             sizes="(max-width: 1280px) 100vw, 1200px"
           />
+          <div
+            className={cn(
+              "absolute inset-0 bg-linear-to-t",
+              titleTextColor === "black"
+                ? "from-white/85 via-white/25 to-transparent"
+                : "from-black/75 via-black/25 to-transparent"
+            )}
+          />
+          <h1
+            className={cn(
+              "absolute inset-x-0 bottom-0 p-5 text-3xl font-black tracking-tight sm:p-7 sm:text-4xl md:text-5xl",
+              titleTextColor === "black"
+                ? "text-slate-950 [text-shadow:0_1px_16px_rgba(255,255,255,0.95)]"
+                : "text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.85)]"
+            )}
+          >
+            {item.title}
+          </h1>
         </div>
 
         <div className="max-w-4xl">
@@ -161,9 +184,6 @@ export default function NewsDetailPage() {
             </span>
           </div>
 
-          <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-            {item.title}
-          </h1>
           <p className="mt-5 text-lg leading-8 text-[#3d6696] sm:text-xl sm:leading-9">{item.description}</p>
         </div>
 
