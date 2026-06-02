@@ -1,12 +1,22 @@
-﻿"use client";
+"use client";
 
-import { Flag, Lightbulb, Loader2, Rocket, Save, Trash2, UserPlus } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import {
+  Flag,
+  ImageIcon,
+  Lightbulb,
+  Loader2,
+  Pencil,
+  Rocket,
+  Save,
+  Trash2,
+  UserPlus,
+  X,
+} from "lucide-react";
+import type { FocusEvent, KeyboardEvent } from "react";
+import { createElement, useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   DEFAULT_ABOUT_SETTINGS,
   type AboutSettings,
@@ -34,64 +44,14 @@ type Feedback = {
   text: string;
 };
 
-type AboutEditorSection = {
-  title: string;
-  fields: Array<{
-    field: AboutSettingsField;
-    label: string;
-    multiline?: boolean;
-  }>;
-};
-
-const ABOUT_EDITOR_SECTIONS: AboutEditorSection[] = [
-  {
-    title: "Capa",
-    fields: [
-      { field: "hero_title", label: "Título da capa" },
-      { field: "hero_subtitle", label: "Subtítulo da capa", multiline: true },
-      { field: "hero_image_url", label: "URL da imagem de fundo" },
-    ],
-  },
-  {
-    title: "Introdução",
-    fields: [
-      { field: "about_title", label: "Título da seção" },
-      { field: "about_description", label: "Texto da seção", multiline: true },
-    ],
-  },
-  {
-    title: "Cards",
-    fields: [
-      { field: "what_is_title", label: "Título do card 1" },
-      { field: "what_is_description", label: "Texto do card 1", multiline: true },
-      { field: "objectives_title", label: "Título do card 2" },
-      { field: "objectives_description", label: "Texto do card 2", multiline: true },
-      { field: "mission_title", label: "Título do card 3" },
-      { field: "mission_description", label: "Texto do card 3", multiline: true },
-    ],
-  },
-  {
-    title: "Seções de membros",
-    fields: [
-      { field: "current_team_title", label: "Título dos membros atuais" },
-      {
-        field: "current_team_description",
-        label: "Descrição dos membros atuais",
-        multiline: true,
-      },
-      { field: "former_team_title", label: "Título dos membros anteriores" },
-      {
-        field: "former_team_description",
-        label: "Descrição dos membros anteriores",
-        multiline: true,
-      },
-    ],
-  },
-];
+type EditableTextTag = "h1" | "h2" | "h5" | "p";
 
 export default function About() {
   const { data: session } = useSession();
   const [settings, setSettings] = useState<AboutSettings>(DEFAULT_ABOUT_SETTINGS);
+  const [draftSettings, setDraftSettings] =
+    useState<AboutSettings>(DEFAULT_ABOUT_SETTINGS);
+  const draftSettingsRef = useRef<AboutSettings>(DEFAULT_ABOUT_SETTINGS);
   const [team, setTeam] = useState<TeamUser[]>([]);
   const [formerTeam, setFormerTeam] = useState<TeamUser[]>([]);
   const [allUsers, setAllUsers] = useState<RegisteredUser[]>([]);
@@ -101,6 +61,7 @@ export default function About() {
   const [settingsLoading, setSettingsLoading] = useState(true);
   const [savingSettings, setSavingSettings] = useState(false);
   const [settingsFeedback, setSettingsFeedback] = useState<Feedback | null>(null);
+  const [isEditingAbout, setIsEditingAbout] = useState(false);
   const canEditAbout = hasPermission(session?.user, "canEditAbout");
 
   const fetchAboutSettings = useCallback(async () => {
@@ -112,7 +73,10 @@ export default function About() {
         throw new Error(data.error || "Não foi possível carregar a página Sobre.");
       }
 
-      setSettings((current) => ({ ...current, ...data }));
+      const nextSettings = { ...DEFAULT_ABOUT_SETTINGS, ...data };
+      setSettings(nextSettings);
+      setDraftSettings(nextSettings);
+      draftSettingsRef.current = nextSettings;
     } catch (error) {
       console.error("Erro ao carregar textos da página Sobre:", error);
     } finally {
@@ -172,12 +136,61 @@ export default function About() {
     });
   }, [refreshData]);
 
-  function updateSettingsField(field: AboutSettingsField, value: string) {
-    setSettings((current) => ({ ...current, [field]: value }));
+  function updateDraftSettingsField(field: AboutSettingsField, value: string) {
+    const nextSettings = { ...draftSettingsRef.current, [field]: value };
+    draftSettingsRef.current = nextSettings;
+    setDraftSettings(nextSettings);
   }
 
-  async function handleSettingsSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function startEditingSettings() {
+    setDraftSettings(settings);
+    draftSettingsRef.current = settings;
+    setSettingsFeedback(null);
+    setIsEditingAbout(true);
+  }
+
+  function cancelEditingSettings() {
+    setDraftSettings(settings);
+    draftSettingsRef.current = settings;
+    setSettingsFeedback(null);
+    setIsEditingAbout(false);
+  }
+
+  function handleEditableBlur(
+    field: AboutSettingsField,
+    event: FocusEvent<HTMLElement>
+  ) {
+    updateDraftSettingsField(
+      field,
+      event.currentTarget.innerText.replace(/\u00a0/g, " ").trim()
+    );
+  }
+
+  function handleSingleLineKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.currentTarget.blur();
+    }
+  }
+
+  function handleHeroImageChange() {
+    const nextImageUrl = window.prompt(
+      "URL da imagem de fundo",
+      draftSettingsRef.current.hero_image_url
+    );
+
+    if (nextImageUrl === null) {
+      return;
+    }
+
+    updateDraftSettingsField("hero_image_url", nextImageUrl.trim());
+  }
+
+  async function handleSettingsSave() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     setSavingSettings(true);
     setSettingsFeedback(null);
 
@@ -185,7 +198,7 @@ export default function About() {
       const response = await fetch("/api/about", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(draftSettingsRef.current),
       });
       const data = await response.json();
 
@@ -193,7 +206,11 @@ export default function About() {
         throw new Error(data.error || "Não foi possível salvar a página Sobre.");
       }
 
-      setSettings((current) => ({ ...current, ...data }));
+      const nextSettings = { ...DEFAULT_ABOUT_SETTINGS, ...data };
+      setSettings(nextSettings);
+      setDraftSettings(nextSettings);
+      draftSettingsRef.current = nextSettings;
+      setIsEditingAbout(false);
       setSettingsFeedback({
         type: "success",
         text: "Página Sobre atualizada com sucesso.",
@@ -252,10 +269,132 @@ export default function About() {
 
   const availableCurrentUsers = allUsers.filter((user) => !user.isTeam);
   const availableFormerUsers = allUsers.filter((user) => !user.isFormerTeam);
+  const displaySettings = isEditingAbout ? draftSettings : settings;
+
+  function getEditableClassName(className: string, onDark = false) {
+    if (!isEditingAbout) {
+      return `${className} whitespace-pre-line break-words`;
+    }
+
+    const editableClasses = onDark
+      ? "cursor-text rounded-lg px-2 py-1 outline outline-2 outline-white/50 transition-colors focus:bg-white/10 focus:outline-white"
+      : "cursor-text rounded-lg px-2 py-1 outline outline-2 outline-blue-200 transition-colors focus:bg-blue-50/70 focus:outline-blue-500";
+
+    return `${className} whitespace-pre-line break-words ${editableClasses}`;
+  }
+
+  function renderEditableText({
+    field,
+    tag,
+    className,
+    label,
+    multiline = true,
+    onDark = false,
+  }: {
+    field: AboutSettingsField;
+    tag: EditableTextTag;
+    className: string;
+    label: string;
+    multiline?: boolean;
+    onDark?: boolean;
+  }) {
+    return createElement(
+      tag,
+      {
+        className: getEditableClassName(className, onDark),
+        contentEditable: isEditingAbout,
+        suppressContentEditableWarning: true,
+        role: isEditingAbout ? "textbox" : undefined,
+        "aria-label": isEditingAbout ? label : undefined,
+        "aria-multiline": isEditingAbout ? multiline : undefined,
+        spellCheck: isEditingAbout,
+        tabIndex: isEditingAbout ? 0 : undefined,
+        onBlur: isEditingAbout
+          ? (event: FocusEvent<HTMLElement>) => handleEditableBlur(field, event)
+          : undefined,
+        onKeyDown:
+          isEditingAbout && !multiline ? handleSingleLineKeyDown : undefined,
+      },
+      displaySettings[field]
+    );
+  }
+
+  const renderEditControls = () => {
+    if (!canEditAbout) {
+      return null;
+    }
+
+    return (
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-h-5">
+          {settingsLoading && (
+            <span className="flex items-center gap-2 text-sm font-medium text-slate-500">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Carregando conteúdo
+            </span>
+          )}
+
+          {settingsFeedback && (
+            <p
+              className={`text-sm font-medium ${
+                settingsFeedback.type === "success"
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {settingsFeedback.text}
+            </p>
+          )}
+        </div>
+
+        {isEditingAbout ? (
+          <div className="flex flex-wrap justify-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={cancelEditingSettings}
+              disabled={savingSettings}
+            >
+              <X className="h-4 w-4" />
+              Cancelar
+            </Button>
+            <Button
+              type="button"
+              className="bg-blue-500 text-white hover:bg-blue-600"
+              onClick={handleSettingsSave}
+              disabled={savingSettings || settingsLoading}
+            >
+              {savingSettings ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Salvando...
+                </>
+              ) : (
+                <>
+                  <Save className="h-4 w-4" />
+                  Salvar
+                </>
+              )}
+            </Button>
+          </div>
+        ) : (
+          <Button
+            type="button"
+            className="self-end bg-blue-500 text-white hover:bg-blue-600"
+            onClick={startEditingSettings}
+            disabled={settingsLoading}
+          >
+            <Pencil className="h-4 w-4" />
+            Editar página
+          </Button>
+        )}
+      </div>
+    );
+  };
 
   const renderMemberSection = ({
-    title,
-    description,
+    titleField,
+    descriptionField,
     members,
     selectedUser,
     setSelectedUser,
@@ -264,8 +403,8 @@ export default function About() {
     addLabel,
     emptyLabel,
   }: {
-    title: string;
-    description: string;
+    titleField: AboutSettingsField;
+    descriptionField: AboutSettingsField;
     members: TeamUser[];
     selectedUser: string;
     setSelectedUser: (value: string) => void;
@@ -275,8 +414,20 @@ export default function About() {
     emptyLabel: string;
   }) => (
     <div className="mt-12 flex flex-col items-center justify-center sm:mt-16">
-      <h1 className="text-center text-3xl font-black sm:text-4xl lg:text-5xl">{title}</h1>
-      <p className="mt-4 max-w-3xl text-center text-base text-slate-400 sm:text-lg">{description}</p>
+      {renderEditableText({
+        field: titleField,
+        tag: "h1",
+        className: "text-center text-3xl font-black sm:text-4xl lg:text-5xl",
+        label: "Título da seção de membros",
+        multiline: false,
+      })}
+      {renderEditableText({
+        field: descriptionField,
+        tag: "p",
+        className:
+          "mt-4 max-w-3xl text-center text-base text-slate-400 sm:text-lg",
+        label: "Descrição da seção de membros",
+      })}
 
       {members.length === 0 ? (
         <p className="mt-8 text-center text-slate-500">{emptyLabel}</p>
@@ -288,7 +439,12 @@ export default function About() {
               className="flex min-w-0 flex-col items-center justify-center rounded-2xl border border-slate-200 p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl sm:p-8"
             >
               <img
-                src={user.profileImageUrl || `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(user.name)}`}
+                src={
+                  user.profileImageUrl ||
+                  `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
+                    user.name
+                  )}`
+                }
                 alt={user.name}
                 className="aspect-square w-24 rounded-full border border-blue-400 object-cover"
               />
@@ -296,9 +452,11 @@ export default function About() {
               <h5 className="font-medium text-blue-500">
                 {user.role === "admin" ? "Administrador" : "Membro"}
               </h5>
-              <p className="mt-4 max-w-full break-words text-center text-slate-400">{user.email}</p>
+              <p className="mt-4 max-w-full break-words text-center text-slate-400">
+                {user.email}
+              </p>
 
-              {canEditAbout && (
+              {canEditAbout && isEditingAbout && (
                 <button
                   className="mt-4 flex items-center gap-2 rounded bg-red-500 px-2 py-1 text-white hover:bg-red-600"
                   onClick={() => updateMembership(user.id, membership, false)}
@@ -312,7 +470,7 @@ export default function About() {
         </div>
       )}
 
-      {canEditAbout && (
+      {canEditAbout && isEditingAbout && (
         <div className="mt-8 flex w-full flex-col items-center justify-center gap-3">
           <div className="flex w-full max-w-2xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
             <select
@@ -348,146 +506,122 @@ export default function About() {
     </div>
   );
 
-  const renderSettingsEditor = () => (
-    <form
-      onSubmit={handleSettingsSubmit}
-      className="mt-8 space-y-8 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8"
-    >
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-2xl font-black text-slate-900">Editar conteúdo da página</h2>
-          <p className="mt-1 text-sm text-slate-500">
-            Atualize os textos, a imagem de capa e os títulos das seções exibidas ao público.
-          </p>
-        </div>
-        {settingsLoading && (
-          <span className="flex items-center gap-2 text-sm font-medium text-slate-500">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Carregando
-          </span>
-        )}
-      </div>
-
-      {ABOUT_EDITOR_SECTIONS.map((section) => (
-        <div key={section.title} className="space-y-4">
-          <h3 className="text-lg font-bold text-slate-800">{section.title}</h3>
-          <div className="grid gap-4 md:grid-cols-2">
-            {section.fields.map(({ field, label, multiline }) => (
-              <div
-                key={field}
-                className={multiline ? "space-y-2 md:col-span-2" : "space-y-2"}
-              >
-                <Label htmlFor={field}>{label}</Label>
-                {multiline ? (
-                  <textarea
-                    id={field}
-                    value={settings[field]}
-                    onChange={(event) => updateSettingsField(field, event.target.value)}
-                    className="min-h-24 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-200 ease-out hover:border-slate-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-100"
-                  />
-                ) : (
-                  <Input
-                    id={field}
-                    value={settings[field]}
-                    onChange={(event) => updateSettingsField(field, event.target.value)}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-
-      {settingsFeedback && (
-        <p
-          className={`text-sm font-medium ${
-            settingsFeedback.type === "success" ? "text-green-600" : "text-red-600"
-          }`}
-        >
-          {settingsFeedback.text}
-        </p>
-      )}
-
-      <div className="flex justify-end">
-        <Button
-          type="submit"
-          className="bg-blue-500 text-white hover:bg-blue-600"
-          disabled={savingSettings || settingsLoading}
-        >
-          {savingSettings ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Salvando...
-            </>
-          ) : (
-            <>
-              <Save className="h-4 w-4" />
-              Salvar alterações
-            </>
-          )}
-        </Button>
-      </div>
-    </form>
-  );
-
   return (
     <div className="min-h-screen h-full px-4 py-8 sm:px-6 lg:px-16">
+      {renderEditControls()}
+
       <div
-        className="min-h-[360px] w-full overflow-hidden rounded-2xl bg-cover bg-center shadow-lg sm:min-h-[440px] lg:min-h-[480px]"
+        className="relative min-h-[360px] w-full overflow-hidden rounded-2xl bg-cover bg-center shadow-lg sm:min-h-[440px] lg:min-h-[480px]"
         style={{
-          backgroundImage: `url(${settings.hero_image_url || DEFAULT_ABOUT_SETTINGS.hero_image_url})`,
+          backgroundImage: `url(${
+            displaySettings.hero_image_url || DEFAULT_ABOUT_SETTINGS.hero_image_url
+          })`,
         }}
       >
+        {canEditAbout && isEditingAbout && (
+          <button
+            type="button"
+            className="absolute right-4 top-4 z-10 flex items-center gap-2 rounded-xl bg-white/95 px-3 py-2 text-sm font-semibold text-slate-800 shadow-lg transition hover:bg-white"
+            onClick={handleHeroImageChange}
+          >
+            <ImageIcon className="h-4 w-4" />
+            Alterar imagem
+          </button>
+        )}
+
         <div className="flex min-h-[360px] w-full flex-col items-center justify-center gap-4 bg-black/50 p-6 sm:min-h-[440px] sm:p-10 lg:min-h-[480px] lg:p-16">
-          <h1 className="text-center text-3xl font-black text-white sm:text-5xl lg:text-6xl">
-            {settings.hero_title}
-          </h1>
-          <h5 className="max-w-4xl text-center text-base font-medium text-slate-200 sm:text-lg">
-            {settings.hero_subtitle}
-          </h5>
+          {renderEditableText({
+            field: "hero_title",
+            tag: "h1",
+            className:
+              "text-center text-3xl font-black text-white sm:text-5xl lg:text-6xl",
+            label: "Título da capa",
+            multiline: false,
+            onDark: true,
+          })}
+          {renderEditableText({
+            field: "hero_subtitle",
+            tag: "h5",
+            className:
+              "max-w-4xl text-center text-base font-medium text-slate-200 sm:text-lg",
+            label: "Subtítulo da capa",
+            onDark: true,
+          })}
         </div>
       </div>
 
-      {canEditAbout && renderSettingsEditor()}
-
       <div className="mt-10 w-full py-6 sm:mt-16 sm:p-8">
-        <h1 className="mb-4 text-3xl font-black text-slate-800 sm:text-4xl">
-          {settings.about_title}
-        </h1>
-        <p className="text-slate-400">
-          {settings.about_description}
-        </p>
+        {renderEditableText({
+          field: "about_title",
+          tag: "h1",
+          className: "mb-4 text-3xl font-black text-slate-800 sm:text-4xl",
+          label: "Título da seção Sobre",
+          multiline: false,
+        })}
+        {renderEditableText({
+          field: "about_description",
+          tag: "p",
+          className: "text-slate-400",
+          label: "Texto da seção Sobre",
+        })}
       </div>
 
       <div className="grid w-full grid-cols-1 gap-5 py-6 md:grid-cols-3 sm:p-8">
         <div className="flex flex-col items-start rounded-lg border border-slate-200 p-6 shadow-lg dark:border-slate-800">
           <Lightbulb size={36} className="mb-8 text-blue-500" />
-          <h2 className="text-lg font-bold">{settings.what_is_title}</h2>
-          <p className="text-slate-400">
-            {settings.what_is_description}
-          </p>
+          {renderEditableText({
+            field: "what_is_title",
+            tag: "h2",
+            className: "text-lg font-bold",
+            label: "Título do card O que é o LEC",
+            multiline: false,
+          })}
+          {renderEditableText({
+            field: "what_is_description",
+            tag: "p",
+            className: "text-slate-400",
+            label: "Texto do card O que é o LEC",
+          })}
         </div>
 
         <div className="flex flex-col items-start rounded-lg border border-slate-200 p-6 shadow-lg dark:border-slate-800">
           <Flag size={36} className="mb-8 text-blue-500" />
-          <h2 className="text-lg font-bold">{settings.objectives_title}</h2>
-          <p className="text-slate-400">
-            {settings.objectives_description}
-          </p>
+          {renderEditableText({
+            field: "objectives_title",
+            tag: "h2",
+            className: "text-lg font-bold",
+            label: "Título do card Objetivos",
+            multiline: false,
+          })}
+          {renderEditableText({
+            field: "objectives_description",
+            tag: "p",
+            className: "text-slate-400",
+            label: "Texto do card Objetivos",
+          })}
         </div>
 
         <div className="flex flex-col items-start rounded-lg border border-slate-200 p-6 shadow-lg dark:border-slate-800">
           <Rocket size={36} className="mb-8 text-blue-500" />
-          <h2 className="text-lg font-bold">{settings.mission_title}</h2>
-          <p className="text-slate-400">
-            {settings.mission_description}
-          </p>
+          {renderEditableText({
+            field: "mission_title",
+            tag: "h2",
+            className: "text-lg font-bold",
+            label: "Título do card Missão",
+            multiline: false,
+          })}
+          {renderEditableText({
+            field: "mission_description",
+            tag: "p",
+            className: "text-slate-400",
+            label: "Texto do card Missão",
+          })}
         </div>
       </div>
 
       {renderMemberSection({
-        title: settings.current_team_title,
-        description: settings.current_team_description,
+        titleField: "current_team_title",
+        descriptionField: "current_team_description",
         members: team,
         selectedUser: selectedCurrentUser,
         setSelectedUser: setSelectedCurrentUser,
@@ -498,8 +632,8 @@ export default function About() {
       })}
 
       {renderMemberSection({
-        title: settings.former_team_title,
-        description: settings.former_team_description,
+        titleField: "former_team_title",
+        descriptionField: "former_team_description",
         members: formerTeam,
         selectedUser: selectedFormerUser,
         setSelectedUser: setSelectedFormerUser,
