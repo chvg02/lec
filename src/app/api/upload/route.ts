@@ -12,6 +12,7 @@ import {
   MAX_UPLOAD_SIZE_BYTES,
   sanitizeFileName,
 } from "@/lib/security";
+import type { UserPermissionKey } from "@/lib/permissions";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -20,6 +21,18 @@ const MISSING_BLOB_CONFIGURATION_ERROR =
   "Vercel Blob nao esta configurado. Crie um Blob Store publico e vincule BLOB_READ_WRITE_TOKEN ao projeto.";
 
 type UploadType = "cover-image" | "editor-image" | "resource";
+
+const RESOURCE_UPLOAD_PERMISSIONS: UserPermissionKey[] = ["canManageResources"];
+const COVER_UPLOAD_PERMISSIONS: UserPermissionKey[] = [
+  "canManageProjects",
+  "canManageNews",
+  "canManageEvents",
+  "canManageResources",
+];
+const EDITOR_IMAGE_UPLOAD_PERMISSIONS: UserPermissionKey[] = [
+  ...COVER_UPLOAD_PERMISSIONS,
+  "canEditAbout",
+];
 
 function getUploadType(value: FormDataEntryValue | null): UploadType {
   return value === "editor-image" || value === "resource"
@@ -62,12 +75,13 @@ export async function POST(req: Request) {
     const file = formData.get("file") as File | null;
     const uploadType = getUploadType(formData.get("uploadType"));
     const isResourceUpload = uploadType === "resource";
+    const uploadPermissions = isResourceUpload
+      ? RESOURCE_UPLOAD_PERMISSIONS
+      : uploadType === "editor-image"
+        ? EDITOR_IMAGE_UPLOAD_PERMISSIONS
+        : COVER_UPLOAD_PERMISSIONS;
 
-    const { response } = await requireAnyPermissionApi(
-      isResourceUpload
-        ? ["canManageResources"]
-        : ["canManageProjects", "canManageNews", "canManageEvents", "canManageResources"]
-    );
+    const { response } = await requireAnyPermissionApi(uploadPermissions);
     if (response) return response;
 
     if (!file) {

@@ -9,10 +9,11 @@ import {
   Rocket,
   Save,
   Trash2,
+  Upload,
   UserPlus,
   X,
 } from "lucide-react";
-import type { FocusEvent, KeyboardEvent } from "react";
+import type { ChangeEvent, FocusEvent, KeyboardEvent } from "react";
 import { createElement, useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -62,6 +63,12 @@ export default function About() {
   const [savingSettings, setSavingSettings] = useState(false);
   const [settingsFeedback, setSettingsFeedback] = useState<Feedback | null>(null);
   const [isEditingAbout, setIsEditingAbout] = useState(false);
+  const [isHeroImagePickerOpen, setIsHeroImagePickerOpen] = useState(false);
+  const [heroImageUrlDraft, setHeroImageUrlDraft] = useState(
+    DEFAULT_ABOUT_SETTINGS.hero_image_url
+  );
+  const [uploadingHeroImage, setUploadingHeroImage] = useState(false);
+  const heroImageFileInputRef = useRef<HTMLInputElement | null>(null);
   const canEditAbout = hasPermission(session?.user, "canEditAbout");
 
   const fetchAboutSettings = useCallback(async () => {
@@ -77,6 +84,7 @@ export default function About() {
       setSettings(nextSettings);
       setDraftSettings(nextSettings);
       draftSettingsRef.current = nextSettings;
+      setHeroImageUrlDraft(nextSettings.hero_image_url);
     } catch (error) {
       console.error("Erro ao carregar textos da página Sobre:", error);
     } finally {
@@ -145,14 +153,18 @@ export default function About() {
   function startEditingSettings() {
     setDraftSettings(settings);
     draftSettingsRef.current = settings;
+    setHeroImageUrlDraft(settings.hero_image_url);
     setSettingsFeedback(null);
+    setIsHeroImagePickerOpen(false);
     setIsEditingAbout(true);
   }
 
   function cancelEditingSettings() {
     setDraftSettings(settings);
     draftSettingsRef.current = settings;
+    setHeroImageUrlDraft(settings.hero_image_url);
     setSettingsFeedback(null);
+    setIsHeroImagePickerOpen(false);
     setIsEditingAbout(false);
   }
 
@@ -174,16 +186,79 @@ export default function About() {
   }
 
   function handleHeroImageChange() {
-    const nextImageUrl = window.prompt(
-      "URL da imagem de fundo",
-      draftSettingsRef.current.hero_image_url
-    );
+    setHeroImageUrlDraft(draftSettingsRef.current.hero_image_url);
+    setIsHeroImagePickerOpen((current) => !current);
+  }
 
-    if (nextImageUrl === null) {
+  function applyHeroImageUrl() {
+    const nextImageUrl = heroImageUrlDraft.trim();
+
+    if (!nextImageUrl) {
+      setSettingsFeedback({
+        type: "error",
+        text: "Informe uma URL de imagem ou envie um arquivo.",
+      });
       return;
     }
 
-    updateDraftSettingsField("hero_image_url", nextImageUrl.trim());
+    updateDraftSettingsField("hero_image_url", nextImageUrl);
+    setIsHeroImagePickerOpen(false);
+    setSettingsFeedback({
+      type: "success",
+      text: "Imagem de capa alterada no rascunho. Clique em Salvar para publicar.",
+    });
+  }
+
+  async function handleHeroImageUpload(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file) {
+      return;
+    }
+
+    setUploadingHeroImage(true);
+    setSettingsFeedback(null);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("uploadType", "editor-image");
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Não foi possível enviar a imagem.");
+      }
+
+      const imageUrl = data.imageUrl || data.fileUrl;
+
+      if (!imageUrl) {
+        throw new Error("O upload não retornou a URL da imagem.");
+      }
+
+      updateDraftSettingsField("hero_image_url", imageUrl);
+      setHeroImageUrlDraft(imageUrl);
+      setIsHeroImagePickerOpen(false);
+      setSettingsFeedback({
+        type: "success",
+        text: "Imagem enviada e aplicada ao rascunho. Clique em Salvar para publicar.",
+      });
+    } catch (error) {
+      setSettingsFeedback({
+        type: "error",
+        text:
+          error instanceof Error
+            ? error.message
+            : "Não foi possível enviar a imagem.",
+      });
+    } finally {
+      setUploadingHeroImage(false);
+    }
   }
 
   async function handleSettingsSave() {
@@ -210,6 +285,8 @@ export default function About() {
       setSettings(nextSettings);
       setDraftSettings(nextSettings);
       draftSettingsRef.current = nextSettings;
+      setHeroImageUrlDraft(nextSettings.hero_image_url);
+      setIsHeroImagePickerOpen(false);
       setIsEditingAbout(false);
       setSettingsFeedback({
         type: "success",
@@ -519,14 +596,80 @@ export default function About() {
         }}
       >
         {canEditAbout && isEditingAbout && (
-          <button
-            type="button"
-            className="absolute right-4 top-4 z-10 flex items-center gap-2 rounded-xl bg-white/95 px-3 py-2 text-sm font-semibold text-slate-800 shadow-lg transition hover:bg-white"
-            onClick={handleHeroImageChange}
-          >
-            <ImageIcon className="h-4 w-4" />
-            Alterar imagem
-          </button>
+          <div className="absolute left-4 right-4 top-4 z-10 flex flex-col items-end gap-2 sm:left-auto">
+            <button
+              type="button"
+              className="flex items-center gap-2 rounded-xl bg-white/95 px-3 py-2 text-sm font-semibold text-slate-800 shadow-lg transition hover:bg-white"
+              onClick={handleHeroImageChange}
+            >
+              <ImageIcon className="h-4 w-4" />
+              Alterar imagem
+            </button>
+
+            {isHeroImagePickerOpen && (
+              <div className="w-full rounded-2xl border border-slate-200 bg-white p-4 text-slate-800 shadow-2xl sm:w-96">
+                <label
+                  htmlFor="about-hero-image-url"
+                  className="text-sm font-semibold text-slate-700"
+                >
+                  URL da imagem
+                </label>
+                <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+                  <input
+                    id="about-hero-image-url"
+                    type="url"
+                    value={heroImageUrlDraft}
+                    onChange={(event) => setHeroImageUrlDraft(event.target.value)}
+                    placeholder="https://..."
+                    className="min-h-10 flex-1 rounded-xl border border-slate-200 px-3 text-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                  />
+                  <Button
+                    type="button"
+                    size="sm"
+                    className="bg-blue-500 text-white hover:bg-blue-600"
+                    onClick={applyHeroImageUrl}
+                  >
+                    Usar URL
+                  </Button>
+                </div>
+
+                <div className="mt-3 flex items-center gap-3">
+                  <div className="h-px flex-1 bg-slate-200" />
+                  <span className="text-xs font-semibold uppercase text-slate-400">
+                    ou
+                  </span>
+                  <div className="h-px flex-1 bg-slate-200" />
+                </div>
+
+                <input
+                  ref={heroImageFileInputRef}
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/gif"
+                  className="sr-only"
+                  onChange={handleHeroImageUpload}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="mt-3 w-full"
+                  onClick={() => heroImageFileInputRef.current?.click()}
+                  disabled={uploadingHeroImage}
+                >
+                  {uploadingHeroImage ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-4 w-4" />
+                      Fazer upload
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
         )}
 
         <div className="flex min-h-[360px] w-full flex-col items-center justify-center gap-4 bg-black/50 p-6 sm:min-h-[440px] sm:p-10 lg:min-h-[480px] lg:p-16">
