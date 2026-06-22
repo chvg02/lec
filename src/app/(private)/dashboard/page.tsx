@@ -147,10 +147,15 @@ export default function DashboardPage() {
 
   if (!session) return null;
 
+  const cardClass = "flex min-h-[22rem] min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-5 sm:p-6";
+  const cardHeaderClass = "flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4";
+  const cardTitleClass = "flex min-w-0 items-center gap-3";
+  const cardCountClass = "flex shrink-0 items-center gap-1.5";
+
   return (
-    <div className="w-full p-8">
-      <div className="flex flex-row items-center justify-between">
-        <div>
+    <div className="w-full overflow-x-hidden p-4 sm:p-6 lg:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
           <h1 className="w-full text-2xl font-black">Dashboard</h1>
           <p className="font-light">Bem-vindo ao seu painel de controle!</p>
         </div>
@@ -166,22 +171,22 @@ export default function DashboardPage() {
           <Loader2 className="animate-spin text-blue-500" size={48} />
         </div>
       ) : (
-        <div className={`mt-8 grid w-full grid-cols-1 gap-8 md:grid-cols-2 ${visibleModules >= 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
+        <div className="mt-8 grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))] gap-5 lg:gap-6">
           {visibleModules === 0 && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500 md:col-span-2 xl:col-span-4">
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">
               Nenhuma funcionalidade foi atribuída ao seu usuário ainda.
             </div>
           )}
           {canManageProjects && (
-            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
-                <div className="flex flex-row items-center gap-4">
-                  <div className="rounded-lg bg-blue-100 p-2">
+            <div className={cardClass}>
+              <div className={cardHeaderClass}>
+                <div className={cardTitleClass}>
+                  <div className="shrink-0 rounded-lg bg-blue-100 p-2">
                     <FolderKanban size={24} className="text-blue-500" />
                   </div>
                   <h1 className="text-xl font-bold">Projetos</h1>
                 </div>
-                <div className="flex flex-row items-center gap-2">
+                <div className={cardCountClass}>
                   <h3 className="font-medium text-slate-400">Ativos:</h3>
                   <h1 className="text-3xl font-black">{data.projects.activeCount}</h1>
                 </div>
@@ -212,15 +217,15 @@ export default function DashboardPage() {
           )}
 
           {canManageUsers && (
-            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
-                <div className="flex flex-row items-center gap-4">
-                  <div className="rounded-lg bg-violet-100 p-2">
+            <div className={cardClass}>
+              <div className={cardHeaderClass}>
+                <div className={cardTitleClass}>
+                  <div className="shrink-0 rounded-lg bg-violet-100 p-2">
                     <UsersRound size={24} className="text-violet-500" />
                   </div>
                   <h1 className="text-xl font-bold">Usuários</h1>
                 </div>
-                <div className="flex flex-row items-center gap-2">
+                <div className={cardCountClass}>
                   <h3 className="font-medium text-slate-400">Ativos:</h3>
                   <h1 className="text-3xl font-black">{data.users.activeCount}</h1>
                 </div>
@@ -248,9 +253,9 @@ export default function DashboardPage() {
           )}
 
           {canEditContact && (
-            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-row items-center gap-4 border-b border-slate-200 pb-4">
-                <div className="rounded-lg bg-sky-100 p-2">
+            <div className={cardClass}>
+              <div className="flex min-w-0 items-center gap-3 border-b border-slate-200 pb-4">
+                <div className="shrink-0 rounded-lg bg-sky-100 p-2">
                   <Mail size={24} className="text-sky-600" />
                 </div>
                 <h1 className="text-xl font-bold">Contato</h1>
@@ -265,9 +270,9 @@ export default function DashboardPage() {
           )}
 
           {canEditAbout && (
-             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-row items-center gap-4 border-b border-slate-200 pb-4">
-                <div className="rounded-lg bg-rose-100 p-2">
+             <div className={cardClass}>
+              <div className="flex min-w-0 items-center gap-3 border-b border-slate-200 pb-4">
+                <div className="shrink-0 rounded-lg bg-rose-100 p-2">
                   <Info size={24} className="text-rose-600" />
                 </div>
                 <h1 className="text-xl font-bold">Sobre</h1>
@@ -282,15 +287,15 @@ export default function DashboardPage() {
           )}
 
           {canManageNews && (
-             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
-                <div className="flex flex-row items-center gap-4">
-                  <div className="rounded-lg bg-amber-100 p-2">
+             <div className={cardClass}>
+              <div className={cardHeaderClass}>
+                <div className={cardTitleClass}>
+                  <div className="shrink-0 rounded-lg bg-amber-100 p-2">
                     <FileText size={24} className="text-amber-500" />
                   </div>
                   <h1 className="text-xl font-bold">Notícias</h1>
                 </div>
-                <div className="flex flex-row items-center gap-2">
+                <div className={cardCountClass}>
                   <h3 className="font-medium text-slate-400">Ativas:</h3>
                   <h1 className="text-3xl font-black">{data.news.activeCount}</h1>
                 </div>
@@ -318,15 +323,15 @@ export default function DashboardPage() {
           )}
 
           {canManageEvents && (
-             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
-                <div className="flex flex-row items-center gap-4">
-                  <div className="rounded-lg bg-emerald-100 p-2">
+             <div className={cardClass}>
+              <div className={cardHeaderClass}>
+                <div className={cardTitleClass}>
+                  <div className="shrink-0 rounded-lg bg-emerald-100 p-2">
                     <CalendarClock size={24} className="text-emerald-500" />
                   </div>
                   <h1 className="text-xl font-bold">Eventos</h1>
                 </div>
-                <div className="flex flex-row items-center gap-2">
+                <div className={cardCountClass}>
                   <h3 className="font-medium text-slate-400">Ativos:</h3>
                   <h1 className="text-3xl font-black">{data.events.activeCount}</h1>
                 </div>
@@ -354,15 +359,15 @@ export default function DashboardPage() {
           )}
 
           {canManageResources && (
-             <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-8">
-              <div className="flex flex-row items-center justify-between border-b border-slate-200 pb-4">
-                <div className="flex flex-row items-center gap-4">
-                  <div className="rounded-lg bg-cyan-100 p-2">
+             <div className={cardClass}>
+              <div className={cardHeaderClass}>
+                <div className={cardTitleClass}>
+                  <div className="shrink-0 rounded-lg bg-cyan-100 p-2">
                     <FolderArchive size={24} className="text-cyan-600" />
                   </div>
                   <h1 className="text-xl font-bold">Recursos</h1>
                 </div>
-                <div className="flex flex-row items-center gap-2">
+                <div className={cardCountClass}>
                   <h3 className="font-medium text-slate-400">Ativos:</h3>
                   <h1 className="text-3xl font-black">{data.resources.activeCount}</h1>
                 </div>
