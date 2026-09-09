@@ -36,7 +36,7 @@ Depois edite `docker/app.env` com as variaveis da aplicacao:
 ```env
 NEXTAUTH_URL=https://seu-dominio.com
 NEXTAUTH_USE_SECURE_COOKIES=true
-NEXTAUTH_SECRET=gere-um-segredo-forte
+NEXTAUTH_SECRET=""
 
 SMTP_HOST=smtp.seu-provedor.com
 SMTP_PORT=587
@@ -46,9 +46,9 @@ SMTP_PASS=senha-ou-app-password
 SMTP_FROM_EMAIL=usuario@dominio.com
 SMTP_FROM_NAME=LEC Facom
 
-DEFAULT_ADMIN_EMAIL=vitor.a.anjos@ufms.br
-DEFAULT_ADMIN_PASSWORD="Echvgme0406#"
-DEFAULT_ADMIN_NAME=vitor anjos
+DEFAULT_ADMIN_EMAIL=email default
+DEFAULT_ADMIN_PASSWORD="senha default"
+DEFAULT_ADMIN_NAME= default name
 DEFAULT_ADMIN_RESET_PASSWORD=false
 ```
 
@@ -99,7 +99,7 @@ Use `docker compose down -v` apenas se quiser apagar tambem banco e uploads.
 - Aguarda o Postgres aceitar conexoes.
 - Executa `prisma migrate deploy`.
 - Garante a existencia do usuario administrador inicial:
-  - email: `vitor.a.anjos@ufms.br`
+  - email: `default`
   - senha inicial: a definida em `DEFAULT_ADMIN_PASSWORD`
   - nome: `vitor anjos`
 - Inicia o Next.js em `0.0.0.0:3000`.
